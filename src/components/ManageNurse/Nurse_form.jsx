@@ -487,6 +487,7 @@ export default class Nurse_form extends Component {
               <div style={{ width: "47%" }}>
                 <Labelbox
                   type="number"
+                  maxLength="2"
                   labelname="Experience"
                   changeData={(data) => this.changeDynamic(data, 'experience')}
                   value={this.state.manageNurse.experience.value}

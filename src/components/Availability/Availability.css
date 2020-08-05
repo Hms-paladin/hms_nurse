@@ -20,6 +20,6 @@
   background-color: #818181;
   border: none;
 }
-.ant-select-selection-selected-value {
-  opacity: 0.6;
+.opacity_letter_availability .ant-select-selection-selected-value{
+  opacity: 0.5 !important;
 }

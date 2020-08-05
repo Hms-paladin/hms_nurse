@@ -255,8 +255,8 @@
 
 .booking_createlist .formdiv .labeltxt {
     font-family: "Roboto" !important;
-    color: #666666 !important;
-    font-weight: 0 !important;
+    color: #666 !important;
+    font-weight: 100 !important;
     opacity: 1 !important;
 }
 

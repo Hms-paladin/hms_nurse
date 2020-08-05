@@ -120,7 +120,7 @@ export default class Profilepage extends React.Component {
                       <div className="nurse_working_detail">
                         <h4 className="nurse_working_hour_detail">Skills</h4>
 
-                        <p className="working_time_detail_skills">
+                        <p className="working_time_detail">
                           {viewData.skills}
                         </p>
                       </div>
@@ -131,18 +131,22 @@ export default class Profilepage extends React.Component {
                 <div>
                   <div className="nurse_modal_button">
                     <div>
-                      <button type="button" class="btn-nurse btn-success">
-                        8 Hrs
-                  </button>
-                      <p>Cost/Month (KWD)</p>
-                      <p className="btn-text">{viewData.cost_eight_hours}</p>
+                      {/* <button type="button" class="btn-nurse btn-success"> */}
+                      <div className="eight_hrs_edit">
+                        <p className="eight_text">8 Hrs</p>
+                        </div>
+                  {/* </button> */}
+                      <p className="cost_edit">Cost/Month (KWD)</p>
+                      <p className="btn_text">{viewData.cost_eight_hours}</p>
                     </div>
                     <div>
-                      <button type="button" class="btn-nurse btn-success">
-                        12 Hrs
-                  </button>
-                      <p>Cost/Month (KWD)</p>
-                      <p className="btn-text">{viewData.cost_twelve_hours}</p>
+                      {/* <button type="button" class="btn-nurse btn-success"> */}
+                      <div className="eight_hrs_edit">
+                        <p className="eight_text">12 Hrs</p>
+                        </div>
+                  {/* </button> */}
+                      <p className="cost_edit">Cost/Month (KWD)</p>
+                      <p className="btn_text">{viewData.cost_twelve_hours}</p>
                     </div>
                   </div>
                 </div>

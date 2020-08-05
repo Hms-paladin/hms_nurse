@@ -100,7 +100,7 @@ export default class Availability extends Component {
             <Calender />
           </Grid>
           <Grid item sm={12} md={6}>
-            <div style={{padding:"20px"}}>
+            <div style={{padding:"20px"}} className ="opacity_letter_availability">
              
               <Select style={{width:"100%"}} onChange={(data) => this.storeNurse(data)}>
                 {/* <div className="availability_nursename_edit"> */}

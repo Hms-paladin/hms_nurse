@@ -1,20 +1,25 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React, { Component } from "react";
-import './AdvertiseList.css';
+
+import './AdvertiseList.css'
+
+
 import Workflow from '../../Images/workflow.svg'
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Half from '../../Images/Full.svg';
 import Full from '../../Images/Half.svg';
+
 import DeleteMedia from './DeleteMedia'
 import Modalcomp from '../../helpers/ModalComp/Modalcomp'
 import Axios from 'axios';
+// import apiservice from '../../helpers/apiservices'
 import { apiurl } from "../../App";
 import { Chart, Axis, Legend, Tooltip, Geom } from 'bizcharts';
 import Stepper from './Stepper'
 import ReactPagination from "../Pagination/Pagination";
 import NotfoundIcon from "../../Images/NotFound.svg";
-import { Spin } from "antd";
+import { Spin } from "antd"
 
 
 
@@ -48,7 +53,7 @@ export default class AdvertiseList extends React.Component{
 getAdBooking = () => {
     Axios({
         method: 'POST',
-        url: apiurl + 'getAdBooking',
+        url: apiurl + '/getAdBooking',
         data:{
             "doctorid":"5",
             "limit":this.state.limit,
@@ -85,7 +90,7 @@ getAdDetails = (data) => {
     
     Axios({
         method: 'POST',
-        url: apiurl + 'getAdBooking',
+        url: apiurl + '/getAdBooking',
         data:{
             "doctorid":"5",
             "limit":this.state.limit,
@@ -117,7 +122,7 @@ getAdDetails = (data) => {
       handleDelete = (details) => {
         Axios({
             method: 'POST',
-            url: apiurl + 'deleteAdBooking',
+            url: apiurl + '/deleteAdBooking',
             data: {
                 doctorid: 5,
             }

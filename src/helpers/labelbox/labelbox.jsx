@@ -87,7 +87,7 @@ export default class Labelbox extends Component {
                 <div className="formdiv">
                     <label className="labeltxt">{data.labelname}</label>
                     <div>
-                        <input className={`${data.error && "brdred"} brdrcls`} min="0" value={this.props.value} type="number" onChange={(e) => this.props.changeData && this.props.changeData(e.target.value)} onKeyDown={e => (e.key === "e" || e.key === "." || e.key === "+" || e.key === "-") && e.preventDefault()} />
+                        <input className={`${data.error && "brdred"} brdrcls`} min="0" value={this.props.value} type="number" onChange={(e) => this.props.changeData && this.props.changeData(e.target.value)} onKeyDown={e => (e.key === "e" || e.key === "+" || e.key === "-") && e.preventDefault()} />
                         {
                             <div className="Errormsg">
                                 <div>{data.error && data.errmsg}</div>

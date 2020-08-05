@@ -32,7 +32,7 @@ componentWillMount(){
     Axios({
       method: 'POST',
       url: apiurl+"/getDoctorClinics",
-      data: {"doctorId":"2",}
+      data: {"doctorId":"5",}
       
     })//if your using axios no need of conversion to json
     .then((response) =>{//2.getting json response in another promise function called .then function

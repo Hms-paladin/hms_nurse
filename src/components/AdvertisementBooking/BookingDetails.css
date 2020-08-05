@@ -195,11 +195,8 @@
     padding: 6px 16px !important;
     font-weight: 600 !important;
     font-family: "Roboto" !important;
-    text-transform: capitalize !important;
 }
-.errmsg_clr{
-    color: red;
-}
+
 .half_full_container {
     height: 95px;
     align-items: center;

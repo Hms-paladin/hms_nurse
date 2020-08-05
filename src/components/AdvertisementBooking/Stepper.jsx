@@ -99,7 +99,7 @@ const useStyles = makeStyles(theme => ({
 
 function getSteps() {
 
-  return ['Uploaded', 'Approved', 'Ad posted'];
+  return ['Booked', 'Approved', 'Ad posted'];
 }
 
 export default function CustomizedSteppers(props) {

@@ -257,7 +257,7 @@ export default class AdBooking extends React.Component {
     handleChangeSize = () => {
         Axios({
             method: 'GET',
-            url: apiurl + "get_mas_size_master"
+            url: apiurl + "/get_mas_size_master"
         })
             .then((response) => {//1..getting json response in another promise function called .then function
                 var data = response.data
@@ -277,7 +277,7 @@ export default class AdBooking extends React.Component {
     handlePlacement = () => {
         Axios({
             method: 'GET',
-            url: apiurl + 'get_mas_placement_location'
+            url: apiurl + '/get_mas_placement_location'
 
         })//if your using axios no need of conversion to json
             .then((response) => {//2.getting json response in another promise function called .then function
@@ -380,7 +380,7 @@ export default class AdBooking extends React.Component {
 
         Axios({
             method: "POST",
-            url: apiurl + 'get_ad_rate_vendor',
+            url: apiurl + '/get_ad_rate_vendor',
             data: ratedata
         }).then((response) => {
             this.setState({ adfeeperday: response.data.data[0].rate })
@@ -424,7 +424,7 @@ export default class AdBooking extends React.Component {
         formdata.set('adtotalcost', this.state.adtotalcost)
 
         !this.state.imageChanged && formdata.append('imageArray', [])
-        !this.state.edit && formdata.set('advendorId', 2)
+        !this.state.edit && formdata.set('advendorId', 5)
         !this.state.edit && formdata.set('createdby', 1)
 
         formdata.set('ipaddress', "126.183.0.1")
@@ -456,7 +456,7 @@ export default class AdBooking extends React.Component {
         console.log("sdfhsljdhfsjdhf", details)
         Axios({
             method: 'POST',
-            url: apiurl + 'insertAdBooking',
+            url: apiurl + '/insertAdBooking',
             data: details
         }).then((response) => {
 
@@ -504,7 +504,7 @@ export default class AdBooking extends React.Component {
             this.state.imageName = "";
             this.state.adsize = "";
         }).catch((error) => {
-            // alert(JSON.stringify(error))
+            alert(JSON.stringify(error))
         })
     }
 
@@ -513,10 +513,10 @@ export default class AdBooking extends React.Component {
     getAdBooking = () => {
         Axios({
             method: 'POST',
-            url: apiurl + 'getAdBooking',
+            url: apiurl + '/getAdBooking',
             data: {
                 "doctorid": "5",
-                "limit": "100",
+                "limit": "10",
                 "pageno": "1"
             }
         }).then((response) => {
@@ -525,7 +525,7 @@ export default class AdBooking extends React.Component {
                 ad_details: response.data.data[0].details
             }, () => console.log("sfdshfjsdhfjsdhfsdf", this.state.ad_details))
         }).catch((error) => {
-            // alert(JSON.stringify(error))
+            alert(JSON.stringify(error))
         })
     }
 
@@ -746,7 +746,7 @@ export default class AdBooking extends React.Component {
 
                                         <div className="validation__error--size">{this.state.sizeError && this.state.sizeError}</div>
 
-                                        <div className="advertise_cost" style={{ marginTop: "4rem" }}>
+                                        <div className="advertise_cost" style={{ marginTop: "2rem" }}>
                                             {/* <div style={{marginTop:"2rem"}}> */}
                                             <label className="fees_cost" >Fee / Day (KWD)</label>
                                             <input type="number" className="html__input" value={this.state.adfeeperday}></input>
@@ -761,7 +761,7 @@ export default class AdBooking extends React.Component {
                                                 value={this.state.endDate} 
                                                 changeData={(data) => this.datepickerChange(data,'enddate')}/>
                                         </div>
-                                        <div className="validation__error--minus errmsg_clr">{this.state.dateError && "enddate should be greater than startdate"}</div>
+                                        <div className="validation__error--minus">{this.state.dateError && "enddate should be greater than startdate"}</div>
                                         <div className="validation__error">{this.state.enddateError && this.state.enddateError}</div>
 
 

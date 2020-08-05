@@ -21,7 +21,6 @@ export default class Login extends Component {
   toggleshow=()=>
   {
     this.setState({hidden:!this.state.hidden})
-    console.log("i am clicked",this.state.hidden)
   }
   onchange=(e)=>
   {

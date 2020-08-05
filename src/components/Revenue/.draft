@@ -1,0 +1,182 @@
+import React, { Component } from "react";
+import "./RevenueMaster.css";
+import { Select } from "antd";
+import "antd/dist/antd.css";
+import Moment from "react-moment";
+import Revenuedetails from "./Revenuedetails";
+import { Input } from "antd";
+import Button from "@material-ui/core/Button";
+import Plus from "../../Images/plus.png";
+import ButtonGroup from "@material-ui/core/ButtonGroup";
+import dateFormat from "dateformat";
+import Labelbox from "../../helpers/labelbox/labelbox";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+const current_date = dateFormat(new Date(), "dd mmm yyyy");
+class RevenueMaster extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      date: "rrr"
+    };
+  }
+
+  render() {
+    const { Option } = Select;
+    const { Search } = Input;
+    console.log(dateFormat(new Date(), "dd mmm yyyy"));
+    return (
+      <div className="nurse_revenue">
+        <div className="uploadsmasterheader">
+          <div className="titlerevenue">REVENUE</div>
+          <div>
+            <Labelbox
+              type="select"
+              value="All"
+              style={{ width: "150px" }}
+              labelname="Duty Hours"
+            />
+          </div>
+          <div className="header_box">
+            <div className="btn-group btn-group-toogle idlenurse_hired_button">
+              <button
+                type="button"
+                className="btn btn-primary idlenurse_hired_day btn-lg"
+              >
+                This Day
+              </button>
+              <button
+                type="button"
+                className="btn btn-info idlenurse_hired_month btn-lg"
+              >
+                This Month
+              </button>
+              <button
+                type="button"
+                className="btn btn-info idlenurse_hired_year btn-lg "
+              >
+                This Year
+              </button>
+            </div>
+
+            <div className="currentdate">
+              <FaChevronLeft className="current_left" />
+              {current_date}
+              <FaChevronRight className="current_right" />
+            </div>
+            <Search
+              placeholder=" search "
+              onSearch={value => console.log(value)}
+              style={{ width: 150 }}
+            />
+          </div>
+        </div>
+        <Revenuedetails />
+      </div>
+    );
+  }
+}
+
+export default RevenueMaster;
+
+
+
+.uploadsmasterheader {
+  height: auto;
+  width: 100%;
+  font-family: "Roboto";
+}
+.nurse_revenue .titlerevenue {
+  font-size: 18px;
+  margin-left: 10px;
+  color: #86b149;
+}
+.nurse_revenue .MuiButton-outlinedSizeSmall {
+  padding: 5px 9px !important;
+}
+
+.nurse_revenue .formdiv .labeltxt {
+  padding-bottom: 0px !important;
+}
+.uploadsmasterheader .labeltxt {
+  color: rgba(0, 0, 0, 0.65) !important;
+  margin-right: 10px !important;
+  margin-bottom: 0px !important;
+  position: relative;
+  top: 4px;
+  font-size: 1.5rem !important;
+}
+.patient_head {
+  width: 22%;
+  position: relative;
+  font-size: 1.5rem;
+  color: #333;
+}
+.nurse_patienttype .formdiv {
+  width: 35%;
+}
+.nurse_patienttype {
+  display: flex;
+  align-items: center;
+}
+.nurse_revenue .formdiv .selectbox .ant-select-selection--single {
+  padding: 0px !important;
+}
+.nurse_revenue .nurse_revenueplus-container {
+  display: flex;
+  align-items: center;
+  width: 50%;
+  justify-content: space-between;
+}
+.plus-icon {
+  cursor: pointer;
+}
+.uploadsmasterheader {
+  /* width: 100%; */
+  background-color: #eee;
+  padding: 10px;
+  box-shadow: 11px 23px 16px -24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.Dialogmodal h6 {
+  font-family: "Roboto" !important;
+}
+.formdiv {
+  font-family: "Roboto";
+}
+
+.currentdate {
+  font-size: 1.25rem;
+}
+.nurse_revenue .formdiv {
+  display: flex !important;
+}
+.nurse_revenue .MuiButtonGroup-root {
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.04), 0 4px 8px 0 rgba(0, 0, 0, 0.2) !important;
+}
+.current_left {
+  margin-right: 5px;
+}
+.current_right {
+  margin-left: 5px;
+}
+.idlenurse_hired_day {
+  background-color: #0b51c5 !important;
+}
+
+.idlenurse_hired_month {
+  background-color: #468df0 !important;
+}
+
+.idlenurse_hired_year {
+  background-color: #468df0 !important;
+}
+
+.idlenurse_hired_button .btn-lg {
+  font-size: 1.5rem !important;
+}
+.header_box {
+  display: flex;
+}

@@ -12,6 +12,7 @@ import Axios from "axios";
 import { apiurl } from "../../App";
 import {RightOutlined} from '@ant-design/icons';
 import {LeftOutlined} from '@ant-design/icons';
+import dateformat from 'dateformat';
 
 export default class Uploadform extends Component {
   state = {
@@ -102,12 +103,14 @@ export default class Uploadform extends Component {
               <div className="modal-date">
                 <div>
                   <p>Start Date</p>
-                 <p>{cust_history.startDate}</p>
+                 {/* <p>{cust_history.startDate}</p> */}
+                 <p>{dateformat(cust_history && cust_history.startDate,"dd mmm yyyy")}</p>
                 </div>
 
                 <div>
                   <p>End Date</p>
-                  <p>{cust_history.endDate}</p>
+                  {/* <p>{cust_history.endDate}</p> */}
+                  <p>{dateformat(cust_history && cust_history.endDate,"dd mmm yyyy")}</p>
                 </div>
               </div>
               <Divider />

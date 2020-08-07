@@ -131,3 +131,6 @@ padding-left: 0px;
 .formdiv .MuiInputBase-inputAdornedEnd{
     color: #797777;
 }
+.MuiFormHelperText-root.Mui-error{
+    display: none !important;
+}

@@ -195,6 +195,7 @@
     padding: 6px 16px !important;
     font-weight: 600 !important;
     font-family: "Roboto" !important;
+    text-transform: capitalize !important;
 }
 
 .half_full_container {
@@ -233,6 +234,9 @@
 .advertise_upload{
     margin-top: 15px;
 }
+.enddate_clr_edit{
+    color: red;
+}
 
 .advertise_upload label{
     font-weight: 100;
@@ -263,7 +267,7 @@
 
 .textclr {
     color: #83AF40;
-    font-family: "Roboto-Medium" !important;
+    font-family: "Roboto" !important;
 }
 
 .calendar_container {

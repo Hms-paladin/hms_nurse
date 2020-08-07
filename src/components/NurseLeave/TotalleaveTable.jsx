@@ -21,6 +21,7 @@ import ReactExport from 'react-data-export';
 import DateRangeSelect from "../../helpers/DateRange/DateRange";
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
+var moment = require('moment');
 
 var dateFormat = require('dateformat');
 var now = new Date();
@@ -118,8 +119,8 @@ getmethod(rangeday){
     response.data.data[0] && response.data.data[0].details.map((val)=>{
       console.log(val,"val_leave")
       leaveData.push({nursename:val.Nursename,gender:val.gender,experience:val.experience,
-        Nationality:val.nationality_id,fromdate:dateFormat(val.from_date, "dd-mmm-yyyy"),
-        todate:dateFormat(val.to_date, "dd-mmm-yyyy"),noofdays:val.Noofdays,id:val.id
+        Nationality:val.nationality_id,
+        fromdate:moment(val.from_date).format("DD MMM YYYY"),todate:moment(val.to_date).format("DD MMM YYYY"),noofdays:val.Noofdays,id:val.id
       })
     
     })
@@ -165,8 +166,8 @@ dayReport=(data)=>{
     response.data.data[0] && response.data.data[0].details.map((val,index) =>{
       console.log(val,"text_valdata")
       leaveData.push({nursename:val.Nursename,gender:val.gender,experience:val.experience,
-        Nationality:val.nationality_id,fromdate:dateFormat(val.from_date, "dd-mmm-yyyy"),
-        todate:dateFormat(val.to_date, "dd-mmm-yyyy"),noofdays:val.Noofdays,id:val.id
+        Nationality:val.nationality_id,fromdate:moment(val.from_date).format("DD MMM YYYY"),
+        todate:moment(val.to_date).format("DD MMM YYYY"),noofdays:val.Noofdays,id:val.id
           })
            tableDatafull.push(val)
       })

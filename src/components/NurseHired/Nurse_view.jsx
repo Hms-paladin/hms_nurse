@@ -168,7 +168,7 @@ export default class Nurse_view extends Component {
               <label className="nurse_view_colon">:</label>
               <label className="nurse_view_values">
                 {/* 400 KWD */}
-                {val.CostofMonth && val.CostofMonth[0].CostofMonth}
+                {val.CostofMonth && val.CostofMonth[0].CostofMonth} KWD
               </label>{" "}
             </div>
              {/* )})} */}
@@ -179,7 +179,7 @@ export default class Nurse_view extends Component {
               <label className="nurse_view_colon">:</label>
               <label className="nurse_view_values">
                 {/* 400 KWD */}
-                {val&&val.amount}
+                {val&&val.amount} KWD
               </label>{" "}
             </div>
           </Grid>

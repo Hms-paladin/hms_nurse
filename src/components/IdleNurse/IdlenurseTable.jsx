@@ -25,6 +25,7 @@ import DateRangeSelect from "../../helpers/DateRange/DateRange";
 import dateformat from 'dateformat';
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
+var moment = require('moment');
 
 
 var dateFormat = require('dateformat');
@@ -100,7 +101,8 @@ this.setState({})
       response.data.data[0] && response.data.data[0].details.map((val,index) =>{
         // console.log()
         tabledatas.push({nursename:val.Nursename,gender:val.gender,age:val.age,experience:val.experience,Nationality:val.nationality_id,
-          idlesince:dateFormat(val.IdleSince, "dd-mmm-yyyy"),noofdays:val.Noofdays,id:val.id})
+          idlesince:moment(val.IdleSince).format('DD MMM YYYY'),
+          noofdays:val.Noofdays,id:val.id})
       })
       this.setState({
         tabledatas:tabledatas,
@@ -145,7 +147,7 @@ this.setState({})
       response.data.data[0] && response.data.data[0].details.map((val,index) =>{
         console.log(val,"text_valdata")
         tabledatas.push({nursename:val.Nursename,gender:val.gender,age:val.age,experience:val.experience,Nationality:val.nationality_id,
-                 idlesince:dateFormat(val.IdleSince, "dd-mmm-yyyy"),noofdays:val.Noofdays,id:val.id
+                 idlesince:moment(val.IdleSince).format("DD MMM YYYY"),noofdays:val.Noofdays,id:val.id
             })
              tableDatafull.push(val)
         })
@@ -312,7 +314,6 @@ this.setState({})
           VisibilityIcon="close"
           HistoryIcon="close"
           LocationOnIcon="close"
-          
         />
         <Modalcomp
           visible={this.state.openview}

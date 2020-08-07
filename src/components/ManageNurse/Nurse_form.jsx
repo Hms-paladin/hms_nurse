@@ -177,6 +177,8 @@ export default class Nurse_form extends Component {
       this.setState({
         nationality: response.data.data
       })
+      
+      console.log(this.state.nationality,"nationality_chk")
     })
   }
   changeDynamic = (data, key) => {
@@ -406,7 +408,7 @@ export default class Nurse_form extends Component {
               <div className="duty_hour_container">
                 <h6 className="duty_header">Duty Hours(8 Hours)</h6>
 
-                <div style={{ width: "50%" }}>
+                <div style={{ width:"50%"}}>
                   <Labelbox
                     type="number"
                     labelname="Cost (Per Month)"

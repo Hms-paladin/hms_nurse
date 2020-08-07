@@ -195,6 +195,7 @@ export default class AdBooking extends React.Component {
                 description:
                   'Advertisement expired',
                   placement:"topRight",
+                  
               });
         }else if(new Date (data.ad_start_date) < new Date() && new Date (data.ad_end_date) > new Date() ){
             notification.info({
@@ -746,7 +747,7 @@ export default class AdBooking extends React.Component {
 
                                         <div className="validation__error--size">{this.state.sizeError && this.state.sizeError}</div>
 
-                                        <div className="advertise_cost" style={{ marginTop: "2rem" }}>
+                                        <div className="advertise_cost" style={{ marginTop: "4.2rem" }}>
                                             {/* <div style={{marginTop:"2rem"}}> */}
                                             <label className="fees_cost" >Fee / Day (KWD)</label>
                                             <input type="number" className="html__input" value={this.state.adfeeperday}></input>
@@ -761,7 +762,7 @@ export default class AdBooking extends React.Component {
                                                 value={this.state.endDate} 
                                                 changeData={(data) => this.datepickerChange(data,'enddate')}/>
                                         </div>
-                                        <div className="validation__error--minus">{this.state.dateError && "enddate should be greater than startdate"}</div>
+                                        <div className="validation__error--minus enddate_clr_edit">{this.state.dateError && "Enddate should be greater than startdate"}</div>
                                         <div className="validation__error">{this.state.enddateError && this.state.enddateError}</div>
 
 

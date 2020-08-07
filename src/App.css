@@ -24,3 +24,6 @@ body {
   border-color: none !important;
   color: none !important;
 }
+.anticon-download{
+  display: none;
+}

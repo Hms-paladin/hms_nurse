@@ -23,8 +23,8 @@ const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
 var dateFormat = require('dateformat');
 var now = new Date();
-var moment = require('moment');
 var current_day = dateFormat(now, "yyyy-mm-dd")
+var moment = require('moment');
 class NurseServiceCancellationTable extends React.Component {
   state = {
     openview: false,
@@ -110,8 +110,10 @@ class NurseServiceCancellationTable extends React.Component {
       response.data.data[0] && response.data.data[0].details.map((val) =>{
         console.log(val,"text_valdata")
         tabledata.push({customer:val.PatientName,nursename:val.Nursename,noofmonths:val.Noofmonth,
-                        cancellleddate:dateFormat(val.CancelDate, "dd-mmm-yyyy"),time:formatTimeShow(
-                          val.CancelTime),id:val.id})
+                        cancellleddate:moment(val.CancelDate).format("DD MMM YYYY"),
+                        time:formatTimeShow(val.CancelTime),
+                        // fromdate:moment(val.from_date).format("DD MMM YYYY"),
+                        id:val.id})
         })
         this.setState({
           tabledata:tabledata,
@@ -154,7 +156,9 @@ class NurseServiceCancellationTable extends React.Component {
     response.data.data[0] && response.data.data[0].details.map((val,index) =>{
       console.log(val,"text_valdata")
       tabledata.push({customer:val.PatientName,nursename:val.Nursename,noofmonths:val.Noofmonth,
-        cancellleddate:dateFormat(val.CancelDate,"dd-mmm-yyyy"),time:formatTimeShow(
+        cancellleddate:moment(val.CancelDate).format("DD MMM YYYY"),
+        // fromdate:moment(val.from_date).format("DD MMM YYYY"),
+        time:formatTimeShow(
           val.CancelTime),id:index
           })
            tableDatafull.push(val)
@@ -203,7 +207,8 @@ dayReport=(data)=>{
     response.data.data[0] && response.data.data[0].details.map((val,index) =>{
       console.log(val,"text_valdata")
       tabledata.push({customer:val.PatientName,nursename:val.Nursename,noofmonths:val.Noofmonth,
-        cancellleddate:dateFormat(val.CancelDate,"dd-mmm-yyyy"),time:formatTimeShow(
+        cancellleddate:moment(val.CancelDate).format("DD MMM YYYY"),
+        time:formatTimeShow(
           val.CancelTime),id:index
           })
            tableDatafull.push(val)

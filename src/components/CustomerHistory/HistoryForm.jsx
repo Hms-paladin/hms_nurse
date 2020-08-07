@@ -10,6 +10,7 @@ import { apiurl } from "../../App";
 import { BsThreeDots } from 'react-icons/bs';
 import {RightOutlined} from '@ant-design/icons';
 import {LeftOutlined} from '@ant-design/icons';
+import dateformat from 'dateformat';
 export default class Uploadform extends Component {
     state = {
       viewData:[],
@@ -92,11 +93,13 @@ export default class Uploadform extends Component {
                         <div className="modal-date">
                             <div>
                             <p>Start Date</p>
-                            <p>{val.from_date}</p>
+                            {/* <p>{val.from_date}</p> */}
+                            <p>{dateformat(val && val.from_date,"dd mmm yyyy")}</p>
                         </div>
                         <div>
                             <p>End Date</p>
-                            <p>{val.to_date}</p>
+                            {/* <p>{val.to_date}</p> */}
+                            <p>{dateformat(val && val.to_date,"dd mmm yyyy")}</p>
                         </div>
                         </div>
                         <Divider/>

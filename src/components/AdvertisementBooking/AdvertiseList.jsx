@@ -21,8 +21,6 @@ import ReactPagination from "../Pagination/Pagination";
 import NotfoundIcon from "../../Images/NotFound.svg";
 import { Spin } from "antd"
 
-
-
 const data = [
     { month: 'Jan.', count: 69, city: 'tokyo' }
 ];
@@ -30,8 +28,6 @@ const scale = {
     month: { alias: 'Month', },
     count: { alias: 'Sales', },
 };
-
-
 
 export default class AdvertiseList extends React.Component{
     constructor(props) {
@@ -240,7 +236,6 @@ getAdDetails = (data) => {
          
 
                 <div>
-                 
                         <Modalcomp xswidth={"xs"} clrchange="textclr" 
                         title="Delete Advertisement" visible={this.state.open} closemodal = {this.handleClose}>
 
@@ -253,8 +248,6 @@ getAdDetails = (data) => {
                 </div>
                 </>
     }
-
-
                 </Spin>
 
 

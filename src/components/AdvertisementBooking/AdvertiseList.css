@@ -159,6 +159,7 @@ font-size: 1.25rem;
 .list_subhead{
     color:#989898 !important;
     font-size: 13.6px;
+    margin-top: 10px;
 }
 .Ad_location_container{
     border: 2px dashed #D1D1D1;

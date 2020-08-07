@@ -49,10 +49,8 @@ class Nurse_dash_page extends Component {
           TableData.push({customername:val.PatientName,nursename:val.Nursename,dutyhours:val.working_hours,
                          months:val.Noofmonth,
                          costofmonth:val.CostofMonth && val.CostofMonth[0].CostofMonth,
-                        // costofmonth:"",val.CostofMonth[0].
-                         totalcost:val.amount,
-                        //  id:val.NurseId,             //divya i/p
-                         id:index       //suriya i/p
+                         totalcost:val.amount,      
+                         id:index       
                         })
       })
       self.setState({
@@ -63,9 +61,7 @@ class Nurse_dash_page extends Component {
         managenurse:ApiData.managenurse,
         revenue:ApiData.nursetotalrevenue,
         TableData,
-        // CostofMonth:response.data.data[0].CostofMonth[0].CostofMonth,
         ViewData:response.data.data[0].todaysappointment,
-        // CostofMonth:response.data.data[0].CostofMonth,
         props_loading:false
       })
       console.log("response_data",this.state.ViewData)

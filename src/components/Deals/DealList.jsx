@@ -78,7 +78,7 @@ export default class DealList extends React.Component {
               <Paper className="dyndeallistPaper">
                 <div className="aligndeallistdata">
                   <div>
-                    <span>Test Name</span>
+                    <span>Service Type</span>
                     <div>{listdata.deal_service_type == "" ? "All" : listdata.deal_service_type}</div>
                     
                     

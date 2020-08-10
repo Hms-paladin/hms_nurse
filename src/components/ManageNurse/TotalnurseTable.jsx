@@ -86,7 +86,7 @@ class DashboardTable extends React.Component {
   HistoryTableData =() =>{
     axios({
       method: 'post',
-      url: apiurl + 'getNursePatientHistory/?results=2',
+      url: apiurl + 'getNursePatientHistory',
       data: {
         nurseId:3,
       }

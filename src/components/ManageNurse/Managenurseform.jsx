@@ -86,7 +86,7 @@ export default class Uploadform extends Component {
         </div>
         : */}
         <div>
-            {this.props.history_data_store[0].patientHistory.map((cust_history)=>{
+            {this.props.history_data_store[0] && this.props.history_data_store[0].patientHistory.map((cust_history)=>{
             console.log(this.props.history_data_store[0].patientHistory,"cust_history_chk")
             return(
         //       <>

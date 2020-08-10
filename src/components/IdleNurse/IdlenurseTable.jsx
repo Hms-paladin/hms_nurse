@@ -100,7 +100,7 @@ this.setState({})
       var tabledatas=[];
       response.data.data[0] && response.data.data[0].details.map((val,index) =>{
         // console.log()
-        tabledatas.push({nursename:val.Nursename,gender:val.gender,age:val.age,experience:val.experience,Nationality:val.nationality_id,
+        tabledatas.push({nursename:val.Nursename,gender:val.gender,age:val.age,experience:val.experience,Nationality:val.nationalityName,
           idlesince:moment(val.IdleSince).format('DD MMM YYYY'),
           noofdays:val.Noofdays,id:val.id})
       })
@@ -146,7 +146,7 @@ this.setState({})
       var tableDatafull = [];
       response.data.data[0] && response.data.data[0].details.map((val,index) =>{
         console.log(val,"text_valdata")
-        tabledatas.push({nursename:val.Nursename,gender:val.gender,age:val.age,experience:val.experience,Nationality:val.nationality_id,
+        tabledatas.push({nursename:val.Nursename,gender:val.gender,age:val.age,experience:val.experience,Nationality:val.nationalityName,
                  idlesince:moment(val.IdleSince).format("DD MMM YYYY"),noofdays:val.Noofdays,id:val.id
             })
              tableDatafull.push(val)
@@ -208,7 +208,7 @@ this.setState({})
         || (data.gender!= null && data.gender.toLowerCase().includes(this.state.search.toLowerCase()))
         || (data.age!= null && data.age.toString().includes(this.state.search.toString()))
         || (data.experience!= null && data.experience.toString().includes(this.state.search.toString()))
-        || (data.Nationality!= null && data.Nationality.toString().includes(this.state.search.toString()))
+        || (data.Nationality!= null && data.Nationality.toLowerCase().includes(this.state.search.toString()))
         || (data.idlesince!= null && data.idlesince.toLowerCase().includes(this.state.search.toLowerCase()))
         || (data.noofdays!= null && data.noofdays.toString().includes(this.state.search.toString()))
         ) {

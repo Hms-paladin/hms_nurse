@@ -39,7 +39,8 @@
 }
 .manage_nurse_image {
   width: 100%;
-  height: 100%;
+  /* height: 100%; */
+  height: 97%;
 }
 .manage_nurse_image_div {
   width: 100%;

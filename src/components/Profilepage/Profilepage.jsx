@@ -214,7 +214,7 @@ class ProfileComp extends Component {
         beforeUpload={beforeUpload}
         onChange={this.handleChange}
       >
-        {/* <div className="pic_align"><AddAPhotoIcon className="add_icon"/></div> */}
+         <div className="pic_align"><AddAPhotoIcon className="add_icon"/></div> 
           {imageUrl &&
          <img src={imageUrl} className="upload-img-circle" alt="avatar" />
           }

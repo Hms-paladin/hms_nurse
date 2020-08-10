@@ -165,7 +165,7 @@ class DashboardTable extends React.Component {
           title={"Nurse History"}
           closemodal={e => this.closemodal(e)}
           clrchange="textclr"
-        // xswidth={"xs"}
+       
         >
           <Managenurseform  history_data_store={this.state.history_data_store} closemodal={this.closemodal}/>
         </Modalcomp>
@@ -175,7 +175,9 @@ class DashboardTable extends React.Component {
           editData={this.state.editData}
           title={"Edit Nurse Details"}
           clrchange="textclr"
-          closemodal={(e) => this.closemodal(e)} >
+          closemodal={(e) => this.closemodal(e)}
+          xswidth={"lg"}
+           >
           <Nurse_form getTableData={() => this.props.getTableData()}
             closemodal={this.closemodal}
             editData={this.state.editData}

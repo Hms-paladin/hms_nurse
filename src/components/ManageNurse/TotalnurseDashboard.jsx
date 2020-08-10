@@ -122,7 +122,7 @@ class TotalnurseDashboard extends Component {
               placeholder="search"
               onSearch={value => console.log(value)}
               style={{ width: 150 }}
-              onChange={(e) => this.searchChange(e)}
+              onChange={(e)=>this.setState({search:e.target.value})}
             />
             <img src={Plus} onClick={this.openmodal} />
           </div>
@@ -138,6 +138,7 @@ class TotalnurseDashboard extends Component {
           closemodal={this.onclosemodal}
           title="Add Nurse"
           clrchange="textclr"
+          xswidth={"lg"}
         >
           <Nurse_form visible={this.state.open} closemodal={this.onclosemodal} getTableData={() => this.getTableData()} />
         </Modalcomp>

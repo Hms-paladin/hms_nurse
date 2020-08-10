@@ -8,6 +8,7 @@ import "./Managenursemodal.css";
 import { MdLocationOn, MdLocalPhone } from "react-icons/md";
 import {MdEmail } from "react-icons/md";
 import CloseIcon from '@material-ui/icons/Close';
+
 const styles = {};
 
 export default class Profilepage extends React.Component {
@@ -24,7 +25,7 @@ export default class Profilepage extends React.Component {
   }
 
   render() {
-    console.log(this.props.viewData, "sdfasdfasfdas")
+    console.log(this.props.viewData, "data_chk")
 
     const styles = "";
     const { viewData, classes, onClose, cancel, selectedValue, ...other } = this.props;
@@ -35,6 +36,7 @@ export default class Profilepage extends React.Component {
         aria-labelledby="simple-dialog-title"
         {...other}
       >
+        
         <div className="manage_nurse_popup_details">
 
           <div className="manage_nurse_close_icon">
@@ -94,22 +96,19 @@ export default class Profilepage extends React.Component {
                     <div className="nurse_working_detail">
                       <h4 className="nurse_working_hour_detail">Gender</h4>
 
-                      {/* <p className="working_time_detail">{viewData.gender}</p> */}
-              <p className="working_time_detail">{this.props.viewData.gender == "1" ?"Male" : "Female"}</p>
+                      <p className="working_time_detail">{this.props.viewData.gender == 1 ? "Male" : "Female"}</p>
                     </div>
                     <div>
                       <div className="nurse_working_detail">
                         <h4 className="nurse_working_hour_detail">Date Of Birth</h4>
                         <p className="working_time_detail">{viewData.dob}</p>
                       </div>
-                  
                     </div>
                     <div>
                       <div className="nurse_working_detail">
                         <h4 className="nurse_working_hour_detail">Nationality</h4>
 
-                        {/* <p className="working_time_detail">{viewData.nationality_id}</p> */}
-                        <p className="working_time_detail">{this.props.viewData.nationality_id == "1" ? "SaudiArabian" : "American"}</p>
+                        <p className="working_time_detail">{this.props.viewData.nationality_id == 1 ? "SaudiArabian" : "American"}</p>
                       </div>
                     </div>
                     <div>
@@ -179,6 +178,7 @@ export default class Profilepage extends React.Component {
             </Grid>
           }
         </div>
+         
       </Dialog>
 
     );

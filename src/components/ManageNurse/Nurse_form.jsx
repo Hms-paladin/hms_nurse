@@ -54,37 +54,37 @@ export default class Nurse_form extends Component {
     manageNurse: {
       'name': {
         'value': '',
-        validation: [{ 'name': 'required', 'name': 'alphabetsOnly' }],
+        validation: [{ 'name': 'required'},{'name': 'alphabetsOnly' },{"name":"custommaxLength","params":"20"}],
         error: null,
         errmsg: null
       },
       'dob': {
-        'value': '',
-        validation: [{ 'name': '' }],
+        'value': [{ 'name': 'futureDate'}],
+        validation:'',
         error: null,
         errmsg: null
       },
       'experience': {
         'value': '',
-        validation: [{ 'name': '', }],
+        validation: [{ 'name': 'required'},{"name":'alphaNumaricOnly'},{"name":"custommaxLength","params":"2"}],
         error: null,
         errmsg: null
       },
       'gender': {
         'value': '',
-        validation: [{ 'name': '' }],
+        validation: [{ 'name': 'required' }],
         error: null,
         errmsg: null
       },
       'nationality': {
         'value': '',
-        validation: [{ 'name': '' }],
+        validation: [{ 'name': 'required' }],
         error: null,
         errmsg: null
       },
       'mobile_number': {
         'value': '',
-        validation: [{ 'name': '', }],
+        validation: [{ 'name': 'mobile', },{"name":'alphaNumaricOnly'}],
         error: null,
         errmsg: null
       },
@@ -96,25 +96,25 @@ export default class Nurse_form extends Component {
       },
       'cost_per_month_8hrs': {
         'value': '',
-        validation: [{ 'name': '' }],
+        validation: [{'name':"custommaxLength","params":"20" ,'name': 'required'}],
         error: null,
         errmsg: null
       },
       'cost_per_month_12hrs': {
         'value': '',
-        validation: [{ 'name': '' }],
+        validation: [{'name':"custommaxLength","params":"20", 'name': 'required'}],
         error: null,
         errmsg: null
       },
       'a_ddress':{
         'value': '',
-        validation: [{ 'name': '' }],
+        validation: [{ 'name': 'address' }],
         error: null,
         errmsg: null
       },
       'E_mail':{
         'value': '',
-        validation: [{ 'name': '' }],
+        validation: [{ 'name': 'email' }],
         error: null,
         errmsg: null
       },
@@ -177,8 +177,6 @@ export default class Nurse_form extends Component {
       this.setState({
         nationality: response.data.data
       })
-      
-      console.log(this.state.nationality,"nationality_chk")
     })
   }
   changeDynamic = (data, key) => {
@@ -224,7 +222,8 @@ export default class Nurse_form extends Component {
       for (var i in this.state.imageData) {
         formData.append('imageArray', this.state.imageData[i].originFileObj)
       }
-    } else {
+    }
+     else {
       formData.append('imageArray', '')
     }
     console.log(formData, "formdata_chkk")
@@ -245,9 +244,10 @@ export default class Nurse_form extends Component {
     formData.set("is_active", this.state.nurseActive === true ? 1 : 0);
     formData.set("vendorId", 5);
     formData.set("createdby", 19);
-    if (this.props.editopenModal != true) {
+    if (this.props.editopenModal===false) {
       this.insertNurse(formData) // Add Api
     }
+    this.insertNurse(formData)
     if (this.props.editopenModal === true && this.state.imageChanged === true) {
       formData.set("id", this.props.editData.nurseId)
       this.updateNurseDetails(formData)  // Update Api with image Call
@@ -326,10 +326,13 @@ export default class Nurse_form extends Component {
     }
     if (info.file.status === "done") {
       // Get this url from response in real world.
+      this.setState({
+        imageData: info
+      }, () => console.log("sdfdsfsdhfjhsdfhsdfd", this.state.imageData))
       getBase64(info.file.originFileObj, imageUrl =>
         this.setState({
           imageUrl,
-          imageData: info,
+          // imageData: info,
           loading: false,
           imageChanged: true
         })
@@ -408,7 +411,7 @@ export default class Nurse_form extends Component {
               <div className="duty_hour_container">
                 <h6 className="duty_header">Duty Hours(8 Hours)</h6>
 
-                <div style={{ width:"50%"}}>
+                <div style={{ width: "50%" }}>
                   <Labelbox
                     type="number"
                     labelname="Cost (Per Month)"
@@ -450,6 +453,8 @@ export default class Nurse_form extends Component {
                   changeData={(data) => this.changeDynamic(data, 'dob')}
                   error={this.state.manageNurse.dob.error}
                   errmsg={this.state.manageNurse.dob.errmsg}
+                  disableFuture={false}
+                  disablePast={true}
                 />
               </div>
               <div style={{ width: "47%" }}>
@@ -495,6 +500,7 @@ export default class Nurse_form extends Component {
                   value={this.state.manageNurse.experience.value}
                   error={this.state.manageNurse.experience.error}
                   errmsg={this.state.manageNurse.experience.errmsg}
+              
                 />
               </div>
               <div style={{ width: "47%" }}>
@@ -523,7 +529,7 @@ export default class Nurse_form extends Component {
             </div>
             </div>
           </Grid>
-          <Grid items xs={4} md={3} className="items_container">
+          <Grid items xs={4} md={3} className="items_container mt-5">
             <div className="User-upload-container">
               <Upload
                 name="avatar"
@@ -534,16 +540,17 @@ export default class Nurse_form extends Component {
                 beforeUpload={beforeUpload}
                 onChange={this.handleChange}
               >
-                {imageUrl ? (
+                 {/* {this.state.imageChanged ===true? */}
                   <img
                     src={imageUrl}
                     className="upload-img-circle"
                     alt="avatar"
                     style={{ width: "100%" }}
                   />
-                ) : (
-                    uploadButton
-                  )}
+                  
+{/*                 
+                   : uploadButton
+                 } */}
               </Upload>
               <div className="chkbox_text_edit">
                 <div>

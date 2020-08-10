@@ -87,6 +87,9 @@ img.upload-img-circle {
   border: 1px solid #ccc !important;
   /* color:#333; */
 }
+.users-form .formdiv{
+  margin-bottom: 10px;
+}
 .buttons_container {
   padding: 10px;
   display: flex;
@@ -131,7 +134,7 @@ img.upload-img-circle {
   justify-content: space-between;
   /* margin-left: 20px; */
   width: 115%;
-  padding-top: 15px;
+  padding: 18px;
 }
 .duty_hoursdiv {
   display: flex;

@@ -12,7 +12,7 @@ import Axios from "axios";
 import { apiurl } from "../../App";
 import {RightOutlined} from '@ant-design/icons';
 import {LeftOutlined} from '@ant-design/icons';
-import dateformat from 'dateformat';
+import NotfoundIcon from "../../Images/NotFound.svg"
 
 export default class Uploadform extends Component {
   state = {
@@ -31,6 +31,12 @@ export default class Uploadform extends Component {
               console.log(val,"valchecking")
               return(
                 <>
+          {/* {val === undefined ?
+        <div>
+          <img src={NotfoundIcon}/><div>No Data Found</div>
+        </div>
+        :  */}
+        {/* <> */}
               <Grid item spacing={2} xs={6} md={3}>
               <img src={val.profileImage} className="card-profile" />
             </Grid>
@@ -58,6 +64,8 @@ export default class Uploadform extends Component {
                 </div>
               </div>
             </Grid>
+            {/* </> */}
+            {/* } */}
             </>
               )
             })}
@@ -68,12 +76,25 @@ export default class Uploadform extends Component {
         {/* <div className="left_arrow_edits"> 
                 <LeftOutlined  className="icon_click"/>
               </div> */}
+          
         <Grid container spacing={2} xs={12}>
             <Grid item spacing={2} xs={12} md={12}>
         <div className="paper-bck" style={{ bgcolor: "grey" }}>
-          {this.props.history_data_store[0].patientHistory.map((cust_history)=>{
-            console.log(cust_history,"cust_history_chk")
+              {/* {this.props.viewData === undefined ?
+        <div>
+          <img src={NotfoundIcon}/><div>No Data Found</div>
+        </div>
+        : */}
+        <div>
+            {this.props.history_data_store[0].patientHistory.map((cust_history)=>{
+            console.log(this.props.history_data_store[0].patientHistory,"cust_history_chk")
             return(
+        //       <>
+        //             {this.props.history_data_store[0].patientHistory === undefined ?
+        // <div>
+        //   <img src={NotfoundIcon}/><div>No Data Found</div>
+        // </div>
+        // : 
           <div className="Card-par col-sm-3">
             <Card>
               <div className="container">
@@ -103,14 +124,12 @@ export default class Uploadform extends Component {
               <div className="modal-date">
                 <div>
                   <p>Start Date</p>
-                 {/* <p>{cust_history.startDate}</p> */}
-                 <p>{dateformat(cust_history && cust_history.startDate,"dd mmm yyyy")}</p>
+                 <p>{cust_history.startDate}</p>
                 </div>
 
                 <div>
                   <p>End Date</p>
-                  {/* <p>{cust_history.endDate}</p> */}
-                  <p>{dateformat(cust_history && cust_history.endDate,"dd mmm yyyy")}</p>
+                  <p>{cust_history.endDate}</p>
                 </div>
               </div>
               <Divider />
@@ -120,8 +139,15 @@ export default class Uploadform extends Component {
               </p>
             </Card>
           </div>
+        // }
+        // </>
             )
+                   
           })}
+
+        </div>
+        
+          {/* } */}
           {/* <div className="right_arrow_edits"> 
                 <RightOutlined />
               </div> */}

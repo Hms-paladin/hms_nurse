@@ -36,6 +36,16 @@ class TotalleaveTable extends React.Component {
     props_loading:true,
     wk_Mn_Yr_Full_Data: [],
     spinner: false,
+    gender: [
+      {
+        id: 1,
+        value: 'Male'
+      },
+      {
+        id: 2,
+        value: 'Female'
+      }
+    ],
   };
 
 

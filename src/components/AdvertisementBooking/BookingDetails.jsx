@@ -135,11 +135,6 @@ export default class AdBooking extends React.Component {
                 this.setState({startdate:data.enddate,endDate:data.startdate},() => this.compareDate())
                 }
             }
-                    // this.setState({
-        //     startdate: dateformat(new Date(data[0].split(" ").reverse().join("/")), "yyyy-mm-dd"),
-        //     endDate: dateformat(new Date(data[1].split(" ").reverse().join("/")), "yyyy-mm-dd")
-        // })
-        // this.setState({})
         }
 
 

@@ -87,6 +87,22 @@ export default class Availability extends Component {
     })
   }
 
+  getRangeData = (data) => {
+          
+    console.log(data,"getRangeData")
+    if(data.enddate===null){
+      
+        this.setState({fromdate:data.startdate})
+    }else{
+        if(data.startdate<data.enddate){
+           
+        this.setState({fromdate:data.startdate,todate:data.enddate})
+        }else{
+        this.setState({fromdate:data.enddate,todate:data.startdate})
+        }
+    }
+}
+
 
 
   storeNurse = (data) => {
@@ -97,7 +113,7 @@ export default class Availability extends Component {
       <div>
         <Grid container>
           <Grid item sm={12} md={6}>
-            <Calender />
+            <Calender getDate={(data) => this.getRangeData(data)} />
           </Grid>
           <Grid item sm={12} md={6}>
             <div style={{padding:"20px"}} className ="opacity_letter_availability">

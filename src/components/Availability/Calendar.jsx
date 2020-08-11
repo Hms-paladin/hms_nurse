@@ -5,10 +5,15 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import dateFormat from 'dateformat';
 import originalMoment from "moment";
 import { extendMoment } from "moment-range";
+import dateformat from 'dateformat';
+import { apiurl } from "../../App";
+import Axios from "axios";
+import { Spin } from "antd"
 
 
 const moment = extendMoment(originalMoment);
-const Current_date=(dateFormat(new Date(),"ddd, dd mmm yyyy"))
+const Current_date = (dateFormat(new Date(), "ddd, dd mmm yyyy"))
+
 export default class Calendar extends React.Component {
   weekdayshort = moment.weekdaysShort();
 
@@ -19,21 +24,27 @@ export default class Calendar extends React.Component {
     dateObject: moment(),
     allmonths: moment.months(),
     selectedDay: null,
-    currentdate:moment().format("mmm"),
-    fulldate:"",
-    datearr:'',
-    rangearr:"",
+    currentdate: moment().format("mmm"),
+    fulldate: "",
+    rangeSelect: [],
+    rangeSelectFirst: [],
+    slotSubtract: 1,
+    slotAdd: 1,
+    TotalslotsAvailable: [],
+    spinLoad: true
   };
+
+
   daysInMonth = () => {
     return this.state.dateObject.daysInMonth();
   };
   year = () => {
-    console.log(this.state.dateObject.format("Y"),"year")
+    console.log(this.state.dateObject.format("Y"), "year")
 
     return this.state.dateObject.format("Y");
   };
   currentDay = () => {
-    console.log(this.state.dateObject.format("Y"),"currentday")
+    console.log(this.state.dateObject.format("Y"), "currentday")
     return this.state.dateObject.format("D");
   };
   firstDayOfMonth = () => {
@@ -113,17 +124,95 @@ export default class Calendar extends React.Component {
   };
 
   onPrev = () => {
+    this.setState({spinLoad: true})
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+    var monthmatch = []
+    var yearmatch = []
+
+    for(let i = 0;i<monthNames.length;i++){
+      if(this.month()===monthNames[i]){
+        if(this.month()==="Jan"){
+          yearmatch.push(Number(this.year())-1)
+          monthmatch.push("Dec")
+          break;
+        }else{
+        monthmatch.push(monthNames[i-1])
+        yearmatch.push(this.year())
+        break;
+        }
+      }
+    }
+    var monthmatchNum = []
+
+    for(let j=0;j<monthNames.length;j++){
+      if(monthNames[j]===monthmatch[0]){
+        monthmatchNum.push(j+1)
+      }
+    }
+
+    var totaldaycount = new Date(Number(yearmatch[0]), Number(monthmatchNum[0]), 0).getDate()
+    console.log(totaldaycount,"totaldaycount")
+
+    var fromdate = dateformat(yearmatch[0] +" " +monthmatch[0] +" " +1, "yyyy-mm-dd")
+    var todate = dateformat(yearmatch[0] +" " +monthmatch[0] +" " +totaldaycount, "yyyy-mm-dd")
+
+    console.log(fromdate,"monthmatch")
+    console.log(todate,"monthmatch")
+
+    this.getslots(fromdate,todate )
+
     let curr = "";
     if (this.state.showYearTable === true) {
       curr = "year";
     } else {
       curr = "month";
     }
+
     this.setState({
-      dateObject: this.state.dateObject.subtract(1, curr)
+      dateObject: this.state.dateObject.subtract(1, curr),
     });
   };
   onNext = () => {
+    this.setState({spinLoad:true})
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+    var monthmatch = []
+    var yearmatch = []
+
+    for(let i = 0;i<monthNames.length;i++){
+      if(this.month()===monthNames[i]){
+        if(this.month()==="Dec"){
+          yearmatch.push(Number(this.year())+1)
+          monthmatch.push("Jan")
+          break;
+        }else{
+        monthmatch.push(monthNames[i+1])
+        yearmatch.push(this.year())
+        break;
+        }
+      }
+    }
+
+    var monthmatchNum = []
+
+    for(let j=0;j<monthNames.length;j++){
+      if(monthNames[j]===monthmatch[0]){
+        monthmatchNum.push(j+1)
+      }
+    }
+
+    var totaldaycount = new Date(Number(yearmatch[0]), Number(monthmatchNum[0]), 0).getDate()
+    console.log(totaldaycount,"totaldaycount")
+
+    var fromdate = dateformat(yearmatch[0] +" " +monthmatch[0] +" " +1, "yyyy-mm-dd")
+    var todate = dateformat(yearmatch[0] +" " +monthmatch[0] +" " +totaldaycount, "yyyy-mm-dd")
+
+    console.log(fromdate,"monthmatch")
+    console.log(todate,"monthmatch")
+
+    this.getslots(fromdate,todate )
+
     let curr = "";
     if (this.state.showYearTable === true) {
       curr = "year";
@@ -131,11 +220,10 @@ export default class Calendar extends React.Component {
       curr = "month";
     }
     this.setState({
-      dateObject: this.state.dateObject.add(1, curr)
+      dateObject: this.state.dateObject.add(1, curr),
     });
   };
   setYear = year => {
-    // alert(year)
     let dateObject = Object.assign({}, this.state.dateObject);
     dateObject = moment(dateObject).set("year", year);
     this.setState({
@@ -207,141 +295,205 @@ export default class Calendar extends React.Component {
       </table>
     );
   };
+
   onDayClick = (e, d) => {
-    console.log(d,this.month(),this.year(),"insideclick")
-    var datearr=[]
-    var rangearr=[]
-    // for open availability buttons
+    console.log(d, this.month(), this.year(), "insideclick")
+    var datearr = []
+    var rangeSelect = []
+    var rangeSelectFirst = []
+    var startDatestore = []
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-    if(this.state.fulldate.length===2){
-      this.props.open_btn && this.props.open_btn(false)
+
+    if (this.state.fulldate.length === 0) {
+      startDatestore.push(new Date(this.month() + "-" + this.year() + "-" + d))
+      rangeSelect.push(`selectedclr${d}_${this.month()}_${this.year()}`)
+
+      // send date value to parent
+      this.props.getDate({startdate:new Date(this.month() + "-" + this.year() + "-" + d),enddate:null})
     }
-    else if(this.state.fulldate.length===1){
-      this.props.open_btn && this.props.open_btn(true)
+    else if (this.state.fulldate.length === 1) {
+
+      var initialstartDate = this.state.startDatestore[0]
+      var initialendDate = new Date(new Date(this.month() + "-" + this.year() + "-" + d))
+
+      // send date value to parent
+      this.props.getDate({startdate:initialstartDate,enddate:new Date(this.month() + "-" + this.year() + "-" + d)})
+      var startDate = []
+      var endDate = []
+
+      if (initialstartDate > initialendDate) {
+        startDate.push(new Date(new Date(this.month() + "-" + this.year() + "-" + d)))
+        endDate.push(this.state.startDatestore[0])
+      }
+      else if (initialstartDate < initialendDate) {
+        startDate.push(this.state.startDatestore[0])
+        endDate.push(new Date(new Date(this.month() + "-" + this.year() + "-" + d)))
+      }
+      else {
+        startDate.push(this.state.startDatestore[0])
+        endDate.push(this.state.startDatestore[0])
+      }
+
+
+      var
+        arr = new Array(),
+        dt = new Date(startDate[0] - 1);
+
+      while (dt <= endDate[0] - 1) {
+        arr.push(new Date(dt));
+        dt.setDate(dt.getDate() + 1);
+        rangeSelect.push(`selectedclr${dt.getDate()}_${monthNames[dt.getMonth()]}_${moment(new Date(dt)).format("YYYY")}`)
+
+      }
+    }
+    else if (this.state.fulldate.length === 2) {
+      startDatestore.push(new Date(this.month() + "-" + this.year() + "-" + d))
+      rangeSelect.push(`selectedclr${d}_${this.month()}_${this.year()}`)
+      
+      // send date value to parent
+      this.props.getDate({startdate:new Date(this.month() + "-" + this.year() + "-" + d),enddate:null})
     }
 
-    // 
 
+    if (this.state.fulldate.length <= 1) {
+      datearr.push(...this.state.fulldate, `selectedclr${d}_${this.month()}_${this.year()}`)
+    }
+    else {
+      datearr.push(`selectedclr${d}_${this.month()}_${this.year()}`)
+    }
 
-
-if(this.state.fulldate.length<=1){
-
-    datearr.push(...this.state.fulldate,`selectedclr${d}_${this.month()}_${this.year()}`)
-    rangearr.push(...this.state.rangearr,d+" "+this.state.dateObject.format("M")+" "+this.state.dateObject.format("Y"))
-    
-}
-else{
-  datearr.push(`selectedclr${d}_${this.month()}_${this.year()}`)
-  rangearr.push(d+" "+this.state.dateObject.format("M")+" "+this.state.dateObject.format("Y"))
-  
-}
-
-console.log(datearr,"datearr")
     this.setState(
       {
         selectedDay: d,
-        fulldate:datearr,
-        rangearr:rangearr,
+        fulldate: datearr,
+        selectedMonth: this.month(),
+        selectedYear: this.year(),
+        rangeSelect: rangeSelect,
+        rangeSelectFirst: rangeSelectFirst,
+        startDatestore: startDatestore,
       },
     );
   };
+
+  componentDidMount() {
+    this.getslots()
+  }
+
+  getslots = (fromDate, toDate) => {
+
+    var date = new Date();
+    var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+    var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+
+    // console.log(fromDate, "finaltest")
+    // console.log(toDate, "finaltest")
+
+    // var self = this
+
+    // Axios({
+    //   method: 'POST',
+    //   url: apiurl + '/labCalendarSlots',
+    //   data: {
+    //     "lab_id": "2",
+    //     "from_date": fromDate ? fromDate : dateformat(firstDay, "yyyy-mm-dd"),
+    //     "to_date": toDate ? toDate : dateformat(lastDay, "yyyy-mm-dd")
+    //   }
+    // }).then((response) => {
+    //   console.log(response.data, "resdate")
+    //   self.setState({ TotalslotsAvailable: response.data.data, spinLoad: false })
+    // })
+  }
+
   render() {
-    console.log(this.state.selectedDay,this.state.dateObject.format("MMM"),this.state.dateObject.format("Y"),"selectedDay")
+
+    console.log(new Date()+2,"currentdate")
+    console.log(this.state.rangeSelect, "rangeSelect")
+
     let weekdayshortname = this.weekdayshort.map(day => {
       return <th key={day}>{day}</th>;
     });
+
     let blanks = [];
+
     for (let i = 0; i < this.firstDayOfMonth(); i++) {
       blanks.push(<td className="calendar-day empty"></td>);
     }
+
     let daysInMonth = [];
+    var hidepastdataleft = []
 
 
+    for (let p = 1; p <= this.daysInMonth(); p++) {
+
+      if(dateformat(this.year()+" "+this.month()+" "+p,"yyyy,mm,dd") === dateformat(new Date(),"yyyy,mm,dd")){
+         hidepastdataleft.push(false)
+      }
+      else{
+        hidepastdataleft.push(true)
+      }
+
+      console.log(new Date(dateformat(this.year()+" "+this.month()+" "+p,"yyyy,mm,dd")),"newdate")
+      if(new Date() < new Date(dateformat(this.year()+" "+this.month()+" "+p,"yyyy,mm,dd")) || dateformat(this.year()+" "+this.month()+" "+p,"yyyy,mm,dd") === dateformat(new Date(),"yyyy,mm,dd") ){
+        var hidepastdata = true
+      }
+      else{
+        var hidepastdata = false
+      }
+    }
+    if(hidepastdata){
     for (let d = 1; d <= this.daysInMonth(); d++) {
-      const startdate=`selectedclr${d}_${this.state.dateObject.format("MMM")}_${this.state.dateObject.format("Y")}`
+      const startdate = `selectedclr${d}_${this.state.dateObject.format("MMM")}_${this.state.dateObject.format("Y")}`
       let currentDay = d == this.currentDay() ? "today" : "";
-      var firstdate=this.state.selectedDay+" "+this.state.dateObject.format("M")+" "+this.state.dateObject.format("Y")
-      console.log((this.state.rangearr && this.state.rangearr[0].slice(0, 2)),"slice")
-
-
-
-      // calculate for inter css
-
-      var first_sel_val=this.state.rangearr && Number(this.state.rangearr[0].slice(0, 2))
-      var second_sel_val=this.state.rangearr[1] && Number(this.state.rangearr[1].slice(0, 2))
-      var final_dif_val=first_sel_val-second_sel_val
-      if(final_dif_val<0){
-        var final_dif_val=(final_dif_val*-1)-1
+      if(this.props.aftertwodays){
+      var textgreyhide = moment(new Date()).add(1, 'days') < new Date(dateformat(this.year()+" "+this.month()+" "+d,"yyyy,mm,dd")) || dateformat(this.year()+" "+this.month()+" "+d,"yyyy,mm,dd") === moment(new Date()).add(1, 'days').format("yyyy,mm,dd") 
       }
-    
-    var swaparray=this.state.fulldate
-     
-      if(this.state.fulldate.length===2 && first_sel_val>second_sel_val){
-          var swaparray=[]
-          swaparray.push(this.state.fulldate[1],this.state.fulldate[0])
+      else{
+      var textgreyhide = new Date() < new Date(dateformat(this.year()+" "+this.month()+" "+d,"yyyy,mm,dd")) || dateformat(this.year()+" "+this.month()+" "+d,"yyyy,mm,dd") === dateformat(new Date(),"yyyy,mm,dd") 
       }
 
-      console.log(this.state.fulldate,"fulldate")
-      console.log(swaparray,"swaparray")
-
-        var inter_css=""
-
-          if(this.state.fulldate.length===2){
-          console.log(first_sel_val,"first_sel_val")
-
-        if(d<second_sel_val && d>first_sel_val){
-          var inter_css=`selectedclr${d}_${this.state.dateObject.format("MMM")}_${this.state.dateObject.format("Y")}`
-        }
-        
-        else if(d>second_sel_val && d<first_sel_val)
-        {
-          var inter_css=`selectedclr${d}_${this.state.dateObject.format("MMM")}_${this.state.dateObject.format("Y")}`
-        }
-          }
-          
-
-
-      console.log(inter_css,"inter_css")
       daysInMonth.push(
-        
 
-        <td key={d} className={`calendar-day ${currentDay}`} >
+        <td key={d} className={`calendar-day ${currentDay} ${!textgreyhide && "cursornonehide"}`} onClick={textgreyhide && (e => { this.onDayClick(e, d); })}>
           <div className="range_parent w-100">
 
-          <div className="range_child w-25">
+            <div className="range_child w-25">
+            </div>
+            <div
+              className={`${startdate === this.state.rangeSelect[0] && "table_fir_sel" ||
+                startdate === this.state.rangeSelect[this.state.rangeSelect.length - 1] && "table_sec_sel" ||
+                this.state.rangeSelect.includes(startdate) && "table_inter_sel"
+                }`}
+            >
+              <span className={`${!textgreyhide && "colornonepast"} table-body`}>
+                {d}
+              </span>
+            </div>
+            <div className="range_btm w-25">
+            </div>
           </div>
-          <div
-          // className={`selectedclr${d}_${this.state.dateObject.format("MMM")}_${this.state.dateObject.format("Y")}`}
-          // style={{backgroundColor:`${d===this.state.selectedDay && "table_fir_sel"}`}}
-          // className={applycss}
-          // className={startdate===inter_css && "table_fir_sel"}
 
-          className={`${startdate===swaparray[0] && "table_fir_sel" ||
-          startdate===swaparray[1] && "table_sec_sel" || 
-          startdate===inter_css  && "table_inter_sel"
-         }` }
+          {/* {
+              this.state.TotalslotsAvailable[d - 1] && this.state.TotalslotsAvailable[d - 1].day !==5 &&
+              <div className="inner_totalslots">
+            {
+              this.state.TotalslotsAvailable[d - 1] && this.state.TotalslotsAvailable[d - 1].total
+            }
+           </div>
+      } */}
 
-
-          >
-          <span className="table-body"
-            onClick={e => {
-              this.onDayClick(e, d);
-            }}
-          >
-            {d}
-
-          </span>
-          </div>
-          <div className="range_btm w-25">
-          </div>
-          </div>
-         
-          {/* <div className="inner_totalslots">12</div>
-            <div className="inner_availslots">0</div> */}
+          {/* <div className="inner_availslots">
+            {this.props.slots ? this.props.slots.map((val) => {
+              return (
+                val.currentDayId === 4 && d === 22 && val.availableSlots
+              )
+            }) : "0"}
+          </div> */}
 
         </td>
       );
     }
+  }
     var totalSlots = [...blanks, ...daysInMonth];
     let rows = [];
     let cells = [];
@@ -367,23 +519,23 @@ console.log(datearr,"datearr")
     return (
       <div className="tail-datetime-calendar">
         <div className="calendar-navi">
-        <div>{Current_date}</div>
-        <div  className="move_lft_rgt">
-          <ChevronLeftIcon className="date_arrow" onClick={e => {this.onPrev(); }}/>
-          {!this.state.showMonthTable && (
-            <span
-              // onClick={e => {
-              //   this.showMonth();
-              // }}
-              class="calendar-label"
-            >
-              {this.month()}
-            </span>
-          )}
-          {/* <span  onClick={e => this.showYearTable()}>{this.year()}</span> */}
-          <span>{this.year()}</span>
-           <ChevronRightIcon className="date_arrow" onClick={e => {this.onNext();}}/>
-           </div>
+          <div>{Current_date}</div>
+          <div className="move_lft_rgt">
+            <ChevronLeftIcon className="date_arrow" onClick={hidepastdataleft.every((val)=>val===true) && (e => { this.onPrev(); })} />
+            {!this.state.showMonthTable && (
+              <span
+                // onClick={e => {
+                //   this.showMonth();
+                // }}
+                class="calendar-label"
+              >
+                {this.month()}
+              </span>
+            )}
+            {/* <span  onClick={e => this.showYearTable()}>{this.year()}</span> */}
+            <span>{this.year()}</span>
+            <ChevronRightIcon className="date_arrow" onClick={e => { this.onNext(); }} />
+          </div>
         </div>
 
         <div className="calendar-date">
@@ -393,21 +545,23 @@ console.log(datearr,"datearr")
           )}
         </div>
 
-       {this.state.showDateTable && (
+
+
+        {this.state.showDateTable && (
           <div className="calendar-date">
-            <table className="calendar-day">
-              <thead className="weekday_shortname">
-                <tr>{weekdayshortname}</tr>
-              </thead>
-              <tbody className="table_body">{daysinmonth}</tbody>
+            {/* <Spin className="spinner_align" spinning={this.state.spinLoad}> */}
+              <table className="calendar-day">
+                <thead className="weekday_shortname">
+                  <tr>{weekdayshortname}</tr>
+                </thead>
+                <tbody className="table_body">{daysinmonth}</tbody>
+              </table>
+            {/* </Spin> */}
 
-
-
-            </table>
-            <div className="calslots_container">
-          <div className="total_slots_div"><p className="total_slots"></p><span className="total_slots_text">Total Slots</span></div>
-          <div className="total_slots_div"><p className="avail_slots"></p><span className="total_slots_text">Available Slots</span></div>
-          </div>
+            {/* <div className="calslots_container">
+              <div className="total_slots_div"><p className="total_slots"></p><span className="total_slots_text">Total Slots</span></div>
+              <div className="total_slots_div"><p className="avail_slots"></p><span className="total_slots_text">Available Slots</span></div>
+            </div> */}
 
           </div>
         )}

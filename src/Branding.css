@@ -70,3 +70,14 @@
   
  }
 
+ 
+/* toaster */
+
+.ant-notification-notice-closable{
+  padding: 14px 5px 0px 16px;
+}
+.ant-notification-notice-description{
+    position: relative;
+    bottom: 17px;
+    margin-right: 40px;
+}

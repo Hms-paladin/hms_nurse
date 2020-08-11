@@ -2,9 +2,9 @@
 {
 	padding:0px !important;
 }*/
-.MuiDialog-paperWidthSm {
+/* .MuiDialog-paperWidthSm {
   width: 700px !important;
-}
+} */
 .addmanage_nurses_details {
   font-family: "Roboto";
   display: flex;
@@ -130,10 +130,6 @@
 .total {
   padding: 3%;
   width: 100%;
-}
-
-.MuiDialog-paperWidthSm {
-  max-width: 680px !important;
 }
 
 .manage_nurse_text {

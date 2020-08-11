@@ -141,27 +141,10 @@ class MiniDrawer extends React.Component {
   };
   componentDidMount(){
     this.ProfileGetApi()
-    this.EditProfileApi()
     this.setState({
       current_location: window.location.href
     },() => console.log("sfdshfjsdhfjsdhfsdf", this.state.current_location))
   }
-  // ProfileGetApi=()=>{
-  //   var self=this
-  //   Axios({
-  //     method: 'POST',
-  //     url: "http://52.200.251.222:8158/api/v1/Nurse/getnursevendorprofile",
-  //     data:{
-  //       "nursevendorId":"5"
-  //     },
-  // }).then((response) => {
-  //   var ProfileData=[]
-  //   console.log(response,"getdetails")
-  //   ProfileData=response.data.data
-  //   this.setState({ProfileData}) 
-  // }).catch((error) => {
-  //     })
-  // }
 
   ProfileGetApi=()=>{
     var self=this
@@ -185,36 +168,7 @@ class MiniDrawer extends React.Component {
       })
   }
 
-  EditProfileApi=()=>{
-
-    var formData = new FormData()
-    if (this.props.imageChanged === true) {
-
-        for (let i in this.props.Image) {
-            formData.append('uploadFile', this.props.Image[i].originFileObj)
-            console.log("formdafdsfsdf", this.props.Image[i].originFileObj)
-        }
-
-    }else{
-        formData.append('uploadFile', '')
-    }
-    formData.set('modifiedby', 1)
-    formData.set('nursevendorId', this.props.EditId)
-    Axios({
-      method: 'POST',
-      url: apiurl + "Nurse/editNursevendorprofile",
-      data:formData
-       
-  }).then((response) => {
-    console.log("response",response)
-    // window.location.reload(false)
-   this.props.ProfileGetApi()
-   this.Notification("Updated successfully ")
-  }).catch((error) => {
-      
-  })
-  // this.props.closemodal()
-  }
+  
 
   handleClose = () => {
     this.props.onClose(this.props.selectedValue);

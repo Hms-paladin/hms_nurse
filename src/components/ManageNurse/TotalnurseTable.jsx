@@ -4,7 +4,6 @@ import Modalcomp from "../../helpers/ModalComp/Modalcomp";
 import "./TotalnurseTable.css";
 import Managenursemodal from "./Managenursemodal";
 import Managenurseform from "./Managenurseform";
-import CloseIcon from "@material-ui/icons/Close";
 import axios from "axios";
 import { apiurl } from "../../App";
 import DeleteNurse from '../../helpers/ModalComp/deleteModal';

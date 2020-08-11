@@ -407,7 +407,6 @@ export default class Calendar extends React.Component {
 
   render() {
 
-
     console.log(this.state.rangeSelect, "rangeSelect")
 
     let weekdayshortname = this.weekdayshort.map(day => {
@@ -445,7 +444,12 @@ export default class Calendar extends React.Component {
     for (let d = 1; d <= this.daysInMonth(); d++) {
       const startdate = `selectedclr${d}_${this.state.dateObject.format("MMM")}_${this.state.dateObject.format("Y")}`
       let currentDay = d == this.currentDay() ? "today" : "";
+      if(this.props.aftertwodays){
+      var textgreyhide = moment(new Date()).add(1, 'days') < new Date(dateformat(this.year()+" "+this.month()+" "+d,"yyyy,mm,dd")) || dateformat(this.year()+" "+this.month()+" "+d,"yyyy,mm,dd") === moment(new Date()).add(1, 'days').format("yyyy,mm,dd") 
+      }
+      else{
       var textgreyhide = new Date() < new Date(dateformat(this.year()+" "+this.month()+" "+d,"yyyy,mm,dd")) || dateformat(this.year()+" "+this.month()+" "+d,"yyyy,mm,dd") === dateformat(new Date(),"yyyy,mm,dd") 
+      }
 
       daysInMonth.push(
 
@@ -553,10 +557,10 @@ export default class Calendar extends React.Component {
               </table>
             </Spin>
 
-            <div className="calslots_container">
+            {/* <div className="calslots_container">
               <div className="total_slots_div"><p className="total_slots"></p><span className="total_slots_text">Total Slots</span></div>
               <div className="total_slots_div"><p className="avail_slots"></p><span className="total_slots_text">Available Slots</span></div>
-            </div>
+            </div> */}
 
           </div>
         )}

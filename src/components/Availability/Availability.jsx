@@ -132,7 +132,7 @@ export default class Availability extends Component {
           <Grid item sm={12} md={6}>
             <div style={{ padding: "20px" }} className="opacity_letter_availability">
 
-              <Select style={{ width: "100%",marginBottom:"15px" }} onChange={(data) => this.storeNurse(data)}>
+              <Select style={{ width: "100%",marginBottom:"15px" }} onChange={(data) => this.storeNurse(data)} placeholder="Nurses name"> 
                 {this.getNurseNames()}
               </Select>
               <div className="errormsgAvailability">{this.state.Selectrequired && "Field Required"}</div>

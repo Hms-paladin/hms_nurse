@@ -63,6 +63,11 @@ const openNotification = () => {
 var startdate = dateformat(new Date(), "yyyy-mm-dd")
 
 var enddate = dateformat(new Date(), "yyyy-mm-dd")
+
+var startDatePicker = moment();
+var startDatePicker = moment(startDatePicker).add(2, 'days').format('YYYY-MM-DD');
+
+var enddatePicker = moment(startDatePicker);
 export default class AdBooking extends React.Component {
     constructor(props) {
         super(props)
@@ -84,9 +89,10 @@ export default class AdBooking extends React.Component {
             adsize: "",
             ad_details: [],
             activeKey: "1",
-            startdate: startdate,
-            endDate:  enddate,
+            startdate: startDatePicker,
+            endDate:  enddatePicker,
             checked:false,
+            minDate:startDatePicker,
 
 
 
@@ -135,6 +141,11 @@ export default class AdBooking extends React.Component {
                 this.setState({startdate:data.enddate,endDate:data.startdate},() => this.compareDate())
                 }
             }
+                    // this.setState({
+        //     startdate: dateformat(new Date(data[0].split(" ").reverse().join("/")), "yyyy-mm-dd"),
+        //     endDate: dateformat(new Date(data[1].split(" ").reverse().join("/")), "yyyy-mm-dd")
+        // })
+        // this.setState({})
         }
 
 
@@ -457,7 +468,7 @@ export default class AdBooking extends React.Component {
         }).then((response) => {
 
           
-            this.getAdBooking();
+            this.getAdBooking("Advertisement added successfully");
             
             this.props.generateAlert("Advertisement added successfully")
 
@@ -490,7 +501,7 @@ export default class AdBooking extends React.Component {
             data: details
         }).then((response) => {
 
-            this.getAdBooking()
+            this.getAdBooking("Advertisement updated successfully")
             this.props.generateAlert("Advertisement updated successfully")
             this.setState({activeKey:"2",edit:false})
             this.state.adfeeperday = "";
@@ -506,7 +517,7 @@ export default class AdBooking extends React.Component {
 
 
     //   get the ad details
-    getAdBooking = () => {
+    getAdBooking = (notifymsg) => {
         Axios({
             method: 'POST',
             url: apiurl + '/getAdBooking',
@@ -520,6 +531,12 @@ export default class AdBooking extends React.Component {
             this.setState({
                 ad_details: response.data.data[0].details
             }, () => console.log("sfdshfjsdhfjsdhfsdf", this.state.ad_details))
+            if(notifymsg){
+                notification.info({
+                    description:notifymsg,
+                      placement:"topRight",
+                  });
+            }
         }).catch((error) => {
             alert(JSON.stringify(error))
         })
@@ -708,6 +725,7 @@ export default class AdBooking extends React.Component {
 
                         <Calendar
                             getDate={(data) => this.getRangeData(data)}
+                            aftertwodays={true}
                         />
 
                     </Grid>
@@ -718,7 +736,7 @@ export default class AdBooking extends React.Component {
                                     <Grid item xs={12} md={6} className="create_container">
                                         <div className="date_box_sizing">
                                             <Labelbox disablePast={true} type="datepicker" labelname="Start Date" value={this.state.startdate}
-                                            changeData={(date) => this.datepickerChange(date,'startdate')}
+                                            changeData={(date) => this.datepickerChange(date,'startdate')} minDate={this.state.minDate}
                                             /></div>
                                         <div className="validation__error">{this.state.startdateError && this.state.startdateError}</div>
 
@@ -755,6 +773,7 @@ export default class AdBooking extends React.Component {
                                         <div className="date_box_sizing">
                                             <Labelbox type="datepicker" labelname="End Date" disablePast={true}
                                                 value={this.state.endDate} 
+                                                minDate={this.state.minDate}
                                                 changeData={(data) => this.datepickerChange(data,'enddate')}/>
                                         </div>
                                         <div className="validation__error--minus enddate_clr_edit">{this.state.dateError && "Enddate should be greater than startdate"}</div>

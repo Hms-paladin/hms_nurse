@@ -1,29 +1,12 @@
-
 import React from "react";
-import PropTypes from "prop-types";
-import { makeStyles } from "@material-ui/core/styles";
-import DialogTitle from "@material-ui/core/DialogTitle";
 import Dialog from "@material-ui/core/Dialog";
-import PersonIcon from "@material-ui/icons/Person";
-import AddIcon from "@material-ui/icons/Add";
-import Typography from "@material-ui/core/Typography";
-import { blue } from "@material-ui/core/colors";
 import Button from "@material-ui/core/Button";
-import Trainee from "../../Images/11.jpg";
 import Grid from "@material-ui/core/Grid";
-import Divider from "@material-ui/core/Divider";
-import { withStyles } from "@material-ui/core/styles";
 import "./Nurse_view.css";
-import { TiLocation, MdLocationOn, MdLocalPhone } from "react-icons/md";
-import { IoIosGlobe } from "react-icons/io";
-import EditIcon from "@material-ui/icons/Edit"
 import CloseIcon from '@material-ui/icons/Close';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import VisibilityIcon from '@material-ui/icons/Visibility';
-import Axios from 'axios';
 import dateformat from 'dateformat';
-const styles = {};
-const apiurl_N="http://52.200.251.222:8158/api/v1/Nurse/";
+import No_image_available from "../../Images/No_image_available.svg"
+
 export default class ProfileView extends React.Component {
   constructor(props) {
     super(props);
@@ -80,8 +63,8 @@ export default class ProfileView extends React.Component {
               <div className="nurse_view_image_childdiv">
                 <img
                   className="nurse_view_image"
-                  src={ViewData && ViewData.profile_name} 
-                  alt="jklj"
+                  src={ViewData && ViewData.profile_name?ViewData.profile_name:No_image_available}
+                  alt="This IMG format is not supporting"
                   style={{ height: "100" }}
                 />{" "}
               </div>

@@ -2,11 +2,12 @@ import React, { Component } from "react";
 import Dialog from "@material-ui/core/Dialog";
 import { withStyles } from "@material-ui/core/styles";
 import { Grid, Button } from "@material-ui/core";
-import doctor from "../../Images/nurse.jpg";
-import "./Nurse_view.css";
+import No_image_available from "../../Images/No_image_available.svg"
 import CloseIcon from '@material-ui/icons/Close';
 import dateformat from 'dateformat';
-import Divider from "@material-ui/core/Divider";
+
+import "./Nurse_view.css";
+
 const styles = {};
 
 export default class Nurse_view extends Component {
@@ -70,8 +71,8 @@ export default class Nurse_view extends Component {
               <div className="nurse_view_image_childdiv">
                 <img
                   className="nurse_view_image"
-                  src={val&&val.profile_name}
-                  alt="jklj"
+                  src={val&&val.profile_name?val.profile_name:No_image_available}
+                  alt="This IMG format is not supporting"
                   style={{ height: "100" }}
                 />{" "}
               </div>
@@ -113,7 +114,7 @@ export default class Nurse_view extends Component {
               <div className="dutytime_container">
                 <p className="time-inhours">
                   {/* 8 Hrs */}
-                  {val&&val.working_hours} Hrs
+                  {val && val.working_hours} Hrs
                 </p>
               </div>
             </div>

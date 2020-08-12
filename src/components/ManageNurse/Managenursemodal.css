@@ -90,12 +90,10 @@
   font-size: 15px;
   /* margin-left: 9px; */
 }
-
 .manage_nurse_popup_details .working_hour {
   font-size: 16px;
-  padding-bottom: 5%;
-
-  padding-top: 5%;
+  /* padding-bottom: 5%;
+  padding-top: 5%; */
 }
 .manage_nurse_popup_details .nurse_working_hour_detail {
   font-size: 15px;

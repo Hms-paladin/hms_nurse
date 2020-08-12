@@ -243,13 +243,7 @@ export default class AdBooking extends React.Component {
         this.handlePlacement()
         this.getAdBooking()
         this.getRate(1)
-
     }
-
-
-
-
-
     handleChangeSize = () => {
         Axios({
             method: 'GET',
@@ -292,9 +286,6 @@ export default class AdBooking extends React.Component {
                 console.log("placement_location", this.state.placementLocation)
             })
     }
-
-
-
     validation = () => {
         let startdateError = "";
         let enddateError = "";
@@ -385,13 +376,7 @@ export default class AdBooking extends React.Component {
 
         })
     }
-
-
-
-
     handleSubmit = () => {
-
-
         console.log("sfjsdfjdshfjdshfsfdhsdf", this.state.imagedata)
 
         let formdata = new FormData();
@@ -460,10 +445,6 @@ export default class AdBooking extends React.Component {
             this.getAdBooking();
             
             this.props.generateAlert("Advertisement added successfully")
-
-
-          
-
             this.state.adfeeperday = "";
             this.state.location = "";
             this.state.adtotalcost = "";
@@ -471,13 +452,12 @@ export default class AdBooking extends React.Component {
             this.state.adsize = "";
             this.state.imagedata=[];
 
-           
-
             this.setState({hidefilelist:true,recallget:true})
 
         }).catch((error) => {
             // alert(JSON.stringify(error))
         })
+        console.log(this.generateAlert,"alert_chk")
     }
 
 
@@ -500,7 +480,7 @@ export default class AdBooking extends React.Component {
             this.state.imageName = "";
             this.state.adsize = "";
         }).catch((error) => {
-            alert(JSON.stringify(error))
+            // alert(JSON.stringify(error))
         })
     }
 

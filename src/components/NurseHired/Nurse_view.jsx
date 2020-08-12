@@ -28,6 +28,16 @@ export default class Nurse_view extends Component {
       viewdata:newprops.OpenViewData
     })
   }
+  viewAddress =()=>{
+    console.log(this.state.see,"seeee")
+    // alert("dot_open")
+    // alert(this.state.see)
+    this.setState({
+      see:!this.state.see,
+    })
+    console.log(this.setState.see,"see_check")
+    // alert(this.state.see)
+  }
 
   render() {
     const { classes, onClose, selectedValue, ...other } = this.props;
@@ -122,16 +132,16 @@ export default class Nurse_view extends Component {
                 {/* 6623 Western Ring Rd, */}
                 {val&&val.address}
                 <label className="road_dot">...</label>
+                {/* <label className="road_dot" onClick={this.viewAddress}>...</label>
+                {this.state.see === false ?
+                        <div className="address_edit">
+                          {this.props.val.address?this.props.val.address:"----"}
+                          <p>2-79</p>
+                          <p>ABC Street</p>
+                          <p>D NAGAR</p>
+                        </div> :null} */}
               </text>
             </div>
-            {/* <div className="nurse_view_subheader">
-              {" "}
-              <label className="nurse_view_qualitiy">Skills</label>
-              <label className="nurse_view_colon">:</label>
-              <label className="nurse_view_values">
-                Elderly care,Child care
-              </label>{" "}
-            </div> */}
             <div className="nurse_view_subheader">
               {" "}
               <label className="nurse_view_qualitiy">Start Date</label>

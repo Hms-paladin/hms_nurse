@@ -116,8 +116,16 @@
    cursor: pointer;
    padding: 9px;
    border-radius: 50%;
-   
  }
+ .road_dot{
+   text-decoration: underline !important;
+   margin-left: 3px;
+   text-decoration: underline;
+   color: blue;
+ }
+ .address_edit{
+  font-size: 13px;
+}
  .close_icon_modal:hover{
    background-color: rgba(0, 0, 0, 0.08);
  

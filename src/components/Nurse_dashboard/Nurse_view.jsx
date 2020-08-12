@@ -27,7 +27,24 @@ const apiurl_N="http://52.200.251.222:8158/api/v1/Nurse/";
 export default class ProfileView extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { cancel: null,view:false,ViewData:"",Cost:"",Duties:""};
+    this.state = { 
+      cancel: null,
+      view:false,
+      ViewData:"",
+      Cost:"",
+      Duties:"",
+      see:true,
+    };
+  }
+  viewAddress =()=>{
+    console.log(this.state.see,"seeee")
+    // alert("dot_open")
+    // alert(this.state.see)
+    this.setState({
+      see:!this.state.see,
+    })
+    console.log(this.setState.see,"see_check")
+    // alert(this.state.see)
   }
   handleClose = () => {
     this.props.onClose(this.props.selectedValue);
@@ -124,8 +141,17 @@ export default class ProfileView extends React.Component {
             <div className="nurse_view_name_wrap">
               <text className="nurse_view_address">
                 {/* 6623 Western Ring Rd, */}
-                {ViewData && ViewData.address}
-                <label className="road_dot">...</label>
+                {/* {ViewData && ViewData.address} */}
+                <label className="road_dot" onClick={this.viewAddress}>...</label>
+                {this.state.see === false ?
+                        <div className="address_edit">
+                          {/* {this.props.ViewData.address == null ? "No address available" : ViewData && ViewData.address} */}
+                          {this.props.ViewData.address?this.props.ViewData.address:"----"}
+                          {/* <p>2-79</p>
+                          <p>ABC Street</p>
+                          <p>D NAGAR</p> */}
+                        </div> :null }
+                        
               </text>
             </div>
             <div className="nurse_view_subheader">

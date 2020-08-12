@@ -49,9 +49,9 @@ export default class AdvertiseList extends React.Component{
 getAdBooking = () => {
     Axios({
         method: 'POST',
-        url: apiurl + '/getAdBooking',
+        url: apiurl + 'Common/getAd_Booking',
         data:{
-            "doctorid":"5",
+            "vendor_id":"5",
             "limit":this.state.limit,
             "pageno":this.state.pageno
         }
@@ -86,9 +86,9 @@ getAdDetails = (data) => {
     
     Axios({
         method: 'POST',
-        url: apiurl + '/getAdBooking',
+        url: apiurl + 'Common/getAd_Booking',
         data:{
-            "doctorid":"5",
+            "vendor_id":"5",
             "limit":this.state.limit,
             "pageno":data+1
         }

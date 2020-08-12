@@ -63,11 +63,6 @@ const openNotification = () => {
 var startdate = dateformat(new Date(), "yyyy-mm-dd")
 
 var enddate = dateformat(new Date(), "yyyy-mm-dd")
-
-var startDatePicker = moment();
-var startDatePicker = moment(startDatePicker).add(2, 'days').format('YYYY-MM-DD');
-
-var enddatePicker = moment(startDatePicker);
 export default class AdBooking extends React.Component {
     constructor(props) {
         super(props)
@@ -89,10 +84,9 @@ export default class AdBooking extends React.Component {
             adsize: "",
             ad_details: [],
             activeKey: "1",
-            startdate: startDatePicker,
-            endDate:  enddatePicker,
+            startdate: startdate,
+            endDate:  enddate,
             checked:false,
-            minDate:startDatePicker,
 
 
 
@@ -201,7 +195,6 @@ export default class AdBooking extends React.Component {
                 description:
                   'Advertisement expired',
                   placement:"topRight",
-                  
               });
         }else if(new Date (data.ad_start_date) < new Date() && new Date (data.ad_end_date) > new Date() ){
             notification.info({
@@ -264,7 +257,7 @@ export default class AdBooking extends React.Component {
     handleChangeSize = () => {
         Axios({
             method: 'GET',
-            url: apiurl + "/get_mas_size_master"
+            url: apiurl + "get_mas_size_master"
         })
             .then((response) => {//1..getting json response in another promise function called .then function
                 var data = response.data
@@ -284,7 +277,7 @@ export default class AdBooking extends React.Component {
     handlePlacement = () => {
         Axios({
             method: 'GET',
-            url: apiurl + '/get_mas_placement_location'
+            url: apiurl + 'get_mas_placement_location'
 
         })//if your using axios no need of conversion to json
             .then((response) => {//2.getting json response in another promise function called .then function
@@ -387,7 +380,7 @@ export default class AdBooking extends React.Component {
 
         Axios({
             method: "POST",
-            url: apiurl + '/get_ad_rate_vendor',
+            url: apiurl + 'get_ad_rate_vendor',
             data: ratedata
         }).then((response) => {
             this.setState({ adfeeperday: response.data.data[0].rate })
@@ -431,7 +424,7 @@ export default class AdBooking extends React.Component {
         formdata.set('adtotalcost', this.state.adtotalcost)
 
         !this.state.imageChanged && formdata.append('imageArray', [])
-        !this.state.edit && formdata.set('advendorId', 5)
+        !this.state.edit && formdata.set('advendorId', 2)
         !this.state.edit && formdata.set('createdby', 1)
 
         formdata.set('ipaddress', "126.183.0.1")
@@ -463,12 +456,12 @@ export default class AdBooking extends React.Component {
         console.log("sdfhsljdhfsjdhf", details)
         Axios({
             method: 'POST',
-            url: apiurl + '/insertAdBooking',
+            url: apiurl + 'insertAdBooking',
             data: details
         }).then((response) => {
 
-          
-            this.getAdBooking("Advertisement added successfully");
+         alert("sdfsdf")          
+            this.getAdBooking();
             
             this.props.generateAlert("Advertisement added successfully")
 
@@ -482,7 +475,7 @@ export default class AdBooking extends React.Component {
             this.state.adsize = "";
             this.state.imagedata=[];
 
-           
+     
 
             this.setState({hidefilelist:true,recallget:true})
 
@@ -501,7 +494,7 @@ export default class AdBooking extends React.Component {
             data: details
         }).then((response) => {
 
-            this.getAdBooking("Advertisement updated successfully")
+            this.getAdBooking()
             this.props.generateAlert("Advertisement updated successfully")
             this.setState({activeKey:"2",edit:false})
             this.state.adfeeperday = "";
@@ -517,13 +510,13 @@ export default class AdBooking extends React.Component {
 
 
     //   get the ad details
-    getAdBooking = (notifymsg) => {
+    getAdBooking = () => {
         Axios({
             method: 'POST',
-            url: apiurl + '/getAdBooking',
+            url: apiurl + 'Common/getAd_Booking',
             data: {
-                "doctorid": "5",
-                "limit": "10",
+                "vendor_id":"5",
+                "limit": "100",
                 "pageno": "1"
             }
         }).then((response) => {
@@ -531,12 +524,6 @@ export default class AdBooking extends React.Component {
             this.setState({
                 ad_details: response.data.data[0].details
             }, () => console.log("sfdshfjsdhfjsdhfsdf", this.state.ad_details))
-            if(notifymsg){
-                notification.info({
-                    description:notifymsg,
-                      placement:"topRight",
-                  });
-            }
         }).catch((error) => {
             // alert(JSON.stringify(error))
         })
@@ -725,7 +712,6 @@ export default class AdBooking extends React.Component {
 
                         <Calendar
                             getDate={(data) => this.getRangeData(data)}
-                            aftertwodays={true}
                         />
 
                     </Grid>
@@ -736,7 +722,7 @@ export default class AdBooking extends React.Component {
                                     <Grid item xs={12} md={6} className="create_container">
                                         <div className="date_box_sizing">
                                             <Labelbox disablePast={true} type="datepicker" labelname="Start Date" value={this.state.startdate}
-                                            changeData={(date) => this.datepickerChange(date,'startdate')} minDate={this.state.minDate}
+                                            changeData={(date) => this.datepickerChange(date,'startdate')}
                                             /></div>
                                         <div className="validation__error">{this.state.startdateError && this.state.startdateError}</div>
 
@@ -760,7 +746,7 @@ export default class AdBooking extends React.Component {
 
                                         <div className="validation__error--size">{this.state.sizeError && this.state.sizeError}</div>
 
-                                        <div className="advertise_cost" style={{ marginTop: "4.2rem" }}>
+                                        <div className="advertise_cost" style={{ marginTop: "4rem" }}>
                                             {/* <div style={{marginTop:"2rem"}}> */}
                                             <label className="fees_cost" >Fee / Day (KWD)</label>
                                             <input type="number" className="html__input" value={this.state.adfeeperday}></input>
@@ -773,10 +759,9 @@ export default class AdBooking extends React.Component {
                                         <div className="date_box_sizing">
                                             <Labelbox type="datepicker" labelname="End Date" disablePast={true}
                                                 value={this.state.endDate} 
-                                                minDate={this.state.minDate}
                                                 changeData={(data) => this.datepickerChange(data,'enddate')}/>
                                         </div>
-                                        <div className="validation__error--minus enddate_clr_edit">{this.state.dateError && "Enddate should be greater than startdate"}</div>
+                                        <div className="validation__error--minus errmsg_clr">{this.state.dateError && "enddate should be greater than startdate"}</div>
                                         <div className="validation__error">{this.state.enddateError && this.state.enddateError}</div>
 
 

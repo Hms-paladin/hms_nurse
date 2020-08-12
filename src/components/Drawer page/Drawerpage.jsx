@@ -48,6 +48,7 @@ import ProfileComp from "../Profilepage/Profilepage";
 import CustomerHistoryHeader from "../CustomerHistory/CustomerHistoryHeader";
 import Axios from "axios";
 import {apiurl} from '../../App'
+import {notification} from 'antd';
 
 
 import {
@@ -162,6 +163,17 @@ class MiniDrawer extends React.Component {
   // }).catch((error) => {
   //     })
   // }
+
+  generateAlert = (description) => {
+    notification.success({
+      message: "Success",
+      description,
+      onClick: () => {
+        console.log("Notification Clicked!");
+      },
+    });
+  };
+  
 
   ProfileGetApi=()=>{
     var self=this
@@ -556,7 +568,8 @@ class MiniDrawer extends React.Component {
             />
             <Route
               path={`${this.props.match.path}/advertisement`}
-              component={AdvertisementMaster}
+              // component={AdvertisementMaster}
+              render={(props) => <AdvertisementMaster {...props} generateAlert={this.generateAlert} />}
               exact
             />
             <Route

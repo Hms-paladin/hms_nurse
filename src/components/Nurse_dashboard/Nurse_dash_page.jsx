@@ -150,7 +150,7 @@ class Nurse_dash_page extends Component {
                 <div className="divider_1px"></div>
               </div>
               <div className="nurse_dash_numeric_wrap">
-    <p className="nurse_dash_numeric_value">{this.state.revenue}</p>
+    <p className="nurse_dash_numeric_value">{this.state.revenue?this.state.revenue:0}</p>
               </div>
             </Card>
           </div>

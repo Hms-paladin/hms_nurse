@@ -1,5 +1,6 @@
 .dialog_nurse_eyeview .MuiDialog-paper {
   padding: 20px;
+  overflow-y: scroll !important;
 }
 .nurse_view_image_childdiv {
   width: 82%;
@@ -69,7 +70,8 @@
   border-radius: 20px;
   /* width: 30%; */
   height: 40px;
-  font-size: 15px;
+  white-space: nowrap;
+  font-size: 14px;
   display: flex;
   color: white;
   align-items: center;

@@ -82,7 +82,7 @@ export default class ProfileView extends React.Component {
                 <div className="nurse_view_name_wrap">
                   <text className="nurse_view_age">
               {/* 29years */}
-              {ViewData && ViewData.age} Years/{ViewData && ViewData.gender}
+              {ViewData && ViewData.age} Years/{ViewData && ViewData.gender==1?"Male":"Female"}
                   </text>
                 </div>
                 {/* <div className="nurse_view_name_wrap">

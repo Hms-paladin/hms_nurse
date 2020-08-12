@@ -78,7 +78,7 @@ export default class Nurse_view extends Component {
                 <div className="nurse_view_name_wrap">
                   <text className="nurse_view_age">
               {/* 29years */}
-              {val&&val.age} Years/{val&&val.nurseGender}
+              {val&&val.age} Years/{val&&val.nurseGender==1?"Male":"Female"}
                   </text>
                 </div>
                 {/* <div className="nurse_view_name_wrap">

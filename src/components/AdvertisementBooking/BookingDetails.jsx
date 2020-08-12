@@ -511,7 +511,7 @@ export default class AdBooking extends React.Component {
             this.state.imageName = "";
             this.state.adsize = "";
         }).catch((error) => {
-            alert(JSON.stringify(error))
+            // alert(JSON.stringify(error))
         })
     }
 
@@ -538,7 +538,7 @@ export default class AdBooking extends React.Component {
                   });
             }
         }).catch((error) => {
-            alert(JSON.stringify(error))
+            // alert(JSON.stringify(error))
         })
     }
 

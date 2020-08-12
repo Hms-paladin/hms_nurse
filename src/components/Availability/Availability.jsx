@@ -140,8 +140,8 @@ export default class Availability extends Component {
                 className="avail_date_picker"
                 style={{ display: "flex", justifyContent: "space-between", paddingTop: "10px" }}
               >
-                <Labelbox type="datepicker" labelname="From Date" value={this.state.fromdate} changeData={(data) => this.storeDate(data, "fromdate")} />
-                <Labelbox type="datepicker" labelname="To Date" value={this.state.todate} changeData={(data) => this.storeDate(data, "todate")} errmsg={"ToDate Should Be Greater Than FromDate"} error={errorstate} />
+                <Labelbox type="datepicker" labelname="From Date" value={this.state.fromdate} changeData={(data) => this.storeDate(data, "fromdate")} minDate={new Date()}/>
+                <Labelbox type="datepicker" labelname="To Date" value={this.state.todate} changeData={(data) => this.storeDate(data, "todate")} errmsg={"ToDate Should Be Greater Than FromDate"} error={errorstate} minDate={new Date()}/>
 
               </div>
               <div className="avail_button">

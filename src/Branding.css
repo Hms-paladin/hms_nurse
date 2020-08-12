@@ -81,3 +81,7 @@
     bottom: 17px;
     margin-right: 40px;
 }
+
+.MuiDialog-paperScrollPaper{
+  overflow-y: scroll !important;
+}

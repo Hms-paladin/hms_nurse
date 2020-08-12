@@ -1,6 +1,3 @@
-.avail_date_picker .formdiv .MuiFormControl-marginNormal {
-  /* width: 80% !important; */
-}
 
 .avail_button {
   display: flex;
@@ -18,6 +15,7 @@
 .avail_button .leave_btn {
   background-color: #F38F31;
   border: none;
+  margin-right: 6px;
 }
 
 .avail_button .block_btn {

@@ -99,7 +99,7 @@ export default class ProfileView extends React.Component {
                 <div className="nurse_view_name_wrap">
                   <text className="nurse_view_age">
               {/* 29years */}
-              {ViewData && ViewData.age} Years/{ViewData && ViewData.gender}
+              {ViewData && ViewData.age} Years/{ViewData && ViewData.gender==1?"Male":"Female"}
                   </text>
                 </div>
                 {/* <div className="nurse_view_name_wrap">
@@ -145,13 +145,11 @@ export default class ProfileView extends React.Component {
                 <label className="road_dot" onClick={this.viewAddress}>...</label>
                 {this.state.see === false ?
                         <div className="address_edit">
-                          {/* {this.props.ViewData.address == null ? "No address available" : ViewData && ViewData.address} */}
                           {this.props.ViewData.address?this.props.ViewData.address:"----"}
                           {/* <p>2-79</p>
                           <p>ABC Street</p>
                           <p>D NAGAR</p> */}
                         </div> :null }
-                        
               </text>
             </div>
             <div className="nurse_view_subheader">

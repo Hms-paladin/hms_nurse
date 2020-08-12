@@ -128,8 +128,8 @@ getmethod(rangeday){
     var leaveData = [];
     response.data.data[0] && response.data.data[0].details.map((val)=>{
       console.log(val,"val_leave")
-      leaveData.push({nursename:val.Nursename,gender:val.gender,experience:val.experience,
-        Nationality:val.nationality_id,
+      leaveData.push({nursename:val.Nursename,gender:val.gender==1?"Male":"Female",experience:val.experience,
+        Nationality:val.nationality_id==1?"Saudi Arabian":"American",
         fromdate:moment(val.from_date).format("DD MMM YYYY"),todate:moment(val.to_date).format("DD MMM YYYY"),noofdays:val.Noofdays,id:val.id
       })
     
@@ -206,14 +206,14 @@ dayReport=(data)=>{
         return data
         else if (data.nursename!== null && data.nursename.toLowerCase().includes(this.state.search.toLowerCase())
         || (data.gender!= null && data.gender.toLowerCase().includes(this.state.search.toLowerCase()))
-        || (data.experience!= null && data.experience.toString().includes(this.state.search.toString()))
-        || (data.Nationality!= null && data.Nationality.toString().includes(this.state.search.toString()))
+        || (data.experience!= null && data.experience.toString().toLowerCase().includes(this.state.search.toString().toLowerCase()))
+        || (data.Nationality!= null && data.Nationality.toString().toLowerCase().includes(this.state.search.toString().toLowerCase()))
         || (data.fromdate!= null && data.fromdate.toLowerCase().includes(this.state.search.toLowerCase()))
         || (data.todate!= null && data.todate.toLowerCase().includes(this.state.search.toLowerCase()))
-        || (data.noofdays!= null && data.noofdays.toString().includes(this.state.search.toString()))
+        || (data.noofdays!= null && data.noofdays.toString().toLowerCase().includes(this.state.search.toString().toLowerCase()))
         ) {
           return data
-      }   
+      }
     }) 
     // EXCEL FUNCTION
   var multiDataSetbody = []

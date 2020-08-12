@@ -45,7 +45,8 @@ export default class Nurse_view extends Component {
     //   const {val} = propsval ? propsval.OpenViewData : ""
     //   console.log(val,"props_open_viewdata_checking")
 
-    const val=this.props.OpenViewData
+    // const val=this.props.OpenViewData
+    var val=this.props.OpenViewData
     console.log(val,"val_checkkk")
       console.log(val.CostofMonth&&val.CostofMonth[0],"props_open_viewdata_checking")
       console.log(val.Dutiesofnurse&&val.Dutiesofnurse,"dutied_array")
@@ -130,16 +131,16 @@ export default class Nurse_view extends Component {
             <div className="nurse_view_name_wrap">
               <text className="nurse_view_address">
                 {/* 6623 Western Ring Rd, */}
-                {val&&val.address}
-                <label className="road_dot">...</label>
-                {/* <label className="road_dot" onClick={this.viewAddress}>...</label>
+                {/* {val&&val.address}
+                <label className="road_dot">...</label> */}
+                <label className="road_dot" onClick={this.viewAddress}>...</label>
                 {this.state.see === false ?
                         <div className="address_edit">
-                          {this.props.val.address?this.props.val.address:"----"}
-                          <p>2-79</p>
+                          {this.props.val && val.address?this.props.val && val.address:"----"}
+                          {/* <p>2-79</p>
                           <p>ABC Street</p>
-                          <p>D NAGAR</p>
-                        </div> :null} */}
+                          <p>D NAGAR</p> */}
+                        </div>:null}
               </text>
             </div>
             <div className="nurse_view_subheader">

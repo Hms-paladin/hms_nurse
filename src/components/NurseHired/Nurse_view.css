@@ -82,6 +82,7 @@
   margin-left: 3px;
   text-decoration: underline;
   color: blue;
+  cursor: pointer;
 }
 .nurse_view_name {
   color: #333333;
@@ -125,7 +126,11 @@
 }
 .nurse_view_values {
   color:#33333;
-  font-family:"Roboto" !important;
+  font-family:"Roboto"!important;
+}
+
+.address_edit{
+  font-size: 13px;
 }
 .nurse_view_cancel {
   margin-right: 20px !important;

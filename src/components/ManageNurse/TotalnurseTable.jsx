@@ -40,6 +40,7 @@ class DashboardTable extends React.Component {
 
 
   modelopen = (data, id) => {
+    alert(id)
     console.log(id, data, this.state, "edit_id")
     if (data === "view") {
       console.log(data, "view_data")
@@ -58,36 +59,25 @@ class DashboardTable extends React.Component {
       
     }
     else if (data === "history") {
-      var history_data_store = this.state.history_data.filter((history_data_store)=>{
-        return history_data_store.nurseId===id
-     })
-     console.log(this.state.history_data,"historydata_chk")
       this.setState({
         historyopen:true,
-        history_data_store:history_data_store
       })
-      console.log(this.state.history_data_store, "history") 
-      // this.setState({
-      //   HistoryTableData:this.state.totalData.find(val =>val.nurseId === id),
-      // })
+      this.HistoryTableData(id)
     }
-    console.log(this.state.viewData, "viewwwww")
   }
+
 
   closemodal = () => {
     this.setState({ openview: false, editopen: false, deleteopen: false, historyopen: false, workflow: false })
   }
 
-  componentDidMount(){
-    this.HistoryTableData()
-  }
 
-  HistoryTableData =() =>{
+  HistoryTableData =(id) =>{
     axios({
       method: 'post',
-      url: apiurl + 'getNursePatientHistory/?results=2',
+      url: apiurl + 'getNursePatientHistory',
       data: {
-        nurseId:3,
+        nurseId:id,
       }
   })
     .then((response) => {
@@ -166,7 +156,7 @@ class DashboardTable extends React.Component {
           clrchange="textclr"
        
         >
-          <Managenurseform  history_data_store={this.state.history_data_store} closemodal={this.closemodal}/>
+          <Managenurseform  history_data_store={this.state.history_data} closemodal={this.closemodal}/>
         </Modalcomp>
 
 

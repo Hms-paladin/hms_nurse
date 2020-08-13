@@ -72,7 +72,7 @@ class NurseServiceCancellationTable extends React.Component {
       head: [['S.No', 'Customer', 'Nurse Name','No Of Months','Cancelled Date','Time']],
       body:bodydata,
     })
-    doc.save('UploadDeatails.pdf')
+    doc.save('UploadDetails.pdf')
   }}
   componentDidMount =() =>{
     this.getmethod()

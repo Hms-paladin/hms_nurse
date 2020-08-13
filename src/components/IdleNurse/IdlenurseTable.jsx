@@ -89,9 +89,10 @@ this.setState({})
       var tabledatas=[];
       response.data.data && response.data.data.map((val,index) =>{
         // console.log()
-        tabledatas.push({nursename:val.Nursename,gender:val.gender==1 ?"Male" : "Female",age:val.age,experience:val.experience,Nationality:val.nationalityName,
-          idlesince:moment(val.IdleSince).format('DD MMM YYYY'),
-          noofdays:val.Noofdays,id:val.id})
+        tabledatas.push({nursename:val.Nursename,gender:val.gender == 1 ?"Male" : "Female",
+        age:val.age,experience:val.experience,Nationality:val.nationalityName,
+        idlesince:moment(val.IdleSince).format('DD MMM YYYY'),
+        noofdays:val.Noofdays,id:val.id})
       })
       this.setState({
         tabledatas:tabledatas,
@@ -109,6 +110,7 @@ this.setState({})
       var enddate = dateformat(data[0].endDate, "yyyy-mm-dd")
     this.setState({ spinner:true })
     var self = this
+    console.log(startdate ,"start_date_chk")
     Axios({
             method: 'post',
             url: apiurl + 'Nurse/getnurseidle',
@@ -117,7 +119,6 @@ this.setState({})
             "fromDate":startdate,
             "toDate":enddate,
             "period":"Day",
-             
       }
     })
     .then((response) => {
@@ -125,7 +126,7 @@ this.setState({})
       var tableDatafull = [];
       response.data.data && response.data.data.map((val,index) =>{
         console.log(val,"text_valdata")
-        tabledatas.push({nursename:val.Nursename,gender:val.gender==1 ?"Male" : "Female",age:val.age,experience:val.experience,Nationality:val.nationalityName,
+        tabledatas.push({nursename:val.Nursename,gender:val.gender == 1 ?"Male" : "Female",age:val.age,experience:val.experience,Nationality:val.nationalityName,
                  idlesince:moment(val.IdleSince).format("DD MMM YYYY"),noofdays:val.Noofdays,id:val.id
             })
              tableDatafull.push(val)
@@ -305,3 +306,4 @@ this.setState({})
   }
 }
 export default DashboardTable;
+

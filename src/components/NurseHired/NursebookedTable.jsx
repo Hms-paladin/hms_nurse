@@ -141,6 +141,7 @@ class NursebookedTable extends React.Component {
         return (h < 10 ? '0' : '') + h + ':'+h_24.substring(3, 5) + (Number(h_24.substring(0, 2)) < 12 ? ' AM' : ' PM');
     }
       console.log(data,"itemdaterange")
+      console.log(data,"data_test")
         var startdate = dateformat(data[0].startDate, "yyyy-mm-dd")
         var enddate = dateformat(data[0].endDate,"yyyy-mm-dd")
       this.setState({ spinner: true })

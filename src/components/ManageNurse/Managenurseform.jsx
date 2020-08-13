@@ -15,16 +15,8 @@ import { LeftOutlined } from '@ant-design/icons';
 import NotfoundIcon from "../../Images/NotFound.svg"
 import Swiper from 'react-id-swiper';
 
+import MutipleSlidesPerView from "../../helpers/horizontalSwiper";
 
-const params = {
-  slidesPerView: 3,
-  spaceBetween: 90,
-  pagination: {
-    el: '.swiper-pagination',
-    clickable: true,
-  },
-  
-}
 
 
 export default class Uploadform extends Component {
@@ -37,7 +29,22 @@ export default class Uploadform extends Component {
     })
   }
 
+
   render() {
+    const params = {
+      slidesPerView: 3,
+      spaceBetween: 30,
+      pagination: {
+        el: '.swiper-pagination',
+      },
+      // navigation: {
+      //   nextEl: '.swiper-button-next',
+      //   prevEl: '.swiper-button-prev'
+      // },
+      // renderPrevButton: () => <button className="swiper-button-prev">Prev</button>,
+      // renderNextButton: () => <button className="swiper-button-next">Next</button>,
+    }
+
     const { history_data_store } = this.state
     // var val=this.props.history_data_store
     console.log(this.props.history_data_store, "props_chkkk")
@@ -94,11 +101,68 @@ export default class Uploadform extends Component {
 
         </div>
         <Swiper {...params}>
-          <div>Slide #1</div>
-          <div>Slide #2</div>
-          <div>Slide #3</div>
-          <div>Slide #4</div>
-          <div>Slide #5</div>
+          <div>
+            {this.props.history_data_store[0] && this.props.history_data_store[0].patientHistory.map((cust_history) => {
+              console.log(this.props.history_data_store[0].patientHistory, "cust_history_chk")
+              return (
+                //       <>
+                //             {this.props.history_data_store[0].patientHistory === undefined ?
+                // <div>
+                //   <img src={NotfoundIcon}/><div>No Data Found</div>
+                // </div>
+                // : 
+                <div className="Card-par">
+                  <Card>
+                    <div className="container">
+                      <div className="avatar">
+                        <img src={cust_history.profileImage} className="card-img" alt="not avail" />
+                      </div>
+                    </div>
+                    <button className="btn btn-success">{cust_history.workingHours} Hrs</button>
+
+                    <div className="modal-text">
+                      <h5>
+                        <b>
+                          {/* Mrs.Dina */}
+                          {cust_history.name}
+                        </b>
+                      </h5>
+                      <p>{cust_history.age} Years/{cust_history.gender}</p>
+                      <p>
+                        {/* Jabriya... */}
+                        {cust_history.address}
+                      </p>
+                      <p>
+                        {/* +965 22000001 */}
+                        {cust_history.phone_no}
+                      </p>
+                    </div>
+                    <div className="modal-date">
+                      <div>
+                        <p>Start Date</p>
+                        <p>{cust_history.startDate}</p>
+                      </div>
+
+                      <div>
+                        <p>End Date</p>
+                        <p>{cust_history.endDate}</p>
+                      </div>
+                    </div>
+                    <Divider />
+                    <p className="mt-3 ml-3">
+                      {/* Sponge Bath,Evening Walk */}
+                      {cust_history.duties}
+                    </p>
+                  </Card>
+                </div>
+                // }
+                // </>
+              )
+
+            })}
+
+          </div>
+
         </Swiper>
       </>
     );

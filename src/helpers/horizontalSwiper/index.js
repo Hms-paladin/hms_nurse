@@ -1,17 +1,30 @@
-import React from 'react';
 
+  import React from 'react';
+  import Swiper from 'react-id-swiper';
 
-export default class HorizontalSwiper extends React.Component {
-    render() {
-       
-        // if(this.props.history_data_store.length > 0){
-        //     this.menuItems = this.Menu(this.props.history_data_store.length > 0 && this.props.history_data_store[0].patientHistory, selected);
-        // }
-        console.log(this.props, "checlkl")
-        return (
-            <div>
-                fd
-            </div>
-        )
+  const MutipleSlidesPerView = () => {
+   const params = {
+      slidesPerView: 3,
+      spaceBetween: 30,
+      pagination: {
+        el: '.swiper-pagination',
+        type: 'bullets',
+        clickable: true
+      },
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev'
+      },
     }
-}
+
+    return (
+      <Swiper {...params}>
+        <div>Slide #1</div>
+        <div>Slide #2</div>
+        <div>Slide #3</div>
+        <div>Slide #4</div>
+        <div>Slide #5</div>
+      </Swiper>
+    )
+  };
+  export default MutipleSlidesPerView;

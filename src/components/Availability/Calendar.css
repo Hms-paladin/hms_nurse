@@ -752,4 +752,14 @@ border-bottom-right-radius: 25px !important;
     display: flex;
     align-items: center;
   }
-    
+
+  .table_inter_selleave{
+    background-color: #F19494;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3125) !important;
+    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3125) !important;
+  }
+  
+  .spinner_alignAvaliable span i {
+    background-color: #82AE3F;
+  }

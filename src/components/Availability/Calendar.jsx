@@ -31,8 +31,17 @@ export default class Calendar extends React.Component {
     slotSubtract: 1,
     slotAdd: 1,
     TotalslotsAvailable: [],
-    spinLoad: true
+    spinLoad: false,
+    leaveapplied:[],
   };
+
+  UNSAFE_componentWillReceiveProps(newProps){
+    if(newProps.nurseavaliable){
+      this.getslots(null,null,newProps.nurseId)
+      this.setState({nurseId:newProps.nurseId})
+      this.props.nurseavaliablefalse()
+    }
+  }
 
 
   daysInMonth = () => {
@@ -160,7 +169,8 @@ export default class Calendar extends React.Component {
     console.log(fromdate,"monthmatch")
     console.log(todate,"monthmatch")
 
-    this.getslots(fromdate,todate )
+
+    this.getslots(fromdate,todate,this.state.nurseId )
 
     let curr = "";
     if (this.state.showYearTable === true) {
@@ -211,7 +221,7 @@ export default class Calendar extends React.Component {
     console.log(fromdate,"monthmatch")
     console.log(todate,"monthmatch")
 
-    this.getslots(fromdate,todate )
+    this.getslots(fromdate,todate,this.state.nurseId )
 
     let curr = "";
     if (this.state.showYearTable === true) {
@@ -376,33 +386,40 @@ export default class Calendar extends React.Component {
     );
   };
 
-  componentDidMount() {
-    this.getslots()
-  }
+  // componentDidMount() {
+  //   this.getslots()
+  // }
 
-  getslots = (fromDate, toDate) => {
-
+  getslots = (fromDate, toDate,id) => {
+    this.setState({spinLoad:true})
     var date = new Date();
     var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
     var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
 
-    // console.log(fromDate, "finaltest")
-    // console.log(toDate, "finaltest")
-
-    // var self = this
-
-    // Axios({
-    //   method: 'POST',
-    //   url: apiurl + '/labCalendarSlots',
-    //   data: {
-    //     "lab_id": "2",
-    //     "from_date": fromDate ? fromDate : dateformat(firstDay, "yyyy-mm-dd"),
-    //     "to_date": toDate ? toDate : dateformat(lastDay, "yyyy-mm-dd")
-    //   }
-    // }).then((response) => {
-    //   console.log(response.data, "resdate")
-    //   self.setState({ TotalslotsAvailable: response.data.data, spinLoad: false })
-    // })
+    var self = this
+    Axios({
+      method: 'POST',
+      url: apiurl + 'Nurse/getnurseavailabledetails',
+      data: {
+        "nurseId":id,
+        "nursevendorId":"5",
+        "fromDate": fromDate ? fromDate : dateformat(firstDay, "yyyy-mm-dd"),
+        "toDate": toDate ? toDate : dateformat(lastDay, "yyyy-mm-dd")
+      }
+    }).then((response) => {
+      var leaveapplieddate = []
+      console.log(response.data, "resdate")
+      response.data.data.map((val)=>{
+        if(val.nurseleaveDate){
+          leaveapplieddate.push(new Date(dateformat(val.selected_date,"yyyy,mm,dd")).toString())
+        }else{
+          leaveapplieddate.push(null)
+        }
+      })
+      
+      console.log(leaveapplieddate,"leaveapplieddate")
+      self.setState({ leaveapplied: leaveapplieddate, spinLoad: false })
+    })
   }
 
   render() {
@@ -444,6 +461,8 @@ export default class Calendar extends React.Component {
     if(hidepastdata){
     for (let d = 1; d <= this.daysInMonth(); d++) {
       const startdate = `selectedclr${d}_${this.state.dateObject.format("MMM")}_${this.state.dateObject.format("Y")}`
+      const startdateleave = new Date(dateformat(this.year()+" "+this.month()+" "+d,"yyyy,mm,dd"))
+      
       let currentDay = d == this.currentDay() ? "today" : "";
       if(this.props.aftertwodays){
       var textgreyhide = moment(new Date()).add(1, 'days') < new Date(dateformat(this.year()+" "+this.month()+" "+d,"yyyy,mm,dd")) || dateformat(this.year()+" "+this.month()+" "+d,"yyyy,mm,dd") === moment(new Date()).add(1, 'days').format("yyyy,mm,dd") 
@@ -451,6 +470,8 @@ export default class Calendar extends React.Component {
       else{
       var textgreyhide = new Date() < new Date(dateformat(this.year()+" "+this.month()+" "+d,"yyyy,mm,dd")) || dateformat(this.year()+" "+this.month()+" "+d,"yyyy,mm,dd") === dateformat(new Date(),"yyyy,mm,dd") 
       }
+
+      console.log(startdateleave,"startdateleave")
 
       daysInMonth.push(
 
@@ -462,7 +483,7 @@ export default class Calendar extends React.Component {
             <div
               className={`${startdate === this.state.rangeSelect[0] && "table_fir_sel" ||
                 startdate === this.state.rangeSelect[this.state.rangeSelect.length - 1] && "table_sec_sel" ||
-                this.state.rangeSelect.includes(startdate) && "table_inter_sel"
+                this.state.rangeSelect.includes(startdate) && "table_inter_sel" || this.state.leaveapplied.includes(startdateleave.toString()) && "table_inter_selleave"
                 }`}
             >
               <span className={`${!textgreyhide && "colornonepast"} table-body`}>
@@ -549,19 +570,19 @@ export default class Calendar extends React.Component {
 
         {this.state.showDateTable && (
           <div className="calendar-date">
-            {/* <Spin className="spinner_align" spinning={this.state.spinLoad}> */}
+            <Spin className="spinner_alignAvaliable" spinning={this.state.spinLoad}>
               <table className="calendar-day">
                 <thead className="weekday_shortname">
                   <tr>{weekdayshortname}</tr>
                 </thead>
                 <tbody className="table_body">{daysinmonth}</tbody>
               </table>
-            {/* </Spin> */}
+            </Spin>
 
-            {/* <div className="calslots_container">
+            <div className="calslots_container">
               <div className="total_slots_div"><p className="total_slots"></p><span className="total_slots_text">Total Slots</span></div>
-              <div className="total_slots_div"><p className="avail_slots"></p><span className="total_slots_text">Available Slots</span></div>
-            </div> */}
+              <div className="total_slots_div"><p className="avail_slots"></p><span className="total_slots_text">Leave Slots</span></div>
+            </div>
 
           </div>
         )}

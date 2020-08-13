@@ -22,7 +22,9 @@ export default class Availability extends Component {
       nurseNames: [],
       fromdate: new Date(),
       todate: new Date(),
-      nurseId: ""
+      nurseId: "",
+      nurseId_cal:"1",
+      nurseavaliable:false,
     }
   }
 
@@ -91,6 +93,8 @@ export default class Availability extends Component {
           description:response.data.msg,
             placement:"topRight",
         });
+        this.setState({nurseavaliable:true})
+        
       }).catch((err) => {
 
       })
@@ -116,7 +120,8 @@ export default class Availability extends Component {
 
 
   storeNurse = (data) => {
-    this.setState({ nurseId: data, Selectrequired: false, selectsettrue: true })
+    console.log(data,"dataattttt")
+    this.setState({ nurseId: data, Selectrequired: false, selectsettrue: true ,nurseavaliable:true})
   }
   render() {
     var errorstate = new Date(this.state.fromdate) > new Date(this.state.todate) ||  new Date(this.state.fromdate) === new Date(this.state.todate) 
@@ -127,7 +132,7 @@ export default class Availability extends Component {
       <div>
         <Grid container>
           <Grid item sm={12} md={6}>
-            <Calender getDate={(data) => this.getRangeData(data)} />
+            <Calender getDate={(data) => this.getRangeData(data)} nurseavaliablefalse={()=>this.setState({nurseavaliable:false})} nurseavaliable={this.state.nurseavaliable} nurseId={this.state.nurseId} />
           </Grid>
           <Grid item sm={12} md={6}>
             <div style={{ padding: "20px" }} className="opacity_letter_availability">

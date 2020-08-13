@@ -166,7 +166,7 @@ this.setState({})
       body:bodydata,
     })
      
-    doc.save('UploadDeatails.pdf')
+    doc.save('UploadDetails.pdf')
     
   }}
   // PRINT FUNCTION

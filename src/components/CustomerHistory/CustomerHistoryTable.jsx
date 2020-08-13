@@ -174,7 +174,7 @@ class CustomerHistoryTable extends React.Component {
       body:bodydata,
     })
      
-    doc.save('UploadDeatails.pdf')
+    doc.save('UploadDetails.pdf')
     
   }
 }

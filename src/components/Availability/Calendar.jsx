@@ -33,11 +33,13 @@ export default class Calendar extends React.Component {
     TotalslotsAvailable: [],
     spinLoad: false,
     leaveapplied:[],
+    leaveFirst:dateformat(new Date(new Date().getFullYear(), new Date().getMonth(), 1), "yyyy-mm-dd"),
+    leaveSecond:dateformat(new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0), "yyyy-mm-dd"),
   };
 
   UNSAFE_componentWillReceiveProps(newProps){
     if(newProps.nurseavaliable){
-      this.getslots(null,null,newProps.nurseId)
+      this.getslots(this.state.leaveFirst,this.state.leaveSecond,newProps.nurseId)
       this.setState({nurseId:newProps.nurseId})
       this.props.nurseavaliablefalse()
     }
@@ -168,7 +170,7 @@ export default class Calendar extends React.Component {
 
     console.log(fromdate,"monthmatch")
     console.log(todate,"monthmatch")
-
+    this.setState({leaveFirst:fromdate,leaveSecond:todate})
 
     this.getslots(fromdate,todate,this.state.nurseId )
 
@@ -220,6 +222,8 @@ export default class Calendar extends React.Component {
 
     console.log(fromdate,"monthmatch")
     console.log(todate,"monthmatch")
+
+    this.setState({leaveFirst:fromdate,leaveSecond:todate})
 
     this.getslots(fromdate,todate,this.state.nurseId )
 
@@ -393,8 +397,8 @@ export default class Calendar extends React.Component {
   getslots = (fromDate, toDate,id) => {
     this.setState({spinLoad:true})
     var date = new Date();
-    var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
-    var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+    // var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+    // var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
 
     var self = this
     Axios({
@@ -403,8 +407,8 @@ export default class Calendar extends React.Component {
       data: {
         "nurseId":id,
         "nursevendorId":"5",
-        "fromDate": fromDate ? fromDate : dateformat(firstDay, "yyyy-mm-dd"),
-        "toDate": toDate ? toDate : dateformat(lastDay, "yyyy-mm-dd")
+        "fromDate": fromDate ,
+        "toDate": toDate ,
       }
     }).then((response) => {
       var leaveapplieddate = []

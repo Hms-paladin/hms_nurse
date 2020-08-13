@@ -86,28 +86,22 @@ class NurseServiceCancellationTable extends React.Component {
       return (h < 10 ? '0' : '') + h + ':'+h_24.substring(3, 5) + (Number(h_24.substring(0, 2)) < 12 ? ' AM' : ' PM');
   }
     this.setState({
-      props_loading:true,
+      props_loading:true
     })
     Axios({
       method: 'post',
-      url: apiurl + 'patient/getnursecancelappointment',
+      url: apiurl + 'Nurse/getnursecancelappointment',
       data: {
         nursevendorId:5,
-        // week: rangeday==="week"?true:false,
-        // month: rangeday==="month"?true:false,
-        // year: rangeday==="year"?true:false,
-        date: dateformat(new Date(), "yyyy-mm-dd"),
-        date_to:dateformat(new Date(), "yyyy-mm-dd"),
-        searchContent:"false",
-        name:"",
-        // date:current_day,
-        limit:10,
-        pageno:1,
+        fromDate: dateformat(new Date(), "yyyy-mm-dd"),
+        toDate:dateformat(new Date(), "yyyy-mm-dd"),
+        period:"Day",
       }
   })
   .then((response) => {
+    console.log(response,"checki_res")
       var tabledata = [];
-      response.data.data[0] && response.data.data[0].details.map((val) =>{
+      response.data.data && response.data.data.map((val) =>{
         console.log(val,"text_valdata")
         tabledata.push({customer:val.PatientName,nursename:val.Nursename,noofmonths:val.Noofmonth,
                         cancellleddate:moment(val.CancelDate).format("DD MMM YYYY"),
@@ -136,80 +130,21 @@ class NurseServiceCancellationTable extends React.Component {
   var self = this
   Axios({
           method: 'post',
-          url: apiurl + 'patient/getnursecancelappointment',
+          url: apiurl + 'Nurse/getnursecancelappointment',
           data: {
             "nursevendorId":"5",
-            "week":false,
-            "month":false,
-            "year":false,
-            "searchContent":"false",
-            "name":"",
-            "date":startdate,
-            "date_to":enddate,
-            "limit":10,
-            "pageno":1
+            "fromDate":startdate,
+            "toDate":enddate,
+            "period":"Day",
     }
   })
   .then((response) => {
     var tabledata = [];
     var tableDatafull = [];
-    response.data.data[0] && response.data.data[0].details.map((val,index) =>{
+    response.data.data && response.data.data.map((val,index) =>{
       console.log(val,"text_valdata")
       tabledata.push({customer:val.PatientName,nursename:val.Nursename,noofmonths:val.Noofmonth,
-        cancellleddate:moment(val.CancelDate).format("DD MMM YYYY"),
-        // fromdate:moment(val.from_date).format("DD MMM YYYY"),
-        time:formatTimeShow(
-          val.CancelTime),id:index
-          })
-           tableDatafull.push(val)
-      })
-      this.setState({
-        tabledata:tabledata,
-        wk_Mn_Yr_Full_Data: tableDatafull,
-        props_loading:false,
-        spinner:false
-    })
-    console.log(this.state.wk_Mn_Yr_Full_Data,"datattat")
-})
-}
-  // Date Range Function
-dayReport=(data)=>{
-  function formatTimeShow(h_24) {
-    
-    var h = Number(h_24.substring(0, 2)) % 12;
-    if (h === 0) h = 12;
-    return (h < 10 ? '0' : '') + h + ':'+h_24.substring(3, 5) + (Number(h_24.substring(0, 2)) < 12 ? ' AM' : ' PM');
-}
-  console.log(data,"itemdaterange")
-    var startdate = dateformat(data[0].startDate, "yyyy-mm-dd")
-    var enddate = dateformat(data[0].endDate,"yyyy-mm-dd")
-  this.setState({ spinner: true })
-  var self = this
-  Axios({
-          method: 'post',
-          url: apiurl + 'patient/getnursecancelappointment',
-          data: {
-            "nursevendorId":"5",
-            "week":false,
-            "month":false,
-            "year":false,
-            "searchContent":"false",
-            "name":"",
-            "date":startdate,
-            "date_to":enddate,
-            "limit":10,
-            "pageno":1
-    }
-  })
-  .then((response) => {
-    var tabledata = [];
-    var tableDatafull = [];
-    response.data.data[0] && response.data.data[0].details.map((val,index) =>{
-      console.log(val,"text_valdata")
-      tabledata.push({customer:val.PatientName,nursename:val.Nursename,noofmonths:val.Noofmonth,
-        cancellleddate:moment(val.CancelDate).format("DD MMM YYYY"),
-        time:formatTimeShow(
-          val.CancelTime),id:index
+        cancellleddate:moment(val.CancelDate).format("DD MMM YYYY"),time:formatTimeShow(val.CancelTime),id:index
           })
            tableDatafull.push(val)
       })
@@ -345,3 +280,8 @@ generateprint=()=>{
   }
 }
 export default NurseServiceCancellationTable;
+
+
+
+
+

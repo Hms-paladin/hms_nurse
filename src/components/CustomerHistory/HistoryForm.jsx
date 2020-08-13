@@ -71,7 +71,7 @@ export default class Uploadform extends Component {
             <Grid item spacing={2} xs={12} md={12}>
                   {this.props.OpenViewData[0].nurseDetails.map((val,index)=>{
                   console.log(val,"map_val_check")
-                return(
+                return( 
                   <div className="nurse_view_card">
                     <div className="Card-par col-sm-3">
                       <Card>

@@ -22,8 +22,6 @@ import dateformat from 'dateformat';
 import DateRangeSelect from "../../helpers/DateRange/DateRange";
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
-
-
 var dateFormat = require('dateformat');
 var now = new Date();
 var current_day = dateFormat(now, "yyyy-mm-dd")
@@ -59,7 +57,7 @@ class CustomerHistoryTable extends React.Component {
          return OpenViewData.PatientId===id
       })
       this.setState({ 
-        openview: true,
+        openview: true, 
         OpenViewData:OpenViewData
        });
       console.log(OpenViewData,"openviewdata_checking")
@@ -70,7 +68,7 @@ class CustomerHistoryTable extends React.Component {
   };
   searchChange = (e) =>{
     this.setState({
-      search : e.target.value
+      search:e.target.value
     })
     this.setState({})
       }
@@ -90,23 +88,16 @@ class CustomerHistoryTable extends React.Component {
       url: apiurl + 'Nurse/getvendornurseCustomerhistory',
       data: {
         nursevendorId:5,
-        // week: rangeday==="week"?true:false,
-        // month: rangeday==="month"?true:false,
-        // year: rangeday==="year"?true:false,
-        searchContent:"true",
-        date: dateformat(new Date(), "yyyy-mm-dd"),
-        date_to:dateformat(new Date(), "yyyy-mm-dd"),
-        name:"",
-        // date:current_day,
-        limit:10,
-        pageno:1,
+        fromDate: dateformat(new Date(), "yyyy-mm-dd"),
+        toDate:dateformat(new Date(), "yyyy-mm-dd"),
+        period:"Day"
       }
   })
     .then((response) => {
       console.log(response,"response_check_cancel_table")
       var tabledata = [];
-      console.log(response.data.data[0].details,"nursename_check")
-      response.data.data[0].details.map((val) =>{
+      console.log(response.data.data,"nursename_check")
+      response.data.data.map((val) =>{
         console.log(val,"text_valdata")
         tabledata.push({customer:val.PatientName,nursename:val.Nursename,gender:val.gender,age:val.age,
                       id:val.PatientId})
@@ -115,7 +106,7 @@ class CustomerHistoryTable extends React.Component {
         this.setState({
           tabledata:tabledata,
           props_loading:false,
-          totalValue:response.data.data[0].details,
+          totalValue:response.data.data,
       })
       console.log(this.state.tabledata,"table_data_nurse")
   }).catch((error) => {
@@ -127,12 +118,6 @@ class CustomerHistoryTable extends React.Component {
   // DATE RANGE PICKER FUNCTIONALITY
 
   dayReport=(data)=>{
-  //   function formatTimeShow(h_24) {
-      
-  //     var h = Number(h_24.substring(0, 2)) % 12;
-  //     if (h === 0) h = 12;
-  //     return (h < 10 ? '0' : '') + h + ':'+h_24.substring(3, 5) + (Number(h_24.substring(0, 2)) < 12 ? ' AM' : ' PM');
-  // }
     console.log(data,"itemdaterange")
       var startdate = dateformat(data[0].startDate, "yyyy-mm-dd")
       var enddate = dateformat(data[0].endDate,"yyyy-mm-dd")
@@ -143,26 +128,19 @@ class CustomerHistoryTable extends React.Component {
             url: apiurl + 'Nurse/getvendornurseCustomerhistory',
             data: {
               "nursevendorId":"5",
-              "week":false,
-              "month":false,
-              "year":true,
-              "searchContent":"false",
-              "name":"",
-              "date":startdate,
-              "date_to":enddate,
-              "limit":10,
-              "pageno":1
+              "fromDate":startdate,
+              "toDate":enddate,
+              "period":"Day"
       }
     })
     .then((response) => {
       var tabledata = [];
       var tableDatafull = [];
-      response.data.data[0].details.map((val,index) =>{
+      response.data.data.map((val,index) =>{
         console.log(val,"text_valdata")
         tabledata.push({customer:val.PatientName,nursename:val.Nursename,gender:val.gender,age:val.age,
-                              id:val.PatientId
-            })
-             tableDatafull.push(val)
+                              id:val.PatientId})
+          tableDatafull.push(val)
         })
         this.setState({
           tabledata:tabledata,
@@ -257,12 +235,6 @@ class CustomerHistoryTable extends React.Component {
       <p className="title_header">CUSTOMER HISTORY </p>
       <div style={{ fontSize: "16px" ,display:"flex",alignItems:"center"}}>
       <DateRangeSelect dynalign={"dynalign"} rangeDate={(item)=>this.dayReport(item)} />
-      {/* <ButtonGroup className="clinic_group_details" size="small" aria-label="small outlined button group">
-              <Button className="clinic_details" onClick={()=>this.getTableData("week")}>This Week</Button>
-              <Button className="clinic_details" onClick={()=>this.getTableData("month")}>This Month</Button>
-              <Button className="clinic_details" onClick={()=>this.getTableData("year")}>This Year</Button>
-        </ButtonGroup>
-        <Moment format="DD-MMM-YYYY" className="mr-2"></Moment> */}
         <Search
           placeholder="search"
           onSearch={value => console.log(value)}

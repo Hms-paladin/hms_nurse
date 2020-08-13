@@ -60,9 +60,10 @@ const openNotification = () => {
     });
 }
 
-var startdate = dateformat(new Date(), "yyyy-mm-dd")
+var startDate = moment();
+var startdate = moment(startDate).add(2, 'days').format('YYYY-MM-DD');
 
-var enddate = dateformat(new Date(), "yyyy-mm-dd")
+var enddate = moment(startdate);
 export default class AdBooking extends React.Component {
     constructor(props) {
         super(props)
@@ -87,7 +88,7 @@ export default class AdBooking extends React.Component {
             startdate: startdate,
             endDate:  enddate,
             checked:false,
-
+            minDate:startdate,
 
 
             startdateError: "",
@@ -409,7 +410,7 @@ export default class AdBooking extends React.Component {
         formdata.set('adtotalcost', this.state.adtotalcost)
 
         !this.state.imageChanged && formdata.append('imageArray', [])
-        !this.state.edit && formdata.set('advendorId', 2)
+        !this.state.edit && formdata.set('advendorId', 5)
         !this.state.edit && formdata.set('createdby', 1)
 
         formdata.set('ipaddress', "126.183.0.1")
@@ -445,16 +446,19 @@ export default class AdBooking extends React.Component {
             data: details
         }).then((response) => {
 
-         alert("sdfsdf")          
             this.getAdBooking();
             
             this.props.generateAlert("Advertisement added successfully")
-            this.state.adfeeperday = "";
-            this.state.location = "";
-            this.state.adtotalcost = "";
+
+            this.state.adfeeperday = 100;
+            // this.state.location = "";
+            this.state.adtotalcost = 100;
             this.state.imageName = "";
             this.state.adsize = "";
             this.state.imagedata=[];
+            this.state.startdate = startdate;
+            this.state.endDate = enddate;
+     
 
             this.setState({hidefilelist:true,recallget:true})
 
@@ -477,12 +481,13 @@ export default class AdBooking extends React.Component {
             this.getAdBooking()
             this.props.generateAlert("Advertisement updated successfully")
             this.setState({activeKey:"2",edit:false})
-            this.state.adfeeperday = "";
+            this.state.adfeeperday = 100;
             this.state.startdate = startdate;
             this.state.endDate = enddate;
-            this.state.adtotalcost = "";
+            this.state.adtotalcost = 100;
             this.state.imageName = "";
             this.state.adsize = "";
+            this.state.imagedata=[];
         }).catch((error) => {
             // alert(JSON.stringify(error))
         })
@@ -692,6 +697,7 @@ export default class AdBooking extends React.Component {
 
                         <Calendar
                             getDate={(data) => this.getRangeData(data)}
+                            aftertwodays={true}
                         />
 
                     </Grid>
@@ -702,7 +708,7 @@ export default class AdBooking extends React.Component {
                                     <Grid item xs={12} md={6} className="create_container">
                                         <div className="date_box_sizing">
                                             <Labelbox disablePast={true} type="datepicker" labelname="Start Date" value={this.state.startdate}
-                                            changeData={(date) => this.datepickerChange(date,'startdate')}
+                                            changeData={(date) => this.datepickerChange(date,'startdate')} minDate={this.state.minDate}
                                             /></div>
                                         <div className="validation__error">{this.state.startdateError && this.state.startdateError}</div>
 
@@ -738,7 +744,7 @@ export default class AdBooking extends React.Component {
                                     <Grid item xs={12} md={6} className="create_container">
                                         <div className="date_box_sizing">
                                             <Labelbox type="datepicker" labelname="End Date" disablePast={true}
-                                                value={this.state.endDate} 
+                                                value={this.state.endDate} minDate={this.state.minDate}
                                                 changeData={(data) => this.datepickerChange(data,'enddate')}/>
                                         </div>
                                         <div className="validation__error--minus errmsg_clr">{this.state.dateError && "enddate should be greater than startdate"}</div>

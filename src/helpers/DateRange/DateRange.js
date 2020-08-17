@@ -24,7 +24,6 @@ export default class DateRangeSelect extends React.Component {
     }
     
     onday = (item) => {
-        alert("test")
         if (this.state.onCount === 1) {
             this.setState({
                 item: [item.selection],

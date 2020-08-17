@@ -3,11 +3,8 @@ import Grid from "@material-ui/core/Grid";
 import Labelbox from "../../helpers/labelbox/labelbox";
 import Button from "@material-ui/core/Button";
 import "./Nurse_form.css";
-import { Upload, Icon, message } from "antd";
-import { DatePicker } from "antd";
-import Divider from "@material-ui/core/Divider";
+import { Upload, message } from "antd";
 import "antd/dist/antd.css";
-import Profilepage from "../LabProfile/Profilepage";
 import ValidationLibrary from '../../helpers/validationfunction';
 import Axios from 'axios';
 import { apiurl } from "../../App";
@@ -54,12 +51,12 @@ export default class Nurse_form extends Component {
     manageNurse: {
       'name': {
         'value': '',
-        validation: [{ 'name': 'required'},{'name': 'alphabetsOnly' },{"name":"custommaxLength","params":"20"}],
+        validation: [{ 'name': 'required'},{'name': 'alphabetwithspace'},{'name':'nowhitespace'},{"name":"custommaxLength","params":"20"}],
         error: null,
         errmsg: null
       },
       'dob': {
-        'value': [{ 'name': 'futureDate'}],
+        'value': [{ 'name': 'required'}],
         validation:'',
         error: null,
         errmsg: null
@@ -199,7 +196,7 @@ export default class Nurse_form extends Component {
       manageNurse[manageNurseKeys[i]].errmsg = errorcheck.msg;
     }
     var filtererr = manageNurseKeys.filter((obj) =>
-      manageNurse[obj].error == true);
+      manageNurse[obj].error === true);
     // console.log(filtererr.length)
     if (filtererr.length > 0) {
       this.setState({ error: true })
@@ -247,7 +244,6 @@ export default class Nurse_form extends Component {
     if (this.props.editopenModal===false) {
       this.insertNurse(formData) // Add Api
     }
-    this.insertNurse(formData)
     if (this.props.editopenModal === true && this.state.imageChanged === true) {
       formData.set("id", this.props.editData.nurseId)
       this.updateNurseDetails(formData)  // Update Api with image Call
@@ -290,7 +286,7 @@ export default class Nurse_form extends Component {
       }).catch((error) => {
         // alert(JSON.stringify(error))
       })
-    this.props.getTableData(); // Props from MediaUploadsMaster.jsx
+    this.props.getTableData(); // Props from TotalNurseTable.jsx
 
   }
 
@@ -453,8 +449,8 @@ export default class Nurse_form extends Component {
                   changeData={(data) => this.changeDynamic(data, 'dob')}
                   error={this.state.manageNurse.dob.error}
                   errmsg={this.state.manageNurse.dob.errmsg}
-                  disableFuture={false}
-                  disablePast={true}
+                  disableFuture={true}
+                  blockDate={new Date()}
                 />
               </div>
               <div style={{ width: "47%" }}>
@@ -545,7 +541,7 @@ export default class Nurse_form extends Component {
                     src={imageUrl}
                     className="upload-img-circle"
                     alt="avatar"
-                    style={{ width: "100%" }}
+                    style={{ width: "100%",height:'123px' }}
                   />
                   
 {/*                 

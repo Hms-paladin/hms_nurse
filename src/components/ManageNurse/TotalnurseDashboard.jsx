@@ -9,6 +9,7 @@ import { Input } from "antd";
 import Modalcomp from "../../helpers/ModalComp/Modalcomp";
 import { apiurl } from "../../App";
 import Axios from 'axios';
+import moment from 'moment';
 
 class TotalnurseDashboard extends Component {
   constructor(props) {
@@ -38,13 +39,12 @@ class TotalnurseDashboard extends Component {
     })
       .then((response) => {
         console.log(response, "res")
-        // alert("get")
         var tableData = [];
         response.data.data.map((val) => {
           tableData.push({
             nurseName: val.name,
             gender: val.gender === "1" ? "Male" : "Female",
-            age: val.age,
+            age:  moment().diff(val.dob, 'years'),
             experience: val.experience,
             nationality: val.nationality_id === 1 ? "Saudi" : "America",
             id: val.nurseId
@@ -122,7 +122,7 @@ class TotalnurseDashboard extends Component {
               placeholder="search"
               onSearch={value => console.log(value)}
               style={{ width: 150 }}
-              onChange={(e)=>this.setState({search:e.target.value})}
+              onChange={(e) => this.setState({ search: e.target.value })}
             />
             <img src={Plus} onClick={this.openmodal} />
           </div>

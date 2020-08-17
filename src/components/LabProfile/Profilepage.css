@@ -88,9 +88,8 @@
 
 .working_hour {
   font-size: 13px;
-  padding-bottom: 5%;
-
-  padding-top: 5%;
+  /* padding-bottom: 5%;
+  padding-top: 5%; */
 }
 .working_hour_detail {
   font-size: 11px;

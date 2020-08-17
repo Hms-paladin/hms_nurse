@@ -243,18 +243,12 @@ getAdDetails = (data) => {
                             loader={(data)=>this.setState({dataOnload:data})}
                             apiendpoint={"deleteAdBooking"} generateAlert={this.props.generateAlert}
                                            
-                                            closemodal = {this.handleClose} />
+                            closemodal = {this.handleClose} />
                         </Modalcomp>
                 </div>
                 </>
     }
                 </Spin>
-
-
-       
-               
-                    
-            
         )
     }
 }

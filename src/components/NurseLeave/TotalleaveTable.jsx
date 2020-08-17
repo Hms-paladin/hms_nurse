@@ -88,7 +88,7 @@ class TotalleaveTable extends React.Component {
       body:bodydata,
     })
      
-    doc.save('UploadDeatails.pdf')
+    doc.save('UploadDetails.pdf')
     
   }
 }
@@ -103,33 +103,21 @@ getmethod(rangeday){
   })
   axios({
     method:"POST",
-    url: apiurl + "patient/getnurseleaveinfo",
+    url: apiurl + "Nurse/getnurseleaveinfo",
     data:{
       nursevendorId:"5",
-      // week: rangeday==="week"?true:false,
-      // month: rangeday==="month"?true:false,
-      // year: rangeday==="year"?true:false,
-      week:"false",
-      month:"true",
-      year:"false",
-      searchContent:"false",
-      date: dateformat(new Date(), "yyyy-mm-dd"),
-      date_to:dateformat(new Date(), "yyyy-mm-dd"),
-      name:"",
-      // date:current_day,
-      // date:"2020-07-01",
-	    // date_to:"2020-07-16",
-      limit:10,
-      pageno:1,
+      fromDate: dateformat(new Date(), "yyyy-mm-dd"),
+      toDate:dateformat(new Date(), "yyyy-mm-dd"),
+      period:"Day"
     }
   })
   .then((response)=>{
-    console.log(response,"res")
+    console.log(response.data.data,"res_test")
     var leaveData = [];
-    response.data.data[0] && response.data.data[0].details.map((val)=>{
+    response.data.data && response.data.data.map((val)=>{
       console.log(val,"val_leave")
       leaveData.push({nursename:val.Nursename,gender:val.gender==1?"Male":"Female",experience:val.experience,
-        Nationality:val.nationality_id==1?"Saudi Arabian":"American",
+        Nationality:val.nationality,
         fromdate:moment(val.from_date).format("DD MMM YYYY"),todate:moment(val.to_date).format("DD MMM YYYY"),noofdays:val.Noofdays,id:val.id
       })
     
@@ -156,27 +144,21 @@ dayReport=(data)=>{
   var self = this
   axios({
           method: 'post',
-          url: apiurl + 'patient/getnurseleaveinfo',
+          url: apiurl + 'Nurse/getnurseleaveinfo',
           data: {
             "nursevendorId":"5",
-            "week":false,
-            "month":true,
-            "year":false,
-            "searchContent":"false",
-            "name":"",
-            "date":startdate,
-            "date_to":enddate,
-            "limit":10,
-            "pageno":1
+            "fromDate":startdate,
+            "toDate":enddate,
+             "period":"Day"
     }
   })
   .then((response) => {
     var leaveData = [];
     var tableDatafull = [];
-    response.data.data[0] && response.data.data[0].details.map((val,index) =>{
+    response.data.data && response.data.data.map((val,index) =>{
       console.log(val,"text_valdata")
       leaveData.push({nursename:val.Nursename,gender:val.gender,experience:val.experience,
-        Nationality:val.nationality_id,fromdate:moment(val.from_date).format("DD MMM YYYY"),
+        Nationality:val.nationality,fromdate:moment(val.from_date).format("DD MMM YYYY"),
         todate:moment(val.to_date).format("DD MMM YYYY"),noofdays:val.Noofdays,id:val.id
           })
            tableDatafull.push(val)
@@ -260,12 +242,6 @@ dayReport=(data)=>{
       <p className="title_header">NURSES ON LEAVE </p>
       <div style={{ fontSize: "16px" ,display:"flex",alignItems:"center"}}>
       <DateRangeSelect dynalign={"dynalign"} rangeDate={(item)=>this.dayReport(item)} />
-      {/* <ButtonGroup className="clinic_group_details" size="small" aria-label="small outlined button group">
-              <Button className="clinic_details" onClick={()=>this.getmethod("week")}>This Week</Button>
-              <Button className="clinic_details" onClick={()=>this.getmethod("month")}>This Month</Button>
-              <Button className="clinic_details" onClick={()=>this.getmethod("year")}>This Year</Button>
-        </ButtonGroup>
-        <Moment format="DD-MMM-YYYY" className="mr-2"></Moment> */}
         <Search
           placeholder="search"
           onSearch={value => console.log(value)}

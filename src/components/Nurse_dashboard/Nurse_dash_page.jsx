@@ -76,7 +76,7 @@ class Nurse_dash_page extends Component {
           <div className="nurse_dashboard_buttons_wrap">
             <Card
               component={NavLink}
-              to="/Home/nursehired"
+              to="/Home/nursehired" 
               className="nurse_button1 nurse_button_common_styles"
             >
               <p className="nurse_button_text"> Total Hired</p>

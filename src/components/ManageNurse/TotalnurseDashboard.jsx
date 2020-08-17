@@ -46,7 +46,7 @@ class TotalnurseDashboard extends Component {
             gender: val.gender === "1" ? "Male" : "Female",
             age:  moment().diff(val.dob, 'years'),
             experience: val.experience,
-            nationality: val.nationality_id === 1 ? "Saudi" : "America",
+            nationality: val.nationality_id === 1 ? "Saudi" : "American",
             id: val.nurseId
           })
           console.log(val.id, "yyyyyyy")

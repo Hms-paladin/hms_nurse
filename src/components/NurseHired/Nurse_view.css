@@ -1,6 +1,5 @@
 .dialog_nurse_eyeview .MuiDialog-paper {
   padding: 20px;
-  overflow-y: scroll !important;
 }
 .nurse_view_image_childdiv {
   width: 82%;
@@ -70,7 +69,7 @@
   border-radius: 20px;
   /* width: 30%; */
   height: 40px;
-  white-space: nowrap;
+  /* font-size: 15px; */
   font-size: 14px;
   display: flex;
   color: white;
@@ -83,6 +82,7 @@
   margin-left: 3px;
   text-decoration: underline;
   color: blue;
+  cursor: pointer;
 }
 .nurse_view_name {
   color: #333333;
@@ -125,8 +125,12 @@
   margin-right: 15px;
 }
 .nurse_view_values {
-  color: #33333;
-  font-family: "Roboto" !important;
+  color:#33333;
+  font-family:"Roboto"!important;
+}
+
+.address_edit{
+  font-size: 13px;
 }
 .nurse_view_cancel {
   margin-right: 20px !important;

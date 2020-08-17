@@ -29,6 +29,16 @@ export default class Nurse_view extends Component {
       viewdata:newprops.OpenViewData
     })
   }
+  viewAddress =()=>{
+    console.log(this.state.see,"seeee")
+    // alert("dot_open")
+    // alert(this.state.see)
+    this.setState({
+      see:!this.state.see,
+    })
+    console.log(this.setState.see,"see_check")
+    // alert(this.state.see)
+  }
 
   render() {
     const { classes, onClose, selectedValue, ...other } = this.props;
@@ -36,7 +46,8 @@ export default class Nurse_view extends Component {
     //   const {val} = propsval ? propsval.OpenViewData : ""
     //   console.log(val,"props_open_viewdata_checking")
 
-    const val=this.props.OpenViewData
+    // const val=this.props.OpenViewData
+    var val=this.props.OpenViewData
     console.log(val,"val_checkkk")
       console.log(val.CostofMonth&&val.CostofMonth[0],"props_open_viewdata_checking")
       console.log(val.Dutiesofnurse&&val.Dutiesofnurse,"dutied_array")
@@ -103,7 +114,7 @@ export default class Nurse_view extends Component {
               <div className="dutytime_container">
                 <p className="time-inhours">
                   {/* 8 Hrs */}
-                  {val&&val.working_hours} Hrs
+                  {val && val.working_hours} Hrs
                 </p>
               </div>
             </div>
@@ -121,18 +132,18 @@ export default class Nurse_view extends Component {
             <div className="nurse_view_name_wrap">
               <text className="nurse_view_address">
                 {/* 6623 Western Ring Rd, */}
-                {val&&val.address}
-                <label className="road_dot">...</label>
+                {/* {val&&val.address}
+                <label className="road_dot">...</label> */}
+                <label className="road_dot" onClick={this.viewAddress}>...</label>
+                {this.state.see === false ?
+                        <div className="address_edit">
+                          {this.props.val && val.address?this.props.val && val.address:"----"}
+                          {/* <p>2-79</p>
+                          <p>ABC Street</p>
+                          <p>D NAGAR</p> */}
+                        </div>:null}
               </text>
             </div>
-            {/* <div className="nurse_view_subheader">
-              {" "}
-              <label className="nurse_view_qualitiy">Skills</label>
-              <label className="nurse_view_colon">:</label>
-              <label className="nurse_view_values">
-                Elderly care,Child care
-              </label>{" "}
-            </div> */}
             <div className="nurse_view_subheader">
               {" "}
               <label className="nurse_view_qualitiy">Start Date</label>

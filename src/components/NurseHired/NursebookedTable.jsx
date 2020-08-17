@@ -89,7 +89,7 @@ class NursebookedTable extends React.Component {
           body:bodydata,
         })
          
-        doc.save('UploadDeatails.pdf')
+        doc.save('UploadDetails.pdf')
       }
     }
       // PRINT FUNCTION
@@ -109,22 +109,14 @@ class NursebookedTable extends React.Component {
         url: apiurl + "Nurse/getnursehired",
         data: {
           nursevendorId:5,
-          month:false,
-          week:false,
-          year:true,
-          searchContent:false,
-          name:"",
-          // date:"2020-07-01",
-          // date_to:"2020-07-30",
-          date: dateformat(new Date(), "yyyy-mm-dd"),
-          date_to:dateformat(new Date(), "yyyy-mm-dd"),
-          limit:10,
-          pageno:1,
+          fromDate: dateformat(new Date(), "yyyy-mm-dd"),
+          toDate:dateformat(new Date(), "yyyy-mm-dd"),
+          period:"Day",
         }
     })
     .then((response) => {
-      console.log(response,"response_chk")
-      response.data.data[0].details.map((val,index)=>{
+      console.log(response.data.data,"response_chk")
+      response.data.data.map((val,index)=>{
         console.log(tabledata,"table_data_chk")
         tabledata.push({nursename:val.Nursename,customer:val.PatientName,experience:val.nurseExperience,
                        fromdate:moment(val.from_date).format('DD MMM YYYY'),
@@ -133,7 +125,7 @@ class NursebookedTable extends React.Component {
       })
         this.setState({
           tabledata:tabledata,
-          totalValue:response.data.data[0].details,
+          totalValue:response.data.data,
           props_loading:false,
           // spinner:false
         })
@@ -149,6 +141,7 @@ class NursebookedTable extends React.Component {
         return (h < 10 ? '0' : '') + h + ':'+h_24.substring(3, 5) + (Number(h_24.substring(0, 2)) < 12 ? ' AM' : ' PM');
     }
       console.log(data,"itemdaterange")
+      console.log(data,"data_test")
         var startdate = dateformat(data[0].startDate, "yyyy-mm-dd")
         var enddate = dateformat(data[0].endDate,"yyyy-mm-dd")
       this.setState({ spinner: true })
@@ -158,21 +151,15 @@ class NursebookedTable extends React.Component {
               url: apiurl + 'Nurse/getnursehired',
               data: {
                 "nursevendorId":"5",
-                "week":false,
-                "month":false,
-                "year":true,
-                "searchContent":"false",
-                "name":"",
-                "date":startdate,
-                "date_to":enddate,
-                "limit":10,
-                "pageno":1
+                "fromDate":startdate,
+                "toDate":enddate,
+                "period":"Day"
         }
       })
       .then((response) => {
         var tabledata = [];
         var tableDatafull = [];
-        response.data.data[0].details.map((val,index) =>{
+        response.data.data.map((val,index) =>{
           console.log(val,"text_valdata")
           tabledata.push({nursename:val.Nursename,customer:val.PatientName,experience:val.nurseExperience,
             fromdate:moment(val.from_date).format('DD MMM YYYY'),
@@ -254,12 +241,6 @@ class NursebookedTable extends React.Component {
       <div className="title_header">TOTAL NURSES HIRED</div>
       <div style={{ fontSize: "16px",display:"flex",alignItems:"center" }}>
       <DateRangeSelect dynalign={"dynalign"} rangeDate={(item)=>this.dayReport(item)} />
-        {/* <ButtonGroup className="clinic_group_details" size="small" aria-label="small outlined button group">
-          <Button className="clinic_details">This Week</Button>
-          <Button className="clinic_details">This Month</Button>
-          <Button className="clinic_details">This Year</Button>
-        </ButtonGroup>
-        <Moment format="DD-MMM-YYYY" className="mr-2 ml-2"></Moment> */}
         <Search
           placeholder="Search"
           onSearch={value => console.log(value)}

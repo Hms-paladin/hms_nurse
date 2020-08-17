@@ -12,6 +12,7 @@ import Nurse_form from "./Nurse_form";
 
 class DashboardTable extends React.Component {
   state = {
+    editopen:false,
     openview: false,
     deleteopen: false,
     tableData: [],
@@ -40,7 +41,6 @@ class DashboardTable extends React.Component {
 
 
   modelopen = (data, id) => {
-    alert(id)
     console.log(id, data, this.state, "edit_id")
     if (data === "view") {
       console.log(data, "view_data")
@@ -170,7 +170,7 @@ class DashboardTable extends React.Component {
           <Nurse_form getTableData={() => this.props.getTableData()}
             closemodal={this.closemodal}
             editData={this.state.editData}
-            editopenModal={this.state.editopen && true} />
+            editopenModal={this.state.editopen} />
         </Modalcomp>
 
         <Modalcomp visible={this.state.deleteopen} title={"Delete"} closemodal={this.closemodal} xswidth={"xs"} clrchange="textclr">

@@ -140,7 +140,7 @@ class TotalnurseDashboard extends Component {
           clrchange="textclr"
           xswidth={"lg"}
         >
-          <Nurse_form visible={this.state.open} closemodal={this.onclosemodal} getTableData={() => this.getTableData()} />
+          <Nurse_form visible={this.state.open} closemodal={this.onclosemodal} editopenModal={false} getTableData={() => this.getTableData()} />
         </Modalcomp>
       </div>
     );

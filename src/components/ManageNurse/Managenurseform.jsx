@@ -1,23 +1,12 @@
 import React, { Component } from "react";
 import Grid from "@material-ui/core/Grid";
 import "./Managenurseform.css";
-import { Paper } from "@material-ui/core";
 import Card from "@material-ui/core/Card";
-import one from "../../Images/11.jpg";
 import Divider from "@material-ui/core/Divider";
-import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import { FaAngleRight } from "react-icons/fa";
-import Axios from "axios";
-import { apiurl } from "../../App";
-import { RightOutlined } from '@ant-design/icons';
-import { LeftOutlined } from '@ant-design/icons';
 import NotfoundIcon from "../../Images/NotFound.svg"
 import Swiper from 'react-id-swiper';
-
-import MutipleSlidesPerView from "../../helpers/horizontalSwiper";
-
-
+import dateFormat from 'dateformat';
 
 export default class Uploadform extends Component {
   state = {
@@ -75,7 +64,7 @@ export default class Uploadform extends Component {
                           </b>
                         </h2>
                         <div style={{ fontSize: "15px" }}>
-                          <p >{val.age}years/{val.gender}</p>
+                          <p >{val.age} Years/{val.gender === 1 ? "Male" : "Female"}</p>
                           <p>
                             {/* Jabriya... */}
                             {val.address}
@@ -118,7 +107,7 @@ export default class Uploadform extends Component {
                         <img src={cust_history.profileImage} className="card-img" alt="not avail" />
                       </div>
                     </div>
-                    <button className="btn btn-success">{cust_history.workingHours} Hrs</button>
+                    <button className="btn btn-success hrsbtn">{cust_history.workingHours} Hrs</button>
 
                     <div className="modal-text">
                       <h5>
@@ -140,12 +129,12 @@ export default class Uploadform extends Component {
                     <div className="modal-date">
                       <div>
                         <p>Start Date</p>
-                        <p>{cust_history.startDate}</p>
+                        <p>{dateFormat(cust_history.startDate,"yyyy-mm-dd")}</p>
                       </div>
 
                       <div>
                         <p>End Date</p>
-                        <p>{cust_history.endDate}</p>
+                        <p>{dateFormat(cust_history.endDate,"yyyy-mm-dd")}</p>
                       </div>
                     </div>
                     <Divider />

@@ -193,3 +193,7 @@ font-size:1.5rem !important;
   display: flex;
   margin-top: 70px;
 }
+
+.hrsbtn{
+  cursor: auto !important;
+}

@@ -97,9 +97,7 @@ export default class BasicDetails extends React.Component {
       this.setState({ Profile })
     }
     Notification = (description) => {
- 
       notification.success({
-          message: 'Success',
           description,
           onClick: () => {
             console.log('Clicked!');
@@ -135,7 +133,7 @@ export default class BasicDetails extends React.Component {
       console.log("response",response)
       // window.location.reload(false)
      this.props.ProfileGetApi()
-     this.Notification("Updated successfully ")
+     this.Notification("Profile Updated successfully ")
     }).catch((error) => {
         
     })

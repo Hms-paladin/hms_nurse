@@ -255,7 +255,6 @@ export default class Nurse_form extends Component {
 
   // POST API FOR ADD MEDIA
   insertNurse = (formData) => {
-    alert("Check")
     var self = this
     Axios({
       method: 'POST',

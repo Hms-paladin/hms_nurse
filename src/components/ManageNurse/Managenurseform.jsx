@@ -90,16 +90,10 @@ export default class Uploadform extends Component {
 
         </div>
         <Swiper {...params}>
-          <div>
-            {this.props.history_data_store[0] && this.props.history_data_store[0].patientHistory.map((cust_history) => {
-              console.log(this.props.history_data_store[0].patientHistory, "cust_history_chk")
-              return (
-                //       <>
-                //             {this.props.history_data_store[0].patientHistory === undefined ?
-                // <div>
-                //   <img src={NotfoundIcon}/><div>No Data Found</div>
-                // </div>
-                // : 
+          {this.props.history_data_store[0] && this.props.history_data_store[0].patientHistory.map((cust_history) => {
+            console.log(this.props.history_data_store[0].patientHistory, "cust_history_chk")
+            return (
+              <div>
                 <div className="Card-par">
                   <Card>
                     <div className="container">
@@ -129,12 +123,12 @@ export default class Uploadform extends Component {
                     <div className="modal-date">
                       <div>
                         <p>Start Date</p>
-                        <p>{dateFormat(cust_history.startDate,"yyyy-mm-dd")}</p>
+                        <p>{dateFormat(cust_history.startDate, "yyyy-mm-dd")}</p>
                       </div>
 
                       <div>
                         <p>End Date</p>
-                        <p>{dateFormat(cust_history.endDate,"yyyy-mm-dd")}</p>
+                        <p>{dateFormat(cust_history.endDate, "yyyy-mm-dd")}</p>
                       </div>
                     </div>
                     <Divider />
@@ -144,13 +138,11 @@ export default class Uploadform extends Component {
                     </p>
                   </Card>
                 </div>
-                // }
-                // </>
-              )
+              </div>
+            )
 
-            })}
+          })}
 
-          </div>
 
         </Swiper>
       </>

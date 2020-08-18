@@ -1,9 +1,6 @@
 .brdrcls .label-box {
   font-size: 1.5rem !important;
 }
-/* .formdiv {
-  margin-left: 20px;
-} */
 .MuiTypography-body1 {
   font-size: 1.5rem !important;
 }
@@ -15,9 +12,6 @@
   height: auto;
   margin-left: 4px;
 }
-/* .labeltxt {
-  color: rgb(151 151 151) !important;
-} */
 .button {
   font-size: 1.5rem;
 }
@@ -137,40 +131,26 @@ font-size:1.5rem !important;
   border-radius: 15px !important;
 }
 
-/* .container {
-  width: 400px;
-  margin: 120px auto 120px;
-  background-color: #fff;
-  padding: 0 20px 20px;
-  border-radius: 6px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.075);
-  text-align: center;
-} */
 .Card-par {
   position: relative;
-  margin-top: 20px;
-  margin-bottom: 15px;
-  margin-left: 5px;
-  /* width: 200%; */
   width: 100%;
   padding: 3px 3px;
   overflow-x: scroll;
-  display: flex;
 }
 .avatar {
-  border-radius: 100px;
-  overflow: hidden;
-  /* height: 38px; */
-  /* width: 55px;
-  height: 55px; */
+  /* border-radius: 100px; */
+  /* overflow: hidden; */
   position: absolute;
-  top: -20px;
+  top:0px;
   margin: auto;
   left: 12px;
 }
 .card-img {
+  /* width: 50px;
+  height: auto; */
   width: 50px;
-  height: auto;
+  height: 50px;
+  border-radius: 30px;
 }
 .card-profile {
   width: 100%;
@@ -192,4 +172,8 @@ font-size:1.5rem !important;
   font-size: 30px;
   display: flex;
   margin-top: 70px;
+}
+
+.hrsbtn{
+  cursor: auto !important;
 }

@@ -27,3 +27,12 @@ body {
 .anticon-download{
   display: none;
 }
+
+/*message*/
+.ant-message-notice {
+  margin-top: 65px !important;
+}
+
+.ant-message .anticon {
+  top: -2px !important;
+}

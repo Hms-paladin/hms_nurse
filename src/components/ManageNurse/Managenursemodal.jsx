@@ -8,6 +8,7 @@ import "./Managenursemodal.css";
 import { MdLocationOn, MdLocalPhone } from "react-icons/md";
 import {MdEmail } from "react-icons/md";
 import CloseIcon from '@material-ui/icons/Close';
+import No_image_available from "../../Images/No_image_available.svg"
 
 const styles = {};
 
@@ -48,7 +49,13 @@ export default class Profilepage extends React.Component {
               <Grid item xs={12} md={5}>
                 <div className="manage_nurse_image_container">
                   <div className="manage_nurse_image_div">
-                    <img className="manage_nurse_image" src={viewData.profile_image} />
+                    {/* <img className="manage_nurse_image" src={viewData.profile_image} /> */}
+                    <img
+                  className="manage_nurse_image"
+                  src={viewData.profile_image?viewData.profile_image:No_image_available}
+                  alt="This IMG format is not supporting"
+                  style={{ height: "100" }}
+                />{" "}
                   </div>
                 </div>
               </Grid>
@@ -94,26 +101,26 @@ export default class Profilepage extends React.Component {
                       </h4>
                     </div>
                     <div className="nurse_working_detail">
-                      <h4 className="nurse_working_hour_detail">Gender</h4>
+                      <h4 className="nurse_working_hour_detail mr-2">Gender</h4>
 
                       <p className="working_time_detail">{this.props.viewData.gender == 1 ? "Male" : "Female"}</p>
                     </div>
                     <div>
                       <div className="nurse_working_detail">
-                        <h4 className="nurse_working_hour_detail">Date Of Birth</h4>
+                        <h4 className="nurse_working_hour_detail mr-2">Date Of Birth</h4>
                         <p className="working_time_detail">{viewData.dob}</p>
                       </div>
                     </div>
                     <div>
                       <div className="nurse_working_detail">
-                        <h4 className="nurse_working_hour_detail">Nationality</h4>
+                        <h4 className="nurse_working_hour_detail mr-2">Nationality</h4>
 
                         <p className="working_time_detail">{this.props.viewData.nationality_id == 1 ? "SaudiArabian" : "American"}</p>
                       </div>
                     </div>
                     <div>
                       <div className="nurse_working_detail">
-                        <h4 className="nurse_working_hour_detail">Language</h4>
+                        <h4 className="nurse_working_hour_detail mr-2">Language</h4>
 
                         <p className="working_time_detail">{viewData.language}</p>
                       </div>

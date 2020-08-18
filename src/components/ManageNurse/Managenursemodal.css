@@ -46,6 +46,10 @@
   width: 100%;
   height: auto;
 }
+.manage_nurse_image_div img{
+  /* height: 100%; */
+  width: 100%;
+}
 .divider {
   padding: 20px !important;
 }

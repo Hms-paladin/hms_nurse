@@ -80,6 +80,7 @@ export default class DealList extends React.Component {
                   <div>
                     <span>Test Name</span>
                     <div>{listdata.deal_service_type == "" ? "All" : listdata.deal_service_type}</div>
+        {/* <div>{listdata.deal_service_type == ""? "All" : "All"}</div> */}
                     
                     
                   </div>

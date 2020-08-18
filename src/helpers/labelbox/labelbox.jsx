@@ -150,18 +150,7 @@ export default class Labelbox extends Component {
 								disableToolbar={false}
 								autoOk={true}
 								clearable={false}
-								disableUnderline={true}
-								disableFuture={this.props.disableFuture ? this.props.disableFuture : false}
-								disablePast={this.props.disablePast ? this.props.disablePast : false}
-<<<<<<< HEAD
-								minDate={this.props.minDate}
-								maxDate={this.props.maxDate}
-								minDateMessage=""
-=======
-								disablePast={this.props.disablePast ? this.props.disablePast : false}
-								minDate={this.props.minDate ? this.props.minDate : null}
-
->>>>>>> dcb4a2b23d9f9670e253779977009a30c9466c5a
+							
 								variant="variant"
 								format="dd/MM/yyyy"
 								margin="normal"

@@ -5,7 +5,6 @@ import { Grid, Button } from "@material-ui/core";
 import No_image_available from "../../Images/No_image_available.svg"
 import CloseIcon from '@material-ui/icons/Close';
 import dateformat from 'dateformat';
-
 import "./Nurse_view.css";
 
 const styles = {};
@@ -101,7 +100,7 @@ export default class Nurse_view extends Component {
                 <div className="nurse_view_name_wrap">
                   <text className="nurse_view_experience">
                     {/* 3 Years experience */}
-                    {val&&val.nurseExperience} Years experience
+                    {val&&val.nurseExperience} Years Experience
                   </text>
                 </div>
                 <div className="nurse_view_name_wrap">

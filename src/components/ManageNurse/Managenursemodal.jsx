@@ -127,11 +127,9 @@ export default class Profilepage extends React.Component {
                     </div>
                     <div>
                       <div className="nurse_working_detail">
-                        <h4 className="nurse_working_hour_detail">Skills</h4>
+                        <h4 className="skills_div">Skills</h4>
 
-                        <p className="working_time_detail">
-                          {viewData.skills}
-                        </p>
+                        <p className="skill_data">{viewData.skills}</p>
                       </div>
                     </div>
                   </div>

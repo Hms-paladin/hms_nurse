@@ -45,14 +45,14 @@ class Nurse_dash_page extends Component {
     //   CostofMonth.push({CostofMonth:val.CostofMonth,id:val.nurseId})
     //  })
 
-      response.data.data[0].todaysappointment.map((val,index)=>{
-          TableData.push({customername:val.PatientName,nursename:val.Nursename,dutyhours:val.working_hours,
-                         months:val.Noofmonth,
-                         costofmonth:val.CostofMonth && val.CostofMonth[0].CostofMonth,
-                         totalcost:val.amount,      
-                         id:index       
-                        })
-      })
+      // response.data.data[0].todaysappointment.map((val,index)=>{
+      //     TableData.push({customername:val.PatientName,nursename:val.Nursename,dutyhours:val.working_hours,
+      //                    months:val.Noofmonth,
+      //                    costofmonth:val.CostofMonth && val.CostofMonth[0].CostofMonth,
+      //                    totalcost:val.amount,      
+      //                    id:index       
+      //                   })
+      // })
       self.setState({
         cancel:ApiData.cancel_count,
         nursehired:ApiData.nursehired,

@@ -1,9 +1,6 @@
 .brdrcls .label-box {
   font-size: 1.5rem !important;
 }
-/* .formdiv {
-  margin-left: 20px;
-} */
 .MuiTypography-body1 {
   font-size: 1.5rem !important;
 }
@@ -15,9 +12,6 @@
   height: auto;
   margin-left: 4px;
 }
-/* .labeltxt {
-  color: rgb(151 151 151) !important;
-} */
 .button {
   font-size: 1.5rem;
 }

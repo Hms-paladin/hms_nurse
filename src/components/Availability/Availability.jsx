@@ -77,7 +77,8 @@ export default class Availability extends Component {
       var data = {
         "nurseId": this.state.nurseId,
         "from_date": dateFormat(new Date(this.state.fromdate),"yyyy-mm-dd"),
-        "to_date": dateFormat(new Date(this.state.todate),"yyyy-mm-dd")
+        "to_date": dateFormat(new Date(this.state.todate),"yyyy-mm-dd"),
+        "nursevendorId": "5" 
       }
 
       // dateFormat(new Date(this.state.fromdate),"yyyy-mm-dd"),

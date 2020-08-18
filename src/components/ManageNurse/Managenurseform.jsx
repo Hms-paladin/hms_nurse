@@ -123,12 +123,12 @@ export default class Uploadform extends Component {
                     <div className="modal-date">
                       <div>
                         <p>Start Date</p>
-                        <p>{dateFormat(cust_history.startDate, "yyyy-mm-dd")}</p>
+                        <p>{dateFormat(cust_history.startDate, "dd mmm yyyy")}</p>
                       </div>
 
                       <div>
                         <p>End Date</p>
-                        <p>{dateFormat(cust_history.endDate, "yyyy-mm-dd")}</p>
+                        <p>{dateFormat(cust_history.endDate, "dd mmm yyyy")}</p>
                       </div>
                     </div>
                     <Divider />

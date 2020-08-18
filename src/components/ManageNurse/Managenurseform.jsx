@@ -89,6 +89,7 @@ export default class Uploadform extends Component {
 
 
         </div>
+<<<<<<< HEAD
         <Swiper {...params}>
           {this.props.history_data_store[0] && this.props.history_data_store[0].patientHistory.map((cust_history) => {
             console.log(this.props.history_data_store[0].patientHistory, "cust_history_chk")
@@ -103,6 +104,27 @@ export default class Uploadform extends Component {
                       </div>
                     </div>
                     <button className="btn btn-success hrsbtn">{cust_history.workingHours} Hrs</button>
+=======
+        {/* : } */}
+        <div>
+            {this.props.history_data_store[0] && this.props.history_data_store[0].patientHistory.map((cust_history)=>{
+            console.log(this.props.history_data_store[0].patientHistory,"cust_history_chk")
+            return(
+        //       <>
+        //             {this.props.history_data_store[0].patientHistory === undefined ?
+        // <div>
+        //   <img src={NotfoundIcon}/><div>No Data Found</div>
+        // </div>
+        // : 
+          <div className="Card-par col-sm-3">
+            <Card>
+              <div className="container">
+                <div className="avatar">
+                  <img src={cust_history.profileImage} className="card-img" alt="not avail" />
+                </div>
+              </div>
+            <button className="btn btn-success">{cust_history.workingHours} Hrs</button>
+>>>>>>> dcb4a2b23d9f9670e253779977009a30c9466c5a
 
                     <div className="modal-text">
                       <h5>
@@ -145,7 +167,7 @@ export default class Uploadform extends Component {
           })}
 
 
-        </Swiper>
+        {/* </Swiper> */}
       </>
     );
   }

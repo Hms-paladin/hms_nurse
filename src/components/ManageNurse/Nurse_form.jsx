@@ -51,7 +51,7 @@ export default class Nurse_form extends Component {
     manageNurse: {
       'name': {
         'value': '',
-        validation: [{ 'name': 'required'},{'name': 'alphabetwithspace'},{'name':'nowhitespace'},{"name":"custommaxLength","params":"20"}],
+        validation: [{ 'name': 'required'}],
         error: null,
         errmsg: null
       },

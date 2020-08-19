@@ -94,26 +94,26 @@ export default class Profilepage extends React.Component {
                       </h4>
                     </div>
                     <div className="nurse_working_detail">
-                      <h4 className="nurse_working_hour_detail">Gender</h4>
+                      <h4 className="nurse_working_hour_detail mr-2">Gender</h4>
 
                       <p className="working_time_detail">{this.props.viewData.gender == 1 ? "Male" : "Female"}</p>
                     </div>
                     <div>
                       <div className="nurse_working_detail">
-                        <h4 className="nurse_working_hour_detail">Date Of Birth</h4>
+                        <h4 className="nurse_working_hour_detail mr-2">Date Of Birth</h4>
                         <p className="working_time_detail">{viewData.dob}</p>
                       </div>
                     </div>
                     <div>
                       <div className="nurse_working_detail">
-                        <h4 className="nurse_working_hour_detail">Nationality</h4>
+                        <h4 className="nurse_working_hour_detail mr-2">Nationality</h4>
 
                         <p className="working_time_detail">{this.props.viewData.nationality_id == 1 ? "SaudiArabian" : "American"}</p>
                       </div>
                     </div>
                     <div>
                       <div className="nurse_working_detail">
-                        <h4 className="nurse_working_hour_detail">Language</h4>
+                        <h4 className="nurse_working_hour_detail mr-2">Language</h4>
 
                         <p className="working_time_detail">{viewData.language}</p>
                       </div>

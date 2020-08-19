@@ -172,7 +172,9 @@ class NursebookedTable extends React.Component {
             tabledata:tabledata,
             wk_Mn_Yr_Full_Data:tableDatafull,
             props_loading:false,
-            spinner:false
+            spinner:false,
+            totalValue:tableDatafull
+            
         })
         console.log(this.state.wk_Mn_Yr_Full_Data,"datattat")
     })

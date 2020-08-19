@@ -157,7 +157,7 @@ dayReport=(data)=>{
     var tableDatafull = [];
     response.data.data && response.data.data.map((val,index) =>{
       console.log(val,"text_valdata")
-      leaveData.push({nursename:val.Nursename,gender:val.gender,experience:val.experience,
+      leaveData.push({nursename:val.Nursename,gender:val.gender==="1" || val.gender==="Male"?"Male":"Female",experience:val.experience,
         Nationality:val.nationality,fromdate:moment(val.from_date).format("DD MMM YYYY"),
         todate:moment(val.to_date).format("DD MMM YYYY"),noofdays:val.Noofdays,id:val.id
           })

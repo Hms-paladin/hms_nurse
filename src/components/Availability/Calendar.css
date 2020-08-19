@@ -335,10 +335,10 @@
 .table_cells  td:nth-child(6){
   color: #E12F2F !important;
 }
-.total_slots{
+.block_slots{
    width: 15px;
    height:15px;
-   background-color: #A3C4EC;
+   background-color: #b7b4b4;
    border-radius: 50%;
 }
 .total_slots_div{
@@ -349,7 +349,7 @@
 .total_slots_div p{
     margin-bottom: 0px !important;
 }
-.total_slots{
+.block_slots{
     margin-right: 10px;
 }
 .avail_slots{
@@ -759,6 +759,14 @@ border-bottom-right-radius: 25px !important;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3125) !important;
     -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3125) !important;
   }
+
+  .table_inter_selblock{
+    background-color: #b7b4b4;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3125) !important;
+    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3125) !important;
+  }
+  
   
   .spinner_alignAvaliable span i {
     background-color: #82AE3F;

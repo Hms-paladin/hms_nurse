@@ -139,7 +139,7 @@ export default class Nurse_form extends Component {
       this.state.manageNurse.name.value = editData.name
       this.state.manageNurse.dob.value = editData.dob
       this.state.manageNurse.experience.value = editData.experience
-      this.state.manageNurse.gender.value = parseInt(editData.gender)
+      this.state.manageNurse.gender.value =editData.gender
       this.state.manageNurse.nationality.value = editData.nationality_id
       this.state.manageNurse.mobile_number.value = editData.mobileno
       this.state.manageNurse.cost_per_month_8hrs.value = editData.cost_eight_hours
@@ -381,7 +381,7 @@ export default class Nurse_form extends Component {
                   type="select"
                   labelname="Gender"
                   valuelabel={'value'}
-                  valuebind={"id"}
+                  valuebind={"value"}
                   dropdown={this.state.gender}
                   changeData={(data) => this.changeDynamic(data, 'gender')}
                   value={this.state.manageNurse.gender.value}

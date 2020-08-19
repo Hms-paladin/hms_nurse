@@ -43,7 +43,7 @@ class TotalnurseDashboard extends Component {
         response.data.data.map((val) => {
           tableData.push({
             nurseName: val.name,
-            gender: val.gender === "1" ? "Male" : "Female",
+            gender: val.gender,
             age:  moment().diff(val.dob, 'years'),
             experience: val.experience,
             nationality: val.nationality_id === 1 ? "Saudi" : "American",

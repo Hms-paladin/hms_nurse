@@ -33,118 +33,122 @@ export default class Uploadform extends Component {
       // renderPrevButton: () => <button className="swiper-button-prev">Prev</button>,
       // renderNextButton: () => <button className="swiper-button-next">Next</button>,
     }
+    // const params = {
+    //   direction: 'vertical',
+    //   slidesPerView: 'auto',
+    //   freeMode: true,
+    //   scrollbar: {
+    //     el: '.swiper-scrollbar'
+    //   },
+    //   mousewheel: true
+    // }
+
 
     const { history_data_store } = this.state
     // var val=this.props.history_data_store
     console.log(this.props.history_data_store, "props_chkkk")
     return (
       <>
-        <div>
-          <Grid container style={{ width: "100%" }}>
-            <Grid container spacing={2} xs={12}>
-              {this.props.history_data_store.map((val) => {
-                console.log(val, "valchecking")
-                return (
-                  <>
-                    {/* {val === undefined ?
-        <div>
-          <img src={NotfoundIcon}/><div>No Data Found</div>
-        </div>
-        :  */}
-                    {/* <> */}
-                    <Grid item spacing={2} xs={6} md={3}>
-                      <img src={val.profileImage} className="card-profile" />
-                    </Grid>
-                    <Grid item spacing={2} xs={6} md={9}>
-                      <div>
-                        <h2>
-                          <b>
-                            {/* ABIDA */}
-                            {val.nurseName}
-                          </b>
-                        </h2>
-                        <div style={{ fontSize: "15px" }}>
-                          <p >{val.age} Years/{val.gender === 1 ? "Male" : "Female"}</p>
-                          <p>
-                            {/* Jabriya... */}
-                            {val.address}
-                          </p>
-                          <p>
-                            {val.experience} Years Experience
+        <div className="row nurseHistoryWidth">
+          {
+            this.props.history_data_store && this.props.history_data_store.map((val) => {
+              return (
+                <>
+                  <div className="col-md-4">
+                    <img src={val.profileImage} className="card-profile" />
+                  </div>
+                  <div className="col-md-6">
+                    <div>
+                      <h2>
+                        <b>
+                          {/* ABIDA */}
+                          {val.nurseName}
+                        </b>
+                      </h2>
+                      <div style={{ fontSize: "15px" }}>
+                        <p >{val.age} Years/{val.gender === 1 ? "Male" : "Female"}</p>
+                        <p>
+                          {/* Jabriya... */}
+                          {val.address}
+                        </p>
+                        <p>
+                          {val.experience} Years Experience
                 </p>
-                          <p>
+                        <p>
+                          {/* +965 22000001 */}
+                          {val.mobileNo}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </>
+              )
+            })
+          }
+        </div>
+        {/* <Swiper {...params}>
+         
+
+        </Swiper> */}
+
+        <div className="row"> {/* ROw start */}
+          {
+            this.props.history_data_store[0] && this.props.history_data_store[0].patientHistory.map((cust_history) => {
+              return (
+                <div className="col-md-4 nurseCardSpace">
+                  <div>
+                    <div className="Card-par-nurse">
+                      <Card>
+                        <div className="container">
+                          <div className="avatar">
+                            <img src={cust_history.profileImage} className="card-img" alt="not avail" />
+                          </div>
+                        </div>
+                        <button className="btn btn-success hrsbtn hrsBtnNurse">{cust_history.workingHours} Hrs</button>
+
+                        <div className="modal-text">
+                          <h5>
+                            {cust_history.name}
+                          </h5>
+                          <p className="customer-txt">{cust_history.age} Years/{cust_history.gender}</p>
+                          <p className="customer-txt">
+                            {/* Jabriya... */}
+                            {cust_history.address}
+                          </p>
+                          <p className="customer-txt">
                             {/* +965 22000001 */}
-                            {val.mobileNo}
+                            {cust_history.phone_no}
                           </p>
                         </div>
-                      </div>
-                    </Grid>
-                    {/* </> */}
-                    {/* } */}
-                  </>
-                )
-              })}
-            </Grid>
-          </Grid>
+                        <div className="modal-date">
+                          <div>
+                            <p className="customer-txt">Start Date</p>
+                            <p className="customer-txt">{dateFormat(cust_history.startDate, "dd mmm yyyy")}</p>
+                          </div>
 
-
-        </div>
-        <Swiper {...params}>
-          {this.props.history_data_store[0] && this.props.history_data_store[0].patientHistory.map((cust_history) => {
-            console.log(this.props.history_data_store[0].patientHistory, "cust_history_chk")
-            return (
-              <div>
-                <div className="Card-par">
-                  <Card>
-                    <div className="container">
-                      <div className="avatar">
-                        <img src={cust_history.profileImage} className="card-img" alt="not avail" />
-                      </div>
+                          <div>
+                            <p className="customer-txt">End Date</p>
+                            <p className="customer-txt">{dateFormat(cust_history.endDate, "dd mmm yyyy")}</p>
+                          </div>
+                        </div>
+                        <Divider className="mb-0" />
+                        <div className="curstomerservice">
+                          <p className="customer-txt">
+                            {cust_history.duties}
+                          </p>
+                        </div>
+                      </Card>
                     </div>
-                    <button className="btn btn-success hrsbtn">{cust_history.workingHours} Hrs</button>
-
-                    <div className="modal-text">
-                      <h5>
-                        <b>
-                          {/* Mrs.Dina */}
-                          {cust_history.name}
-                        </b>
-                      </h5>
-                      <p>{cust_history.age} Years/{cust_history.gender}</p>
-                      <p>
-                        {/* Jabriya... */}
-                        {cust_history.address}
-                      </p>
-                      <p>
-                        {/* +965 22000001 */}
-                        {cust_history.phone_no}
-                      </p>
-                    </div>
-                    <div className="modal-date">
-                      <div>
-                        <p>Start Date</p>
-                        <p>{dateFormat(cust_history.startDate, "dd mmm yyyy")}</p>
-                      </div>
-
-                      <div>
-                        <p>End Date</p>
-                        <p>{dateFormat(cust_history.endDate, "dd mmm yyyy")}</p>
-                      </div>
-                    </div>
-                    <Divider />
-                    <p className="mt-3 ml-3">
-                      {/* Sponge Bath,Evening Walk */}
-                      {cust_history.duties}
-                    </p>
-                  </Card>
+                  </div>
                 </div>
-              </div>
-            )
+              )
+            })
+          }
 
-          })}
+        </div>{/* ROw End */}
 
 
-        </Swiper>
+
       </>
     );
   }

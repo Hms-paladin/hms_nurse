@@ -119,41 +119,40 @@ font-size:1.5rem !important;
   margin-right: 5px;
 }
 .modal-text {
-  margin-left: 35%;
-  margin-top: 5%;
+  margin-left: 25% !important;
+  margin-top: 4% !important;
 }
-.btn-success {
+.hrsBtnNurse {
   float: right;
   margin-right: 2%;
   margin-top: 2%;
   padding-right: 7% !important;
   padding-left: 7% !important;
-  border-radius: 15px !important;
+  border-radius: 50% !important;
 }
 
-.Card-par {
-  position: relative;
+.Card-par-nurse {
+  position: none ! important;
   width: 100%;
   padding: 3px 3px;
   overflow-x: scroll;
 }
 .avatar {
-  /* border-radius: 100px; */
-  /* overflow: hidden; */
+  border-radius: 50%;
+  overflow: hidden;
   position: absolute;
-  top:0px;
+  top: -18px;
   margin: auto;
-  left: 12px;
+  left: 38px !important;
 }
 .card-img {
-  /* width: 50px;
-  height: auto; */
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 63px;
   border-radius: 30px;
 }
 .card-profile {
   width: 100%;
+  height: 190px;
 }
 .paper-bck {
   margin-top: 10px;
@@ -176,4 +175,25 @@ font-size:1.5rem !important;
 
 .hrsbtn{
   cursor: auto !important;
+}
+
+.customer-txt{
+  margin: 2px;
+  font-size: 13px;
+}
+
+.nurseHistoryWidth{
+  height:230px;
+}
+
+.curstomerservice{
+  height: 40px;
+  overflow-y: scroll;
+  margin: 5px;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+.nurseCardSpace{
+  margin-bottom: 30px;
 }

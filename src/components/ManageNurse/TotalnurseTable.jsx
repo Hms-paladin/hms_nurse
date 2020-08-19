@@ -158,6 +158,7 @@ class DashboardTable extends React.Component {
           title={"Nurse History"}
           closemodal={e => this.closemodal(e)}
           clrchange="textclr"
+          xswidth={"lg"}
         >
           <Managenurseform  history_data_store={this.state.history_data} closemodal={this.closemodal}/>
         </Modalcomp>

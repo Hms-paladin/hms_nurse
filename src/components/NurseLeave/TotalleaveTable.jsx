@@ -75,7 +75,7 @@ class TotalleaveTable extends React.Component {
     const doc = new jsPDF("a3")
     var bodydata  = []
     this.state.leaveData.map((data,index)=>{
-      bodydata.push([index+1,data.nursename,data.gender,data.experience,data.Nationality,data.fromdate,data.todate,data.noofdays])
+      bodydata.push([index+1,data.nursename,data.gender,data.experience,data.Nationality,data.status,data.fromdate,data.todate,data.noofdays])
     })
     doc.autoTable({
       beforePageContent: function(data) {
@@ -118,6 +118,7 @@ getmethod(rangeday){
       console.log(val,"val_leave")
       leaveData.push({nursename:val.Nursename,gender:val.gender==1?"Male":"Female",experience:val.experience,
         Nationality:val.nationality,
+        status:val.status,
         fromdate:moment(val.from_date).format("DD MMM YYYY"),todate:moment(val.to_date).format("DD MMM YYYY"),noofdays:val.Noofdays,id:val.id
       })
     
@@ -190,6 +191,7 @@ dayReport=(data)=>{
         || (data.gender!= null && data.gender.toLowerCase().includes(this.state.search.toLowerCase()))
         || (data.experience!= null && data.experience.toString().toLowerCase().includes(this.state.search.toString().toLowerCase()))
         || (data.Nationality!= null && data.Nationality.toString().toLowerCase().includes(this.state.search.toString().toLowerCase()))
+        || (data.status!= null && data.status.toString().toLowerCase().includes(this.state.search.toString().toLowerCase()))
         || (data.fromdate!= null && data.fromdate.toLowerCase().includes(this.state.search.toLowerCase()))
         || (data.todate!= null && data.todate.toLowerCase().includes(this.state.search.toLowerCase()))
         || (data.noofdays!= null && data.noofdays.toString().toLowerCase().includes(this.state.search.toString().toLowerCase()))
@@ -206,6 +208,7 @@ dayReport=(data)=>{
       {value:xldata.gender},
       {value:xldata.experience},
       {value:xldata.Nationality},
+      {value:xldata.status},
       {value:xldata.fromdate},
       {value:xldata.todate},
       {value:xldata.noofdays}])
@@ -216,6 +219,7 @@ dayReport=(data)=>{
       {value:xldata.gender,style: {fill: {patternType: "solid", fgColor: {rgb: "e2e0e0"}}}},
       {value:xldata.experience,style: {fill: {patternType: "solid", fgColor: {rgb: "e2e0e0"}}}},
       {value:xldata.Nationality,style: {fill: {patternType: "solid", fgColor: {rgb: "e2e0e0"}}}},
+      {value:xldata.status,style: {fill: {patternType: "solid", fgColor: {rgb: "e2e0e0"}}}},
       {value:xldata.fromdate,style: {fill: {patternType: "solid", fgColor: {rgb: "e2e0e0"}}}},
       {value:xldata.todate,style: {fill: {patternType: "solid", fgColor: {rgb: "e2e0e0"}}}},
       {value:xldata.noofdays,style: {fill: {patternType: "solid", fgColor: {rgb: "e2e0e0"}}}}])
@@ -229,6 +233,7 @@ dayReport=(data)=>{
       {title: "Gender", width: {wch: 20},style: {fill: {patternType: "solid", fgColor: {rgb: "86b149"}}}},  
       {title: "Experience", width: {wpx: 90},style: {fill: {patternType: "solid", fgColor: {rgb: "86b149"}}}},
       {title: "Nationality",width:{wpx: 100},style:{fill:{patternType: "solid", fgColor: {rgb: "86b149"}}}},
+      {title: "Status",width:{wpx: 100},style:{fill:{patternType: "solid", fgColor: {rgb: "86b149"}}}},
       {title: "From Date", width: {wpx: 90},style: {fill: {patternType: "solid", fgColor: {rgb: "86b149"}}}},
       {title: "To Date", width: {wpx: 90},style: {fill: {patternType: "solid", fgColor: {rgb: "86b149"}}}},
       {title: "No of days", width: {wpx: 90},style: {fill: {patternType: "solid", fgColor: {rgb: "86b149"}}}},
@@ -239,7 +244,7 @@ dayReport=(data)=>{
     return (
       <>
       <div className="title_dashboard">
-      <p className="title_header">NURSES ON LEAVE/BLOCK </p>
+      <p className="title_header">NURSES ON LEAVE / BLOCK </p>
       <div style={{ fontSize: "16px" ,display:"flex",alignItems:"center"}}>
       <DateRangeSelect dynalign={"dynalign"} rangeDate={(item)=>this.dayReport(item)} />
         <Search
@@ -277,6 +282,7 @@ dayReport=(data)=>{
             { id: "gender", label: "Gender" },
             { id: "experience", label: "Experience" },
             { id: "Nationality", label: "Nationality" },
+            { id: "status", label: "Status"},
             { id: "fromdate", label: "From Date" },
             { id: "todate", label: "To Date" },
             { id: "noofdays", label: "No of days" }

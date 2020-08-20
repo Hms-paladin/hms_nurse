@@ -16,11 +16,13 @@
   background-color: #F38F31;
   border: none;
   margin-right: 6px;
+  font-size: 15px;
 }
 
 .avail_button .block_btn {
   background-color: #818181;
   border: none;
+  font-size: 15px;
 }
 
 /* .opacity_letter_availability .ant-select-selection-selected-value{

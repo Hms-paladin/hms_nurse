@@ -239,7 +239,7 @@ dayReport=(data)=>{
     return (
       <>
       <div className="title_dashboard">
-      <p className="title_header">NURSES ON LEAVE </p>
+      <p className="title_header">NURSES ON LEAVE/BLOCK </p>
       <div style={{ fontSize: "16px" ,display:"flex",alignItems:"center"}}>
       <DateRangeSelect dynalign={"dynalign"} rangeDate={(item)=>this.dayReport(item)} />
         <Search

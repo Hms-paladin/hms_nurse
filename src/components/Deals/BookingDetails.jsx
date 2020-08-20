@@ -388,7 +388,7 @@ export default class BookingDetails extends React.Component {
                                     <Grid item xs={6} md={6}>
                                   
                                                 <div>
-                                                    <label className="label_txt">Test Name</label>
+                                                    <label className="label_txt">Service Type</label>
                                                 <Select defaultValue={this.state.edit ? this.state.editData.deal_service_type : "All"}  style={{width:"100%"}} onChange={this.storeService}>
                                                     {this.services()}
                                                 </Select>

@@ -146,6 +146,9 @@ font-size:1.5rem !important;
 
 .Card-par {
   position: relative;
+  margin-top: 20px;
+  margin-bottom: 15px;
+  margin-left: 1px;
 }
 .right_arrow_edit{
  font-size: 30px;
@@ -202,4 +205,3 @@ font-size:1.5rem !important;
   margin-top: 0px;
   margin-left: 3px;
 }
-

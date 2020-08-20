@@ -161,7 +161,7 @@ export default class DealList extends React.Component {
         url: apiurl + "Common/getsingle_deals",
         data:{
           "vendor_id":"5", 
-          "limit":10, 
+          "limit":100, 
           "pageno":1
           
         } 
@@ -360,13 +360,13 @@ export default class DealList extends React.Component {
           <DeleteMedia closemodal={this.handleClose} deleteitem={this.deleteDealLIst} closeDeleteModel={this.handleClose}/>
         </Modalcomp>
       </div>}
-      {this.state.total_count !== "" && this.state.total_count > 10 &&
+      {/* {this.state.total_count !== "" && this.state.total_count > 10 &&
       <div className="pagination__container">
             <div className="pagination__box">
                     <ReactPagination  limit={this.state.limit} total_count={this.state.total_count} getAdDetails={this.getPaginateList} />
             </div>
         </div>
-  }
+  } */}
       </Spin>
     );
   }

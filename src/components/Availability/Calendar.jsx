@@ -33,6 +33,7 @@ export default class Calendar extends React.Component {
     TotalslotsAvailable: [],
     spinLoad: false,
     leaveapplied:[],
+    nurseBlockedDate:[],
     leaveFirst:dateformat(new Date(new Date().getFullYear(), new Date().getMonth(), 1), "yyyy-mm-dd"),
     leaveSecond:dateformat(new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0), "yyyy-mm-dd"),
   };
@@ -412,6 +413,8 @@ export default class Calendar extends React.Component {
       }
     }).then((response) => {
       var leaveapplieddate = []
+      var nurseBlockedDate = []
+
       console.log(response.data, "resdate")
       response.data.data.map((val)=>{
         if(val.nurseleaveDate){
@@ -419,10 +422,16 @@ export default class Calendar extends React.Component {
         }else{
           leaveapplieddate.push(null)
         }
+
+        if(val.nurseBlockedDate){
+          nurseBlockedDate.push(new Date(dateformat(val.selected_date,"yyyy,mm,dd")).toString())
+        }
+
+
       })
       
       console.log(leaveapplieddate,"leaveapplieddate")
-      self.setState({ leaveapplied: leaveapplieddate, spinLoad: false })
+      self.setState({ leaveapplied: leaveapplieddate,nurseBlockedDate:nurseBlockedDate, spinLoad: false })
     })
   }
 
@@ -488,6 +497,7 @@ export default class Calendar extends React.Component {
               className={`${startdate === this.state.rangeSelect[0] && "table_fir_sel" ||
                 startdate === this.state.rangeSelect[this.state.rangeSelect.length - 1] && "table_sec_sel" ||
                 this.state.rangeSelect.includes(startdate) && "table_inter_sel" || this.state.leaveapplied.includes(startdateleave.toString()) && "table_inter_selleave"
+                || this.state.nurseBlockedDate.includes(startdateleave.toString()) && "table_inter_selblock"
                 }`}
             >
               <span className={`${!textgreyhide && "colornonepast"} table-body`}>
@@ -584,7 +594,7 @@ export default class Calendar extends React.Component {
             </Spin>
 
             <div className="calslots_container">
-              <div className="total_slots_div"><p className="total_slots"></p><span className="total_slots_text">Total Slots</span></div>
+              <div className="total_slots_div"><p className="block_slots"></p><span className="total_slots_text">Block Slots</span></div>
               <div className="total_slots_div"><p className="avail_slots"></p><span className="total_slots_text">Leave Slots</span></div>
             </div>
 

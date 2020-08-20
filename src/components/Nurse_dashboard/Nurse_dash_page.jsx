@@ -5,6 +5,8 @@ import { NavLink } from "react-router-dom";
 import Nursedetails from "./Nurse_dash_details";
 import { apiurl } from "../../App";
 import Axios from 'axios'
+var dateFormat = require('dateformat');
+
 
 class Nurse_dash_page extends Component {
   state={
@@ -30,8 +32,7 @@ class Nurse_dash_page extends Component {
       url:apiurl  + "Nurse/nurseDashboard",
       data:{
         "nursevendorId":"5",
-        "limit":"1",
-        "pageno":"1"
+        "today_date":dateFormat(new Date(), "yyyy-mm-dd")
       }
     }).then((response)=>{
       if(response.data.data &&response.data.data[0]){
@@ -45,14 +46,14 @@ class Nurse_dash_page extends Component {
     //   CostofMonth.push({CostofMonth:val.CostofMonth,id:val.nurseId})
     //  })
 
-      // response.data.data[0].todaysappointment.map((val,index)=>{
-      //     TableData.push({customername:val.PatientName,nursename:val.Nursename,dutyhours:val.working_hours,
-      //                    months:val.Noofmonth,
-      //                    costofmonth:val.CostofMonth && val.CostofMonth[0].CostofMonth,
-      //                    totalcost:val.amount,      
-      //                    id:index       
-      //                   })
-      // })
+      response.data.data[0].today_appointments.map((val,index)=>{
+          TableData.push({customername:val.PatientName,nursename:val.Nursename,dutyhours:val.working_hours,
+                         months:val.Noofmonth,
+                         costofmonth:val.CostofMonth && val.CostofMonth[0].CostofMonth,
+                         totalcost:val.amount,      
+                         id:index       
+                        })
+      })
       self.setState({
         cancel:ApiData.cancel_count,
         nursehired:ApiData.nursehired,
@@ -61,7 +62,7 @@ class Nurse_dash_page extends Component {
         managenurse:ApiData.managenurse,
         revenue:ApiData.nursetotalrevenue,
         TableData,
-        ViewData:response.data.data[0].todaysappointment,
+        ViewData:response.data.data[0].today_appointments,
         props_loading:false
       })
       console.log("response_data",this.state.ViewData)
@@ -137,7 +138,7 @@ class Nurse_dash_page extends Component {
                 <div className="divider_1px"></div>
               </div>
               <div className="nurse_dash_numeric_wrap">
-    <p className="nurse_dash_numeric_value">{this.state.managenurse}</p>
+    <p className="nurse_dash_numeric_value">{this.state.managenurse?this.state.managenurse:0}</p>
               </div>
             </Card>
             <Card

@@ -79,8 +79,8 @@ export default class DealList extends React.Component {
                 <div className="aligndeallistdata">
                   <div>
                     <span>Test Name</span>
-                    <div>{listdata.deal_service_type == "" ? "All" : listdata.deal_service_type}</div>
-        {/* <div>{listdata.deal_service_type == ""? "All" : "All"}</div> */}
+                    {/* <div>{listdata.deal_service_type == "" ? "All" : listdata.deal_service_type}</div> */}
+                    <div>All</div>
                     
                     
                   </div>
@@ -182,8 +182,8 @@ export default class DealList extends React.Component {
                 <div className="aligndeallistdata">
                   <div>
                     <span>Test Name</span>
-                    <div>{listdata.deal_service_type == "" ? "All" : listdata.deal_service_type}</div>
-                    
+                    {/* <div>{listdata.deal_service_type == "" ? "All" : listdata.deal_service_type}</div> */}
+                    <div>All</div>
                     
                   </div>
                   <div>

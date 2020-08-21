@@ -163,7 +163,7 @@ this.setState({})
     })
     doc.autoTable({
       beforePageContent: function(data) {
-        doc.text("Uploaded Details", 15, 23); // 15,13 for css
+        doc.text("Idle Nurses", 15, 23); // 15,13 for css
         },
       margin: { top: 30 },
       showHead:"everyPage",
@@ -172,7 +172,7 @@ this.setState({})
       body:bodydata,
     })
      
-    doc.save('UploadDetails.pdf')
+    doc.save('IdleNurses.pdf')
     
   }}
   // PRINT FUNCTION
@@ -257,8 +257,8 @@ this.setState({})
             onClick={this.generatepdf}
             style={{marginRight:"15px",marginLeft:"15px"}}/>
              {this.state.tabledatas.length===0 ? <ReactSVG src={excel} style={{ marginRight: "15px" }} /> :
-            <ExcelFile element={<ReactSVG src={excel} style={{ marginRight: "15px" }} />}>
-              <ExcelSheet dataSet={multiDataSet} name="Uploaded Details"/>
+            <ExcelFile filename={"IdleNurses"} element={<ReactSVG src={excel} style={{ marginRight: "15px" }} />}>
+              <ExcelSheet dataSet={multiDataSet} name="Idle Nurses"/>
             </ExcelFile>
             }
               <ReactToPrint

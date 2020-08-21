@@ -80,7 +80,7 @@ class NursebookedTable extends React.Component {
         })
         doc.autoTable({
           beforePageContent: function(data) {
-            doc.text("Uploaded Details", 15, 23); // 15,13 for css
+            doc.text("Total Nurses Hired", 15, 23); // 15,13 for css
             },
           margin: { top: 30 },
           showHead:"everyPage",
@@ -89,7 +89,7 @@ class NursebookedTable extends React.Component {
           body:bodydata,
         })
          
-        doc.save('UploadDetails.pdf')
+        doc.save('TotalNursesHired.pdf')
       }
     }
       // PRINT FUNCTION
@@ -257,8 +257,8 @@ class NursebookedTable extends React.Component {
           marginLeft:"15px"}}
         />
         {this.state.tabledata.length===0 ? <ReactSVG src={excel} style={{ marginRight: "15px" }} /> :
-        <ExcelFile element={<ReactSVG src={excel} style={{ marginRight: "15px" }} />}>
-          <ExcelSheet dataSet={multiDataSet} name="Uploaded Details"/>
+        <ExcelFile filename={"TotalNursesHired"} element={<ReactSVG src={excel} style={{ marginRight: "15px" }} />}>
+          <ExcelSheet dataSet={multiDataSet} name="Total Nurses Hired" />
         </ExcelFile>
         }
         <ReactToPrint

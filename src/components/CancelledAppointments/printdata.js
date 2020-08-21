@@ -19,7 +19,7 @@ export default class PrintData extends React.Component {
 
       return (
           <div className="printtabledata">
-              <div className="printDataTitle">Uploaded Details</div>
+              <div className="printDataTitle">Cancelled Appointments</div>
         <table>
           <thead>
             <th>S.No</th>

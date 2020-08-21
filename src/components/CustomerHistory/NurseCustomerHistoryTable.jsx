@@ -1,9 +1,5 @@
 import React, { Component } from "react";
 import "antd/dist/antd.css";
-import TotalnurseTable from "./TotalnurseTable";
-import Paper from "@material-ui/core/Paper";
-import Plus from "../../Images/plus.png";
-import Nurse_form from "./Nurse_form";
 import { Input, Tooltip, Button } from "antd";
 import { apiurl } from "../../App";
 import Axios from 'axios';
@@ -15,7 +11,7 @@ import pdf from "../../Images/pdf.svg";
 import excel from "../../Images/excel.svg";
 import ReactToPrint from "react-to-print";
 import ReactExport from 'react-data-export';
-import PrintData from "./PrintData";
+import PrintData from "./printdata";
 import ReactSVG from 'react-svg';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
@@ -47,10 +43,10 @@ class NurseCustomerHistoryTable extends Component {
     var self = this
     Axios({
       method: 'POST', //get api
-      url: apiurl + 'Nurse/getnursehistory',
+      url: apiurl + 'Nurse/getvendornurseCustomerhistory',
       data: {
         nursevendorId: 5,
-        nurseId: this.props.nurseId, // prop coming from index.js
+        CustomerId: this.props.customerId, // prop coming from index.js
         fromDate: this.state.fromDate,
         toDate: this.state.toDate,
         period: "Day"
@@ -61,8 +57,8 @@ class NurseCustomerHistoryTable extends Component {
         var tableData = [];
         response.data.data.map((val) => {
           tableData.push({
-            customer: val.PatientName,
-            age: val.patientage,
+            customer: val.Nursename,
+            age: val.nurseage,
             gender: val.gender,
             workingHours: val.working_hours + ' Hrs',
             startDate: dateFormat(val.from_date, "yyyy-mm-dd"),
@@ -146,7 +142,7 @@ class NurseCustomerHistoryTable extends Component {
             <span>{data.designedDutyTable.map(val => val.duties).toString().substring(0, 25) + "..."}</span>
           </Tooltip> : data.designedDutyTable.map(val => val.duties).toString(),
           phoneNumber: data.phoneNumber,
-          address: data.address.length > 25 ? <Tooltip placement="top" title={data.address}>
+          address: data.address != null && data.address.length > 25 ? <Tooltip placement="top" title={data.address}>
             <span>{data.address.substring(0, 25) + '...'}</span>
           </Tooltip> : data.address,
           id: data.nurseId
@@ -175,7 +171,7 @@ class NurseCustomerHistoryTable extends Component {
             <span>{data.designedDutyTable.map(val => val.duties).toString().substring(0, 20) + "..."}</span>
           </Tooltip> : data.designedDutyTable.map(val => val.duties).toString(),
           phoneNumber: data.phoneNumber,
-          address: data.address.length > 20 ? <Tooltip placement="top" title={data.address}>
+          address: data.address != null && data.address.length > 20 ? <Tooltip placement="top" title={data.address}>
             <span>{data.address.substring(0, 20) + '...'}</span>
           </Tooltip> : data.address,
           id: data.nurseId
@@ -234,7 +230,14 @@ class NurseCustomerHistoryTable extends Component {
     return (
       <div>
         <div className="title_dashboard">
-          <div className="title_header"><span style={{ cursor: 'pointer', display: 'inline-block', marginRight: '15px' }} onClick={() => this.props.backToFirstTable()}><ReactSVG src={back} /></span>Nurse History</div>
+          <div className="title_header">
+            <span style={{ cursor: 'pointer', display: 'inline-block', marginRight: '15px' }} onClick={() => this.props.backToFirstTable()}>
+              <ReactSVG src={back} />
+            </span>
+            <span className="mr-4">Customer History</span>
+            <span style={{color:"#ad9d9d",fontSize:"13px",marginRight:"12px"}}>Customer Name</span>
+            <span>{searchData.length > 0 && searchData[0].customer}</span>
+          </div>
           <div style={{ fontSize: "14px", display: "flex", alignItems: "center", }} >
             <DateRangeSelect dynalign={"dynalign"} rangeDate={(item) => this.getRangeDate(item)} />
             <Search
@@ -255,7 +258,7 @@ class NurseCustomerHistoryTable extends Component {
               />
             </div>
             <div style={{ display: "none" }}>
-              <PrintData printtableData={this.state.tableData}
+              <PrintData printTableData={this.state.tableData} DetailedHistory={true}
                 ref={el => (this.componentRef = el)} />
             </div>
           </div>

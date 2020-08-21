@@ -30,7 +30,7 @@ import advertisebooking from "../../Images/advertisebooking.svg";
 import managenurse from "../../Images/managenurse.svg";
 import revenue from "../../Images/revenue.svg";
 import profile from "../../Images/profile.svg";
-import report from "../../Images/report.svg";
+import CustomerHistory from "../../Images/CustomerHistory.svg";
 import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
 import Dashboard from "../Nurse_dashboard/Nurse_dash_master";
 import NursebookedHeader from "../NurseHired/NursebookedHeader";
@@ -45,10 +45,11 @@ import ManageNurse from "../ManageNurse/index";
 import CancelPayment from "../CancelPayment/CancelPayment";
 import PaymentReceived from "../PaymentReceived/PaymentReceived";
 import ProfileComp from "../Profilepage/Profilepage";
-import CustomerHistoryHeader from "../CustomerHistory/CustomerHistoryHeader";
+import CustomerHistoryMaster from "../CustomerHistory/index";
 import Axios from "axios";
 import {apiurl} from '../../App'
 import {notification} from 'antd';
+
 
 
 import {
@@ -479,7 +480,7 @@ class MiniDrawer extends React.Component {
                 <ListItemIcon>
                   <div className="icon-container">
                     <div>
-                      <ReactSVG src={report} />
+                      <ReactSVG src={CustomerHistory} />
                     </div>
                   </div>
                 </ListItemIcon>
@@ -558,7 +559,7 @@ class MiniDrawer extends React.Component {
             />
             <Route
               path={`${this.props.match.path}/customerhistory`}
-              component={CustomerHistoryHeader}
+              component={CustomerHistoryMaster}
               exact
             />
 

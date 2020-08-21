@@ -4,19 +4,19 @@ import NurseCustomerHistoryTable from './NurseCustomerHistoryTable';
 
 export default class CustomerHistoryMaster extends React.Component {
     state = {
-        nurseHistory: false
+        customerHistory: false
     }
 
     // call back func to CustomerHistoryTable
-    goToDetailedCustomerHistory = (id) => {
+    DetailedCustomerHistory = (id) => {
         this.setState({
-            nurseId: id,
-            nurseHistory: true
+            customerId: id,
+            customerHistory: true
         })
     }
     backToFirstTable = () => {
         this.setState({
-            nurseHistory: false
+            customerHistory: false
         })
     }
     render() {
@@ -24,12 +24,10 @@ export default class CustomerHistoryMaster extends React.Component {
             <>
                 {
 
-                    this.state.nurseHistory === false ?
-                        <CustomerHistoryTable
-                            goToDetailedCustomerHistory={(id) => this.goToDetailedCustomerHistory(id)}
-                        />
+                    this.state.customerHistory === false ?
+                        <CustomerHistoryTable check="fjk" DetailedCustomerHistory={(id) => this.DetailedCustomerHistory(id)}/>
                         :
-                        <NurseCustomerHistoryTable nurseId={this.state.nurseId} backToFirstTable={() => this.backToFirstTable()} />
+                        <NurseCustomerHistoryTable customerId={this.state.customerId} backToFirstTable={() => this.backToFirstTable()} />
                 }
             </>
         )

@@ -148,7 +148,7 @@ class NurseHistoryTable extends Component {
                         <span>{data.designedDutyTable.map(val => val.duties).toString().substring(0, 25)+"..."}</span>
                     </Tooltip> : data.designedDutyTable.map(val => val.duties).toString(),
                     phoneNumber: data.phoneNumber,
-                    address: data.address.length > 25 ? <Tooltip placement="top" title={data.address}>
+                    address: data.address != null && data.address.length > 25 ? <Tooltip placement="top" title={data.address}>
                         <span>{data.address.substring(0, 25)+'...'}</span>
                     </Tooltip> : data.address,
                     id: data.nurseId
@@ -177,7 +177,7 @@ class NurseHistoryTable extends Component {
                         <span>{data.designedDutyTable.map(val => val.duties).toString().substring(0, 20)+"..."}</span>
                     </Tooltip> : data.designedDutyTable.map(val => val.duties).toString(),
                     phoneNumber: data.phoneNumber,
-                    address: data.address.length > 20 ? <Tooltip placement="top" title={data.address}>
+                    address: data.address != null && data.address.length > 20 ? <Tooltip placement="top" title={data.address}>
                         <span>{data.address.substring(0, 20)+'...'}</span>
                     </Tooltip> : data.address,
                     id: data.nurseId
@@ -236,7 +236,14 @@ class NurseHistoryTable extends Component {
         return (
             <div>
                 <div className="title_dashboard">
-                    <div className="title_header"><span style={{cursor:'pointer',display:'inline-block',marginRight:'15px'}} onClick={() => this.props.backToNurseTable()}><ReactSVG src={back}/></span>Nurse History</div>
+                    <div className="title_header">
+                        <span style={{cursor:'pointer',display:'inline-block',marginRight:'15px'}} onClick={() => this.props.backToNurseTable()}>
+                            <ReactSVG src={back}/>
+                        </span>
+                        <span className="mr-4">Nurse History</span>
+                        <span style={{color:"#ad9d9d",fontSize:"13px",marginRight:"12px"}}>Nurse Name</span>
+                        <span>{searchData.length > 0 && searchData[0].customer}</span>
+                    </div>
                     <div style={{ fontSize: "14px", display: "flex", alignItems: "center", }} >
                         <DateRangeSelect dynalign={"dynalign"} rangeDate={(item) => this.getRangeDate(item)} />
                         <Search

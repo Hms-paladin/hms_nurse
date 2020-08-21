@@ -149,7 +149,7 @@ class DashboardTable extends React.Component {
           modelopen={(e, id) => this.modelopen(e, id)}
           LocationOnIcon="close"
         />
-        {/* <Managenursemodal
+        <Managenursemodal
           open={this.state.workflow}
           onClose={this.closemodal}
           viewData={this.state.viewData}
@@ -162,7 +162,7 @@ class DashboardTable extends React.Component {
           xswidth={this.state.history_data[0] && this.state.history_data[0].patientHistory.length > 2 ? "lg" : "md"}
         >
           <Managenurseform history_data_store={this.state.history_data} closemodal={this.closemodal} />
-        </Modalcomp> */}
+        </Modalcomp>
 
         <Modalcomp visible={this.state.editopen}
           editData={this.state.editData}

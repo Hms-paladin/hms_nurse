@@ -30,6 +30,11 @@ class CustomerHistoryTable extends React.Component {
     spinner: false,
   };
 
+  componentWillReceiveProps() {
+    console.log(this.props, "sdfasdfa")
+   
+  }
+
   createData = parameter => {
     var keys = Object.keys(parameter);
     var values = Object.values(parameter);
@@ -52,8 +57,8 @@ class CustomerHistoryTable extends React.Component {
         openview: true, 
         OpenViewData:OpenViewData
        });
-       this.props.goToDetailedCustomerHistory(id)//prop comming from index.js
-      console.log(OpenViewData,"openviewdata_checking")
+       console.log(OpenViewData,"openviewdata_checking")
+       this.props.DetailedCustomerHistory(id); //prop comming from index.js
     }
 
   };
@@ -76,12 +81,9 @@ class CustomerHistoryTable extends React.Component {
     var self = this
     Axios({
       method: 'post',
-      url: apiurl + 'Nurse/getvendornurseCustomerhistory',
+      url: apiurl + 'Nurse/getCustomerDetails',
       data: {
         nursevendorId:5,
-        fromDate: dateformat(new Date(), "yyyy-mm-dd"),
-        toDate:dateformat(new Date(), "yyyy-mm-dd"),
-        period:"Day"
       }
   })
     .then((response) => {
@@ -90,9 +92,8 @@ class CustomerHistoryTable extends React.Component {
       console.log(response.data.data,"nursename_check")
       response.data.data.map((val) =>{
         console.log(val,"text_valdata")
-        tabledata.push({customer:val.PatientName,nursename:val.Nursename,gender:val.gender,age:val.age,
-                      id:val.PatientId})
-                      //  console.log(val.nursevendorId,"nursevendor_id")
+        tabledata.push({customer:val.Customername,nursename:val.Nursename,gender:val.gender,age:val.patientage,
+                      id:val.CustomerId})
         })
         this.setState({
           tabledata:tabledata,
@@ -106,42 +107,6 @@ class CustomerHistoryTable extends React.Component {
   // console.log("deletedetails", details)
   }
 
-  // DATE RANGE PICKER FUNCTIONALITY
-
-  dayReport=(data)=>{
-    console.log(data,"itemdaterange")
-      var startdate = dateformat(data[0].startDate, "yyyy-mm-dd")
-      var enddate = dateformat(data[0].endDate,"yyyy-mm-dd")
-    this.setState({ spinner: true })
-    var self = this
-    Axios({
-            method: 'post',
-            url: apiurl + 'Nurse/getvendornurseCustomerhistory',
-            data: {
-              "nursevendorId":"5",
-              "fromDate":startdate,
-              "toDate":enddate,
-              "period":"Day"
-      }
-    })
-    .then((response) => {
-      var tabledata = [];
-      var tableDatafull = [];
-      response.data.data.map((val,index) =>{
-        console.log(val,"text_valdata")
-        tabledata.push({customer:val.Customername,nursename:val.Nursename,gender:val.gender,age:val.patientage,
-                              id:val.CustomerId})
-          tableDatafull.push(val)
-        })
-        this.setState({
-          tabledata:tabledata,
-          wk_Mn_Yr_Full_Data: tableDatafull,
-          props_loading:false,
-          spinner:false
-      })
-      console.log(this.state.wk_Mn_Yr_Full_Data,"datattat")
-  })
-  }
   // PDF FUNCTION
   generatepdf=()=>{
     if(this.state.tabledata.length === 0){
@@ -177,6 +142,8 @@ class CustomerHistoryTable extends React.Component {
   }
 
   render() {
+    console.log(this.props,"myprops")
+
     const { Search } = Input;
     const Tabledatas = this.state.tabledata.filter((data)=>{
       console.log(data,"Search_data")
@@ -225,7 +192,6 @@ class CustomerHistoryTable extends React.Component {
       <div className="title_dashboard">
       <p className="title_header">CUSTOMER HISTORY </p>
       <div style={{ fontSize: "16px" ,display:"flex",alignItems:"center"}}>
-      <DateRangeSelect dynalign={"dynalign"} rangeDate={(item)=>this.dayReport(item)} />
         <Search
           placeholder="search"
           onSearch={value => console.log(value)}
@@ -246,7 +212,7 @@ class CustomerHistoryTable extends React.Component {
                 content={() => this.componentRef}
               />
               <div style={{ display: "none" }}>
-                <PrintData printTableData={this.state.tabledata}
+                <PrintData printTableData={this.state.tabledata} DetailedHistory={false}
                  ref={el => (this.componentRef = el)}/>
               </div>
       </div>

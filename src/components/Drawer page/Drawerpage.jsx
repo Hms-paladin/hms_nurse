@@ -407,7 +407,7 @@ class MiniDrawer extends React.Component {
                     <ReactSVG src={nurseonleave} />
                   </div>
                 </ListItemIcon>
-                <ListItemText primary="Nurses On Leave" />
+                <ListItemText primary="Nurses On Leave/Block" />
               </MenuItem>
 
               <MenuItem component={Link} to="/Home/cancelledappointments" className={`${this.state.current_location.includes("/cancelledappointments") && "active_text_heading"}`}>

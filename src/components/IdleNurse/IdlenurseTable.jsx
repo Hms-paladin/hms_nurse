@@ -71,6 +71,7 @@ this.setState({})
   }
 
   getmethod=(rangeday)=>{
+
     this.setState({
       props_loading:true,
     })
@@ -88,11 +89,13 @@ this.setState({})
       console.log(response.data.data,"response_check_nurseidle_table")
       var tabledatas=[];
       response.data.data && response.data.data.map((val,index) =>{
-        // console.log()
+      console.log(moment(val.nurseIdledetails[0].IdleSince).format("DD MMM YYYY"),"idlesince")
+      console.log(val.nurseIdledetails[0].Noofdays,"idlesince")
+
         tabledatas.push({nursename:val.Nursename,gender:val.gender == 1 ?"Male" : "Female",
         age:val.age,experience:val.experience,Nationality:val.nationalityName,
-        idlesince:moment(val.IdleSince).format('DD MMM YYYY'),
-        noofdays:val.Noofdays,id:val.id})
+        idlesince:moment(val.nurseIdledetails[0].IdleSince).format('DD MMM YYYY'),
+        noofdays:val.nurseIdledetails[0].Noofdays,id:val.id})
       })
       this.setState({
         tabledatas:tabledatas,
@@ -122,12 +125,15 @@ this.setState({})
       }
     })
     .then((response) => {
+      alert("getvalue")
+      console.log(response,"responseresponse")
+
       var tabledatas = [];
       var tableDatafull = [];
       response.data.data && response.data.data.map((val,index) =>{
         console.log(val,"text_valdata")
         tabledatas.push({nursename:val.Nursename,gender:val.gender == 1 ?"Male" : "Female",age:val.age,experience:val.experience,Nationality:val.nationalityName,
-                 idlesince:moment(val.IdleSince).format("DD MMM YYYY"),noofdays:val.Noofdays,id:val.id
+                 idlesince:moment(val.nurseIdledetails[0].IdleSince).format("DD MMM YYYY"),noofdays:val.nurseIdledetails[0].Noofdays,id:val.id
             })
              tableDatafull.push(val)
         })

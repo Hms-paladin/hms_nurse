@@ -41,7 +41,7 @@ export default class Calendar extends React.Component {
   UNSAFE_componentWillReceiveProps(newProps){
     if(newProps.nurseavaliable){
       this.getslots(this.state.leaveFirst,this.state.leaveSecond,newProps.nurseId)
-      this.setState({nurseId:newProps.nurseId})
+      this.setState({nurseId:newProps.nurseId,fulldate:"",rangeSelect:[]})
       this.props.nurseavaliablefalse()
     }
   }
@@ -423,11 +423,9 @@ export default class Calendar extends React.Component {
           leaveapplieddate.push(null)
         }
 
-        if(val.nurseBlockedDate){
+        if(val.nurseBlockedDate || val.nursebookedDate){
           nurseBlockedDate.push(new Date(dateformat(val.selected_date,"yyyy,mm,dd")).toString())
         }
-
-
       })
       
       console.log(leaveapplieddate,"leaveapplieddate")
@@ -494,9 +492,9 @@ export default class Calendar extends React.Component {
             <div className="range_child w-25">
             </div>
             <div
-              className={`${startdate === this.state.rangeSelect[0] && "table_fir_sel" ||
-                startdate === this.state.rangeSelect[this.state.rangeSelect.length - 1] && "table_sec_sel" ||
-                this.state.rangeSelect.includes(startdate) && "table_inter_sel" || this.state.leaveapplied.includes(startdateleave.toString()) && "table_inter_selleave"
+              className={`${startdate === this.state.rangeSelect[0] && "table_fir_sel_avaliabilty" ||
+                startdate === this.state.rangeSelect[this.state.rangeSelect.length - 1] && "table_sec_sel_avaliabilty" ||
+                this.state.rangeSelect.includes(startdate) && "table_inter_sel_avaliabilty" || this.state.leaveapplied.includes(startdateleave.toString()) && "table_inter_selleave"
                 || this.state.nurseBlockedDate.includes(startdateleave.toString()) && "table_inter_selblock"
                 }`}
             >
@@ -594,8 +592,8 @@ export default class Calendar extends React.Component {
             </Spin>
 
             <div className="calslots_container">
-              <div className="total_slots_div"><p className="block_slots"></p><span className="total_slots_text">Block Slots</span></div>
-              <div className="total_slots_div"><p className="avail_slots"></p><span className="total_slots_text">Leave Slots</span></div>
+              <div className="total_slots_div"><p className="block_slots"></p><span className="total_slots_text">Booked Dates</span></div>
+              <div className="total_slots_div"><p className="avail_slots_avaliabilty"></p><span className="total_slots_text">Selected Dates</span></div>
             </div>
 
           </div>

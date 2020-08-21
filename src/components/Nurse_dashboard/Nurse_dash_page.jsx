@@ -106,7 +106,7 @@ class Nurse_dash_page extends Component {
               to="/Home/nurseleave"
               className="nurse_button5 nurse_button_common_styles"
             >
-              <p className="nurse_button_text">Total On Leave</p>
+              <p className="nurse_button_text">Total on Leave/Block</p>
               <div className="divider_container">
                 <div className="divider_1px"></div>
               </div>

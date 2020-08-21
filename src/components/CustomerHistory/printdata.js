@@ -20,9 +20,10 @@ export default class PrintData extends React.Component {
     }else{
       var printBodyData = this.props.printTableData.map((printdata, index) => {
         return (
+          
           <tr>
             <td>{index + 1}</td>
-            <td>{printdata.nurseName}</td>
+            <td>{printdata.customer}</td>
             <td>{printdata.age}</td>
             <td>{printdata.gender}</td>
             <td>{printdata.workingHours}</td>
@@ -61,6 +62,7 @@ export default class PrintData extends React.Component {
               <table>
                 <thead>
                   <th>S.No</th>
+                  <th>Nurse Name</th>
                   <th>Age</th>
                   <th>Gender</th>
                   <th>Working Hours</th>

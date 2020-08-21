@@ -73,6 +73,7 @@ class NurseHistoryTable extends Component {
                         designedDutyTable: val.Dutiesofnurse,
                         phoneNumber: val.phone_no,
                         address: val.address != "undefined" ? val.address : "-",
+                        nurseName:val.Nursename,
                         id: val.nurseId
                     })
                     console.log(val.id, "yyyyyyy")
@@ -118,12 +119,12 @@ class NurseHistoryTable extends Component {
         })
         doc.autoTable({
             beforePageContent: function (data) {
-                doc.text("Nurse Curstomer History", 15, 23); // 15,13 for css
+                doc.text("Nurse Customer History", 15, 23); // 15,13 for css
             },
             margin: { top: 30 },
             showHead: "everyPage",
             theme: "grid",
-            head: [['S.No', 'Customer', 'Age', 'Gender', 'Start Date', 'End Date', 'Designed Duty', 'Phone Number', 'Address']],
+            head: [['S.No', 'Customer', 'Age', 'Gender', 'Working Hours','Start Date', 'End Date', 'Designed Duty', 'Phone Number', 'Address']],
             body: bodydata,
         })
 
@@ -242,10 +243,10 @@ class NurseHistoryTable extends Component {
                         </span>
                         <span className="mr-4">Nurse History</span>
                         <span style={{color:"#ad9d9d",fontSize:"13px",marginRight:"12px"}}>Nurse Name</span>
-                        <span>{searchData.length > 0 && searchData[0].customer}</span>
+                        <span>{this.state.tableData.length > 0 && this.state.tableData[0].nurseName}</span>
                     </div>
                     <div style={{ fontSize: "14px", display: "flex", alignItems: "center", }} >
-                        <DateRangeSelect dynalign={"dynalign"} rangeDate={(item) => this.getRangeDate(item)} />
+                        {/* <DateRangeSelect dynalign={"dynalign"} rangeDate={(item) => this.getRangeDate(item)} /> */}
                         <Search
                             placeholder="Search"
                             onChange={(e) => this.searchChange(e)}

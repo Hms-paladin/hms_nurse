@@ -59,7 +59,7 @@ class NurseCustomerHistoryTable extends Component {
           tableData.push({
             customer: val.Nursename,
             age: val.nurseage,
-            gender: val.gender,
+            gender: val.nursegender,
             workingHours: val.working_hours + ' Hrs',
             startDate: dateFormat(val.from_date, "yyyy-mm-dd"),
             endDate: dateFormat(val.to_date, "yyyy-mm-dd"),
@@ -67,6 +67,7 @@ class NurseCustomerHistoryTable extends Component {
             designedDutyTable: val.Dutiesofnurse,
             phoneNumber: val.phone_no,
             address: val.address != "undefined" ? val.address : "-",
+            customerName:val.Customername,
             id: val.nurseId
           })
           console.log(val.id, "yyyyyyy")
@@ -107,17 +108,18 @@ class NurseCustomerHistoryTable extends Component {
   generatepdf = () => {
     const doc = new jsPDF("a3")
     var bodydata = []
+    
     this.state.tableData.map((data, index) => {
       bodydata.push([index + 1, data.customer, data.age, data.gender, data.workingHours, data.startDate, data.endDate, data.designedDuty, data.phoneNumber, data.address])
     })
     doc.autoTable({
       beforePageContent: function (data) {
-        doc.text("Nurse Curstomer History", 15, 23); // 15,13 for css
+        doc.text("Nurse Customer History", 15, 23); // 15,13 for css
       },
       margin: { top: 30 },
       showHead: "everyPage",
       theme: "grid",
-      head: [['S.No', 'Customer', 'Age', 'Gender', 'Start Date', 'End Date', 'Designed Duty', 'Phone Number', 'Address']],
+      head: [['S.No', 'Nurse Name', 'Age', 'Gender', 'Working Hours', 'Start Date', 'End Date', 'Designed Duty', 'Phone Number', 'Address']],
       body: bodydata,
     })
 
@@ -213,7 +215,7 @@ class NurseCustomerHistoryTable extends Component {
       {
         columns: [
           { title: "S.No", width: { wpx: 35 }, style: { fill: { patternType: "solid", fgColor: { rgb: "86b149" } } } },
-          { title: "Customer", width: { wch: 20 }, style: { fill: { patternType: "solid", fgColor: { rgb: "86b149" } } } },
+          { title: "Nurse Name", width: { wch: 20 }, style: { fill: { patternType: "solid", fgColor: { rgb: "86b149" } } } },
           { title: "Age", width: { wch: 20 }, style: { fill: { patternType: "solid", fgColor: { rgb: "86b149" } } } },
           { title: "Gender", width: { wpx: 90 }, style: { fill: { patternType: "solid", fgColor: { rgb: "86b149" } } } },
           { title: "Working Hours", width: { wpx: 100 }, style: { fill: { patternType: "solid", fgColor: { rgb: "86b149" } } } },
@@ -236,10 +238,10 @@ class NurseCustomerHistoryTable extends Component {
             </span>
             <span className="mr-4">Customer History</span>
             <span style={{color:"#ad9d9d",fontSize:"13px",marginRight:"12px"}}>Customer Name</span>
-            <span>{searchData.length > 0 && searchData[0].customer}</span>
+            <span>{this.state.tableData.length > 0 && this.state.tableData[0].customerName}</span>
           </div>
           <div style={{ fontSize: "14px", display: "flex", alignItems: "center", }} >
-            <DateRangeSelect dynalign={"dynalign"} rangeDate={(item) => this.getRangeDate(item)} />
+            {/* <DateRangeSelect dynalign={"dynalign"} rangeDate={(item) => this.getRangeDate(item)} /> */}
             <Search
               placeholder="Search"
               onChange={(e) => this.searchChange(e)}
@@ -266,7 +268,7 @@ class NurseCustomerHistoryTable extends Component {
         <Tablecomponent
           heading={[
             { id: "", label: "S.No" },
-            { id: "customer", label: "Customer" },
+            { id: "customer", label: "Nurse Name" },
             { id: "age", label: "Age" },
             { id: "gender", label: "Gender" },
             { id: "workingHours", label: "Working Hours" },

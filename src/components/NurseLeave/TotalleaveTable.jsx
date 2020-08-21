@@ -84,7 +84,7 @@ class TotalleaveTable extends React.Component {
       margin: { top: 30 },
       showHead:"everyPage",
       theme:"grid",
-      head: [['S.No', 'Nurse Name', 'Gender','Experience','Nationality','From Date','To Date','No of days']],
+      head: [['S.No', 'Nurse Name', 'Gender','Experience','Nationality',"Status",'From Date','To Date','No of days']],
       body:bodydata,
     })
      

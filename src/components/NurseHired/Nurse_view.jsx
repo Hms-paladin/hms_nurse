@@ -101,7 +101,7 @@ export default class Nurse_view extends Component {
                 <div className="nurse_view_name_wrap">
                   <text className="nurse_view_experience">
                     {/* 3 Years experience */}
-                    {val&&val.nurseExperience} Years experience
+                    {val&&val.nurseExperience} Years Experience
                   </text>
                 </div>
                 <div className="nurse_view_name_wrap">

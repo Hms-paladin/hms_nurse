@@ -199,22 +199,18 @@ export default class Nurse_view extends Component {
           <Grid item xs={12} md={6} className="generalduties_details_container">
             <div className="generalduties_details">
               <h4 className="general_head">General Duties</h4>  
+              <text className="genaeral_details">
+                {val&&val.skills}
+              </text>
+
+              <h4 className="general_head">Designed Duties</h4>
               {val&&val.Dutiesofnurse&&val.Dutiesofnurse.map((duty)=>{
                 return(
               <text className="genaeral_details">
-                {/* Caring,Baby sitting */}
                 {duty && duty.duties}
                 <br />
-                {/* In-Home Care,Coordinate */}
-                <br />
-                {/* with Physician */}
               </text>
                )})} 
-              <h4 className="general_head">Designed Duties</h4>
-              <text className="genaeral_details">
-                {/* Sponge bath,Evening Walking */}
-                {val&&val.skills}
-              </text>
               <div className="nurse_view_cancelbutton">
                 <Button
                   variant="outlined"

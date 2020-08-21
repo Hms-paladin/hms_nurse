@@ -190,22 +190,18 @@ export default class ProfileView extends React.Component {
           <Grid item xs={12} md={6} className="generalduties_details_container">
             <div className="generalduties_details">
               <h4 className="general_head">General Duties</h4>  
+              <text className="genaeral_details">
+              {ViewData && ViewData.skills}
+              </text>
+
+              <h4 className="general_head">Designed Duties</h4>
               {ViewData && ViewData.Dutiesofnurse&&ViewData.Dutiesofnurse.map((duty)=>{
                 return(
               <text className="genaeral_details">
-                {/* Caring,Baby sitting */}
                 {duty.duties}
                 <br />
-                {/* In-Home Care,Coordinate */}
-                <br />
-                {/* with Physician */}
               </text>
-               )})}  
-              <h4 className="general_head">Designed Duties</h4>
-              <text className="genaeral_details">
-                {/* Sponge bath,Evening Walking */}
-                {ViewData && ViewData.skills}
-              </text>
+               )})}
               <div className="nurse_view_cancelbutton">
                 <Button
                   variant="outlined"

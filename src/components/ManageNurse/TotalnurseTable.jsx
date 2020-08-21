@@ -12,13 +12,13 @@ import Nurse_form from "./Nurse_form";
 
 class DashboardTable extends React.Component {
   state = {
-    editopen:false,
+    editopen: false,
     openview: false,
     deleteopen: false,
     tableData: [],
     props_loading: true,
-    history_data:[],
-    history_data_store:[],
+    history_data: [],
+    history_data_store: [],
   };
 
   componentWillReceiveProps() {
@@ -55,14 +55,15 @@ class DashboardTable extends React.Component {
       this.setState({
         editData: this.state.totalData.find(val => val.nurseId === id),
         props_loading: false
-      },()=>console.log(this.state.editData, "dataaa_idd"))
-      
+      }, () => console.log(this.state.editData, "dataaa_idd"))
+
     }
     else if (data === "history") {
+      this.props.getNurseHistory(id)
       this.setState({
-        historyopen:true,
+        historyopen: true,
       })
-      this.HistoryTableData(id)
+      // this.HistoryTableData(id)
     }
   }
 
@@ -72,32 +73,32 @@ class DashboardTable extends React.Component {
   }
 
 
-  HistoryTableData =(id) =>{
+  HistoryTableData = (id) => {
     axios({
       method: 'post',
       url: apiurl + 'getNursePatientHistory',
       data: {
-        nurseId:id,
+        nurseId: id,
       }
-  })
-    .then((response) => {
-      console.log(response,"response_history")
-      var history_data =[];
-      response.data.data.map((val)=>{
-        history_data.push(val)
-        console.log(val,"val_testttttt")
-      })
-      
-        this.setState({
-          history_data:history_data
+    })
+      .then((response) => {
+        console.log(response, "response_history")
+        var history_data = [];
+        response.data.data.map((val) => {
+          history_data.push(val)
+          console.log(val, "val_testttttt")
         })
-        console.log(history_data,"checkk")
-  })
-  .catch((error) => {
-      // alert(JSON.stringify(error))
-  })
+
+        this.setState({
+          history_data: history_data
+        })
+        console.log(history_data, "checkk")
+      })
+      .catch((error) => {
+        // alert(JSON.stringify(error))
+      })
   }
-  
+
   deleteopen = (type, id) => {
     console.log(id, "iddd")
     this.setState({
@@ -148,21 +149,20 @@ class DashboardTable extends React.Component {
           modelopen={(e, id) => this.modelopen(e, id)}
           LocationOnIcon="close"
         />
-        <Managenursemodal 
-        open={this.state.workflow} 
-        onClose={this.closemodal} 
-        viewData={this.state.viewData}
-        xswidth={"lg"} />
+        {/* <Managenursemodal
+          open={this.state.workflow}
+          onClose={this.closemodal}
+          viewData={this.state.viewData}
+          xswidth={"lg"} />
         <Modalcomp
           visible={this.state.historyopen}
           title={"Nurse History"}
           closemodal={e => this.closemodal(e)}
           clrchange="textclr"
-          xswidth={"lg"}
+          xswidth={this.state.history_data[0] && this.state.history_data[0].patientHistory.length > 2 ? "lg" : "md"}
         >
-          <Managenurseform  history_data_store={this.state.history_data} closemodal={this.closemodal}/>
-        </Modalcomp>
-
+          <Managenurseform history_data_store={this.state.history_data} closemodal={this.closemodal} />
+        </Modalcomp> */}
 
         <Modalcomp visible={this.state.editopen}
           editData={this.state.editData}
@@ -170,18 +170,18 @@ class DashboardTable extends React.Component {
           clrchange="textclr"
           closemodal={(e) => this.closemodal(e)}
           xswidth={"lg"}
-           >
+        >
           <Nurse_form
-           getTableData={() => this.props.getTableData()}
+            getTableData={() => this.props.getTableData()}
             closemodal={this.closemodal}
             editData={this.state.editData}
             editopenModal={this.state.editopen} />
         </Modalcomp>
-
         <Modalcomp visible={this.state.deleteopen} title={"Delete"} closemodal={this.closemodal} xswidth={"xs"} clrchange="textclr">
           <DeleteNurse deleterow={this.deleterow} closemodal={this.closemodal} />
         </Modalcomp>
       </div>
+      
     );
   }
 }

@@ -274,7 +274,7 @@ export default class Nurse_form extends Component {
   updateNurseDetails = (nurseData) => {
     var self = this
     Axios({
-      method: 'PUT',
+      method: 'POST',
       url: apiurl + 'editNurseInfo',
       data:
         nurseData

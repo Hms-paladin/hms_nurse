@@ -41,7 +41,7 @@ import NurseserviceCancellation from "../CancelledAppointments/NurseServiceCance
 import AdvertisementMaster from "../AdvertisementBooking/AdvertisementMaster";
 import DealsMaster from "../Deals/DealsMaster";
 import Revenue from "../Revenue/RevenueMaster";
-import TotalnurseDashboard from "../ManageNurse/TotalnurseDashboard";
+import ManageNurse from "../ManageNurse/index";
 import CancelPayment from "../CancelPayment/CancelPayment";
 import PaymentReceived from "../PaymentReceived/PaymentReceived";
 import ProfileComp from "../Profilepage/Profilepage";
@@ -538,7 +538,7 @@ class MiniDrawer extends React.Component {
             />
             <Route
               path={`${this.props.match.path}/managenurse`}
-              component={TotalnurseDashboard}
+              component={ManageNurse}
               exact
             />
             <Route

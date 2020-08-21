@@ -44,7 +44,7 @@ class TotalnurseDashboard extends Component {
           tableData.push({
             nurseName: val.name,
             gender: val.gender,
-            age:  moment().diff(val.dob, 'years'),
+            age: moment().diff(val.dob, 'years'),
             experience: val.experience,
             nationality: val.nationality_id === 1 ? "Saudi" : "American",
             id: val.nurseId
@@ -75,6 +75,7 @@ class TotalnurseDashboard extends Component {
     })
     this.setState({})
   }
+
 
   render() {
     const { Option } = Select;
@@ -132,6 +133,7 @@ class TotalnurseDashboard extends Component {
           getTableData={() => this.getTableData()}
           props_loading={this.state.props_loading}
           totalData={this.state.totalData}
+          getNurseHistory={(id)=>this.props.getNurseHistory(id)}
         />
         <Modalcomp
           visible={this.state.open}

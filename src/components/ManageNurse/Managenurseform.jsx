@@ -95,7 +95,7 @@ export default class Uploadform extends Component {
           {
             this.props.history_data_store[0] && this.props.history_data_store[0].patientHistory.map((cust_history) => {
               return (
-                <div className="col-md-4 nurseCardSpace">
+                <div className={this.props.history_data_store[0].patientHistory.length < 3 ? "col-md-6 nurseCardSpace" : "col-md-4 nurseCardSpace"}>
                   <div>
                     <div className="Card-par-nurse">
                       <Card>

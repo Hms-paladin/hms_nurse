@@ -1,13 +1,8 @@
 import React from "react";
 import Tablecomponent from "../../helpers/TableComponent/TableComp";
-import Modalcomp from "../../helpers/ModalComp/Modalcomp";
 import "./CustomerHistoryTable.css";
-import HistoryForm from "./HistoryForm";
 import Axios from "axios";
 import { apiurl } from "../../App";
-import Button from '@material-ui/core/Button';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
-import Moment from "react-moment";
 import print from "../../Images/print.svg";
 import pdf from "../../Images/pdf.svg";
 import jsPDF from 'jspdf';
@@ -22,9 +17,6 @@ import dateformat from 'dateformat';
 import DateRangeSelect from "../../helpers/DateRange/DateRange";
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
-var dateFormat = require('dateformat');
-var now = new Date();
-var current_day = dateFormat(now, "yyyy-mm-dd")
 
 class CustomerHistoryTable extends React.Component {
   state = {
@@ -60,11 +52,10 @@ class CustomerHistoryTable extends React.Component {
         openview: true, 
         OpenViewData:OpenViewData
        });
+       this.props.goToDetailedCustomerHistory(id)//prop comming from index.js
       console.log(OpenViewData,"openviewdata_checking")
     }
-    // else if (data === "edit") {
-    //   this.setState({ editopen: true });
-    // }
+
   };
   searchChange = (e) =>{
     this.setState({
@@ -138,8 +129,8 @@ class CustomerHistoryTable extends React.Component {
       var tableDatafull = [];
       response.data.data.map((val,index) =>{
         console.log(val,"text_valdata")
-        tabledata.push({customer:val.PatientName,nursename:val.Nursename,gender:val.gender,age:val.age,
-                              id:val.PatientId})
+        tabledata.push({customer:val.Customername,nursename:val.Nursename,gender:val.gender,age:val.patientage,
+                              id:val.CustomerId})
           tableDatafull.push(val)
         })
         this.setState({
@@ -272,7 +263,6 @@ class CustomerHistoryTable extends React.Component {
             { id: "", label: "Action" }
           ]}
           
-          // tableicon_align={"cell_eye"}
           rowdata={Tabledatas.length ===  0 ? []: Tabledatas}
           props_loading={this.state.props_loading}
           DeleteIcon="close"
@@ -281,22 +271,6 @@ class CustomerHistoryTable extends React.Component {
           HistoryIcon="close"
           LocationOnIcon="close"
         />
-
-        <Modalcomp className="clr_class"
-          visible={this.state.openview}
-          title={"CUSTOMER HISTORY"}
-          closemodal={e => this.closemodal(e)}
-          clrchange="textclr"
-          // xswidth={"xs"}
->
-        <HistoryForm  OpenViewData={this.state.OpenViewData}/>
-        </Modalcomp>
-        {/* <Modalcomp
-          visible={this.state.editopen}
-          title={"Edit details"}
-          closemodal={e => this.closemodal(e)}
-          // xswidth={"xs"}
-        ></Modalcomp> */}
       </div>
       </>
     );

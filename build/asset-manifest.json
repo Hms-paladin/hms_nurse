@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/nursemodule/static/css/main.98b2f81d.chunk.css",
-    "main.js": "/nursemodule/static/js/main.60318a3d.chunk.js",
-    "main.js.map": "/nursemodule/static/js/main.60318a3d.chunk.js.map",
+    "main.css": "/nursemodule/static/css/main.65f8143b.chunk.css",
+    "main.js": "/nursemodule/static/js/main.3e0b3ccb.chunk.js",
+    "main.js.map": "/nursemodule/static/js/main.3e0b3ccb.chunk.js.map",
     "runtime-main.js": "/nursemodule/static/js/runtime-main.71862819.js",
     "runtime-main.js.map": "/nursemodule/static/js/runtime-main.71862819.js.map",
     "static/css/2.eb49c9e0.chunk.css": "/nursemodule/static/css/2.eb49c9e0.chunk.css",
-    "static/js/2.cb95cb8b.chunk.js": "/nursemodule/static/js/2.cb95cb8b.chunk.js",
-    "static/js/2.cb95cb8b.chunk.js.map": "/nursemodule/static/js/2.cb95cb8b.chunk.js.map",
+    "static/js/2.7ae71630.chunk.js": "/nursemodule/static/js/2.7ae71630.chunk.js",
+    "static/js/2.7ae71630.chunk.js.map": "/nursemodule/static/js/2.7ae71630.chunk.js.map",
     "index.html": "/nursemodule/index.html",
-    "precache-manifest.906f3f55f5754496fd07693785e31f29.js": "/nursemodule/precache-manifest.906f3f55f5754496fd07693785e31f29.js",
+    "precache-manifest.2263f206ffc86d7fc742cb5bf66081bb.js": "/nursemodule/precache-manifest.2263f206ffc86d7fc742cb5bf66081bb.js",
     "service-worker.js": "/nursemodule/service-worker.js",
     "static/css/2.eb49c9e0.chunk.css.map": "/nursemodule/static/css/2.eb49c9e0.chunk.css.map",
-    "static/css/main.98b2f81d.chunk.css.map": "/nursemodule/static/css/main.98b2f81d.chunk.css.map",
-    "static/js/2.cb95cb8b.chunk.js.LICENSE.txt": "/nursemodule/static/js/2.cb95cb8b.chunk.js.LICENSE.txt",
+    "static/css/main.65f8143b.chunk.css.map": "/nursemodule/static/css/main.65f8143b.chunk.css.map",
+    "static/js/2.7ae71630.chunk.js.LICENSE.txt": "/nursemodule/static/js/2.7ae71630.chunk.js.LICENSE.txt",
     "static/media/1.jpg": "/nursemodule/static/media/1.bf8466dc.jpg",
     "static/media/11.jpg": "/nursemodule/static/media/11.9c2f3f7d.jpg",
     "static/media/Full.svg": "/nursemodule/static/media/Full.6367e280.svg",
@@ -50,8 +50,8 @@
   "entrypoints": [
     "static/js/runtime-main.71862819.js",
     "static/css/2.eb49c9e0.chunk.css",
-    "static/js/2.cb95cb8b.chunk.js",
-    "static/css/main.98b2f81d.chunk.css",
-    "static/js/main.60318a3d.chunk.js"
+    "static/js/2.7ae71630.chunk.js",
+    "static/css/main.65f8143b.chunk.css",
+    "static/js/main.3e0b3ccb.chunk.js"
   ]
 }

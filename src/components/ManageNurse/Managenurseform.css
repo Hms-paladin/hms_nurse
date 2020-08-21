@@ -50,7 +50,6 @@
 }
 /* .Upload-button{
 font-size:1.5rem !important;
-
 } */
 .uploadfiles-wrapper .ant-upload {
   font-size: 1.5rem;
@@ -126,9 +125,11 @@ font-size:1.5rem !important;
   float: right;
   margin-right: 2%;
   margin-top: 2%;
-  padding-right: 7% !important;
-  padding-left: 7% !important;
-  border-radius: 50% !important;
+  padding-right: 24px !important;
+  padding-left: 24px !important;
+  border-radius: 42px;
+  padding-top: 8px;
+  padding-bottom: 8px;
 }
 
 .Card-par-nurse {

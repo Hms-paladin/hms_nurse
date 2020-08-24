@@ -64,7 +64,7 @@ class NurseServiceCancellationTable extends React.Component {
     })
     doc.autoTable({
       beforePageContent: function(data) {
-        doc.text("Uploaded Details", 15, 23); // 15,13 for css
+        doc.text("Cancelled Appointments", 15, 23); // 15,13 for css
         },
       margin: { top: 30 },
       showHead:"everyPage",
@@ -72,7 +72,7 @@ class NurseServiceCancellationTable extends React.Component {
       head: [['S.No', 'Customer', 'Nurse Name','No Of Months','Cancelled Date','Time']],
       body:bodydata,
     })
-    doc.save('UploadDetails.pdf')
+    doc.save('CancelledAppointments.pdf')
   }}
   componentDidMount =() =>{
     this.getmethod()
@@ -229,8 +229,8 @@ generateprint=()=>{
             onClick={this.generatepdf}
             style={{marginRight:"15px",marginLeft:"15px"}}/>
             {this.state.tabledata.length===0 ? <ReactSVG src={excel} style={{ marginRight: "15px" }} /> :
-            <ExcelFile element={<ReactSVG src={excel} style={{ marginRight: "15px" }} />}>
-              <ExcelSheet dataSet={multiDataSet} name="Uploaded Details"/>
+            <ExcelFile filename={"CancelledAppointments"} element={<ReactSVG src={excel} style={{ marginRight: "15px" }} />}>
+              <ExcelSheet dataSet={multiDataSet} name="Cancelled Appointments"/>
             </ExcelFile>
              }
               <ReactToPrint

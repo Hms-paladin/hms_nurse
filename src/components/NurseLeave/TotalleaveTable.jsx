@@ -79,7 +79,7 @@ class TotalleaveTable extends React.Component {
     })
     doc.autoTable({
       beforePageContent: function(data) {
-        doc.text("Uploaded Details", 15, 23); // 15,13 for css
+        doc.text("Nurses On Leave/Block", 15, 23); // 15,13 for css
         },
       margin: { top: 30 },
       showHead:"everyPage",
@@ -88,7 +88,7 @@ class TotalleaveTable extends React.Component {
       body:bodydata,
     })
      
-    doc.save('UploadDetails.pdf')
+    doc.save('NursesOnLeave/Block.pdf')
     
   }
 }
@@ -259,8 +259,8 @@ dayReport=(data)=>{
         style={{marginRight:"15px",
         marginLeft:"15px"}}/>
          {this.state.leaveData.length===0 ? <ReactSVG src={excel} style={{ marginRight: "15px" }} /> :
-        <ExcelFile element={<ReactSVG src={excel} style={{ marginRight: "15px" }} />}>
-          <ExcelSheet dataSet={multiDataSet} name="Uploaded Details"/>
+        <ExcelFile filename={"NursesOnLeave_Block"} element={<ReactSVG src={excel} style={{ marginRight: "15px" }} />}>
+          <ExcelSheet dataSet={multiDataSet} name="Nurses On Leave_Block"/>
         </ExcelFile>
         }
               <ReactToPrint

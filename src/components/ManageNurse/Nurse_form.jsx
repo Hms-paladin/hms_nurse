@@ -56,7 +56,7 @@ export default class Nurse_form extends Component {
         errmsg: null
       },
       'dob': {
-        'value': [{ 'name': 'required'}],
+        'value': '',
         validation:'',
         error: null,
         errmsg: null
@@ -105,7 +105,7 @@ export default class Nurse_form extends Component {
       },
       'a_ddress':{
         'value': '',
-        validation: [{ 'name': 'address' }],
+        validation: [{ 'name': '' }],
         error: null,
         errmsg: null
       },

@@ -125,7 +125,7 @@ this.setState({})
       }
     })
     .then((response) => {
-      alert("getvalue")
+      // alert("getvalue")
       console.log(response,"responseresponse")
 
       var tabledatas = [];

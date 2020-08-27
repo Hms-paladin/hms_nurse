@@ -119,8 +119,12 @@ class DashboardTable extends React.Component {
       }
     })
       .then(function (response) {
+        if(response.status === 0 ){
+          message.error('Nurse Deleted Successfully');
+        }else{
+          message.error('This Nurse is already Booked. Cannot Delete');
+        }
         // alert("Deleted")
-        message.error('Nurse Deleted Successfully');
         self.props.getTableData();
       })
       .catch(function (error) {

@@ -389,7 +389,7 @@ export default class Nurse_form extends Component {
                   errmsg={this.state.manageNurse.gender.errmsg}
                 />
               </div>
-              <div style={{ width: "47%" }}>
+            <div style={{ width: "47%" }}>
                 <Labelbox
                   type="select"
                   labelname="Nationality"

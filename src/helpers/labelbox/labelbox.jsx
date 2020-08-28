@@ -147,9 +147,12 @@ export default class Labelbox extends Component {
 
 						<MuiPickersUtilsProvider utils={DateFnsUtils}>
 							<KeyboardDatePicker
-								disableToolbar={false}
+								disableToolbar={true}
 								autoOk={true}
 								clearable={false}
+								disableUnderline={true}
+								disablePast={this.props.disablePast ? this.props.disablePast : false}
+								minDate={this.props.minDate ? this.props.minDate : null}
 							
 								variant="variant"
 								format="dd/MM/yyyy"

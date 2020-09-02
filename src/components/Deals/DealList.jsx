@@ -71,6 +71,7 @@ export default class DealList extends React.Component {
       this.setState({total_count:response.data.data[0].totalCount})
 
       response.data.data[0].details.map((listdata)=>{
+        console.log("asdfjsdkfhjkdsfhjdsf",listdata)
         dyndealAlllist.push(listdata)
         dyndeallist.push(
           <>
@@ -79,8 +80,8 @@ export default class DealList extends React.Component {
                 <div className="aligndeallistdata">
                   <div>
                     <span>Service Type</span>
-                    {/* <div>{listdata.deal_service_type == "" ? "All" : listdata.deal_service_type}</div> */}
-                    <div>All</div>
+                    <div>{listdata.deal_service_type_id == "" ? "All" : listdata.deal_service_type}</div>
+                    {/* <div>All</div> */}
                     
                     
                   </div>
@@ -182,8 +183,8 @@ export default class DealList extends React.Component {
                 <div className="aligndeallistdata">
                   <div>
                     <span>Service Type</span>
-                    {/* <div>{listdata.deal_service_type == "" ? "All" : listdata.deal_service_type}</div> */}
-                    <div>All</div>
+                    <div>{listdata.deal_service_type == "" ? "All" : listdata.deal_service_type}</div>
+                   
                     
                   </div>
                   <div>

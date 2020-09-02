@@ -76,7 +76,7 @@ class RevenueMaster extends Component {
           nurseName: val.nurse_name,
           dutyHours: val.duty_hours + " Hrs",
           totalMonths: val.total_month,
-          bookedDate: val.book_date,
+          bookedDate: dateFormat(val.book_date,"dd mmm yyyy"),
           cost: val.cost,
           cash: val.cash,
           card: val.card,
@@ -164,7 +164,7 @@ class RevenueMaster extends Component {
         return data
       else if (data.customer !== null && data.customer.toLowerCase().includes(this.state.search.toLowerCase())
         || (data.nurseName != null && data.nurseName.toLowerCase().includes(this.state.search.toLowerCase()))
-        || (data.dutyHours != null && data.dutyHours.toLowerCase().includes(this.state.search.toLowerCase()))
+        || (data.dutyHours != null && data.dutyHours.toString().includes(this.state.search.toString()))
         || (data.totalMonths != null && data.totalMonths.toString().includes(this.state.search.toString()))
         || (data.bookedDate != null && data.bookedDate.toString().includes(this.state.search.toString()))
         || (data.cost != null && data.cost.toString().includes(this.state.search.toString()))
@@ -294,6 +294,8 @@ class RevenueMaster extends Component {
             VisibilityIcon="close"
             grandtotal="total"
             props_loading={this.state.props_loading}
+            modeprop={true}
+
           />
         </div>
         <div className="revenueTotal">

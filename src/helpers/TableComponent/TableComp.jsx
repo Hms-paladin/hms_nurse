@@ -304,6 +304,12 @@ export default class Tablecomponent extends Component {
       <Spin className="spinner_align" spinning={this.props.props_loading}>
       <div className={`VendorDetailsDiv ${this.props.tablemasterclass}`}>
         <Paper className="paper">
+        {
+              this.props.modeprop &&
+              <div className="modeOfPayment">
+                <span className="modeOfPaymentText">Mode of Payment</span>
+              </div>
+            }
           <div className="tableWrapper">
             <Table
               className="table"

@@ -31,19 +31,11 @@ checkValidation(textValue,validatorsArray){
       return {msg:"Please Enter 10 to 15 digit Mobile Number",state:false};
         }
     }
-<<<<<<< HEAD
     else if(validatorsArray[valid].name=='custommobile'){
       //var re = /^(0|[1-9][0-9]{9,15})$/;
        var re = /^([0-9][0-9]{7,14})$/;
        if(re.test(textValue)==false){
      return {msg:"Please Enter 8 to 15 digit Mobile Number",state:false};
-=======
-
-    else if(validatorsArray[valid].name=='mobileHms'){ // 8 Digit Only
-       var re = /^([0-9][0-9]{7})$/;
-       if(re.test(textValue)==false){
-     return {msg:"Please Enter 8 digit Mobile Number",state:false};
->>>>>>> e310d33d062c12f6f94fdd0f77a08d09c9fb3928
        }
    }
    

@@ -40,7 +40,7 @@ export default class BasicDetails extends React.Component {
       },
       'Mobile': {
         'value': '',
-        validation: [{ 'name': 'required' },{'name':'mobile'}],
+        validation: [{ 'name': 'required' },{'name':'mobileHms'}],
         error: null,
         errmsg: null
       },

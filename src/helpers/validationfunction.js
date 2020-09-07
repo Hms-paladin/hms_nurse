@@ -31,6 +31,13 @@ checkValidation(textValue,validatorsArray){
       return {msg:"Please Enter 10 to 15 digit Mobile Number",state:false};
         }
     }
+    else if(validatorsArray[valid].name=='custommobile'){
+      //var re = /^(0|[1-9][0-9]{9,15})$/;
+       var re = /^([0-9][0-9]{7,14})$/;
+       if(re.test(textValue)==false){
+     return {msg:"Please Enter 8 to 15 digit Mobile Number",state:false};
+       }
+   }
    
     else if(validatorsArray[valid].name=='regex'){
        // var re = /^(0|[1-9][0-9]*){10}$/;

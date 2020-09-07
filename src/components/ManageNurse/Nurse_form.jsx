@@ -81,7 +81,7 @@ export default class Nurse_form extends Component {
       },
       'mobile_number': {
         'value': '',
-        validation: [{ 'name': 'mobile', },{"name":'alphaNumaricOnly'}],
+        validation: [{ 'name': 'custommobile'}],
         error: null,
         errmsg: null
       },

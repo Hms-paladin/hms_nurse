@@ -450,7 +450,8 @@ export default class Nurse_form extends Component {
                   error={this.state.manageNurse.dob.error}
                   errmsg={this.state.manageNurse.dob.errmsg}
                   disableFuture={true}
-                  blockDate={new Date()}
+                  // blockDate={new Date()}
+                  disableToolbar
                 />
               </div>
               <div style={{ width: "47%" }}>
@@ -556,7 +557,7 @@ export default class Nurse_form extends Component {
 
                 <Checkbox checked={this.state.nurseActive} onChange={(e) => this.nurseActiveCheck(e)} />
               </div>
-              <div style={{ width: "100%" },{marginTop:"15px"}} className="skills">
+              <div style={{ width: "100%" },{marginTop:this.state.imageChanged === false ?"33px" : "12px"}} className="skills">
               <Labelbox
                 type="text"
                 labelname="Address"

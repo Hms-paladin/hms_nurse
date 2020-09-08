@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Grid from "@material-ui/core/Grid";
 import Labelbox from "../../helpers/labelbox/labelbox";
 import Button from "@material-ui/core/Button";
-import { Tabs,notification } from 'antd';
+import { Tabs, notification } from 'antd';
 import Checkbox from '@material-ui/core/Checkbox';
 // import Report from '../../images/report.jpg'
 import './BookingDetails.css'
@@ -12,10 +12,10 @@ import Axios from "axios";
 import { apiurl } from "../../App";
 import ValidationLibrary from '../../helpers/validationfunction';
 import dateformat from 'dateformat';
-import {Select} from 'antd';
+import { Select } from 'antd';
 
 
-const {Option} = Select;
+const { Option } = Select;
 
 export default class BookingDetails extends React.Component {
     constructor(props) {
@@ -23,8 +23,8 @@ export default class BookingDetails extends React.Component {
         this.state = {
             name: "",
             serviceType: [],
-            serviceTypeAll:false,
-            edit:false,
+            serviceTypeAll: false,
+            edit: false,
             activeKey: "1",
             serviceTypeAll: false,
             dealOption: "M",
@@ -32,13 +32,13 @@ export default class BookingDetails extends React.Component {
             deal_valid_to: new Date(),
             dealActive: false,
             afteredit: false,
-            valideToerror:false,
-            dateError:false,
+            valideToerror: false,
+            dateError: false,
             servicetype: 1,
-            services:[],
-            serviceTypeValue:"All",
+            services: [],
+            serviceTypeValue: "All",
             bookingDetails: {
-               
+
                 'deal_title': {
                     'value': '',
                     validation: [{ 'name': 'required' }],
@@ -54,11 +54,11 @@ export default class BookingDetails extends React.Component {
             }
         }
 
-        console.log("consptops",this.props)
+        console.log("consptops", this.props)
     }
     callback = (key) => {
 
-        if(key == 2 && this.state.edit) {
+        if (key == 2 && this.state.edit) {
             this.resetFormValue()
         }
 
@@ -67,56 +67,56 @@ export default class BookingDetails extends React.Component {
         })
     }
     changeTabFun = (data) => {
-        console.log("asfshdfsdfksd",data)
-        if(new Date (data.deal_valid_from) < new Date() && new Date (data.deal_valid_to) < new Date() ){
+        console.log("asfshdfsdfksd", data)
+        if (new Date(data.deal_valid_from) < new Date() && new Date(data.deal_valid_to) < new Date()) {
             notification.info({
                 description:
-                  'Deals expired',
-                  placement:"topRight",
-              });
-        }else if(new Date (data.deal_valid_from) < new Date() && new Date (data.deal_valid_to) > new Date() ){
+                    'Deals expired',
+                placement: "topRight",
+            });
+        } else if (new Date(data.deal_valid_from) < new Date() && new Date(data.deal_valid_to) > new Date()) {
             notification.info({
                 description:
-                  "Deals already posted",
-                  placement:"topRight",
-              });
-        }else{
-        console.log(data, "editdata")
-        this.setState({
-            edit: true,
-            activeKey: "1",
-            editData: data,
-           
-        },() => this.svalue(data))
-        // For Edit Data form filling
-        // this.state.bookingDetails.service_type.value =   data.deal_service_type == "" ? "All" : data.deal_service_type;
-        this.state.bookingDetails.deal_title.value = data.deal_title
-        // this.state.serviceTypeValue = data.deal_service_type
-        // this.state.serviceTypeId = data.deal_service_type_id;
-        this.state.bookingDetails.deal_amt.value = data.deal_amount
-        this.state.dealActive = data.deal_active === 1 ? true : false
-        this.state.dealOption = data.deal_options === "Amount" ? "M" : "F"
-        this.state.deal_valid_from = dateformat(data.deal_valid_from, "yyyy-mm-dd")
-        this.state.deal_valid_to = dateformat(data.deal_valid_to, "yyyy-mm-dd")
-        
-        this.setState({})
-    }
+                    "Deals already posted",
+                placement: "topRight",
+            });
+        } else {
+            console.log(data, "editdata")
+            this.setState({
+                edit: true,
+                activeKey: "1",
+                editData: data,
+
+            }, () => this.svalue(data))
+            // For Edit Data form filling
+            // this.state.bookingDetails.service_type.value =   data.deal_service_type == "" ? "All" : data.deal_service_type;
+            this.state.bookingDetails.deal_title.value = data.deal_title
+            // this.state.serviceTypeValue = data.deal_service_type
+            // this.state.serviceTypeId = data.deal_service_type_id;
+            this.state.bookingDetails.deal_amt.value = data.deal_amount
+            this.state.dealActive = data.deal_active === 1 ? true : false
+            this.state.dealOption = data.deal_options === "Amount" ? "M" : "F"
+            this.state.deal_valid_from = dateformat(data.deal_valid_from, "yyyy-mm-dd")
+            this.state.deal_valid_to = dateformat(data.deal_valid_to, "yyyy-mm-dd")
+
+            this.setState({})
+        }
 
     }
 
     svalue = (data) => {
-       let wtf = data.deal_service_type == "" ? "All" : data.deal_service_type;
-        wtf == "All" ? this.setState({serviceTypeAll:false}) : this.setState({serviceTypeAll:true})
-        this.setState({serviceTypeValue:wtf,edit:true,servicetype:this.state.editData.deal_service_type_id})
+        let wtf = data.deal_service_type == "" ? "All" : data.deal_service_type;
+        wtf == "All" ? this.setState({ serviceTypeAll: false }) : this.setState({ serviceTypeAll: true })
+        this.setState({ serviceTypeValue: wtf, edit: true, servicetype: this.state.editData.deal_service_type_id })
     }
 
     compareDate = () => {
-       
-        if(dateformat(this.state.deal_valid_from,'mm-dd-yyyy') <= dateformat(this.state.deal_valid_to,'mm-dd-yyyy')) {
-             this.setState({dateError:false})
-           
-        }else{
-            this.setState({dateError:true})
+
+        if (dateformat(this.state.deal_valid_from, 'mm-dd-yyyy') <= dateformat(this.state.deal_valid_to, 'mm-dd-yyyy')) {
+            this.setState({ dateError: false })
+
+        } else {
+            this.setState({ dateError: true })
         }
     }
 
@@ -129,28 +129,28 @@ export default class BookingDetails extends React.Component {
             method: "GET",
             url: apiurl + "get_mas_nurse_types",
             data: {
-                "vendor_id":"5"
+                "vendor_id": "5"
             },
-          })
+        })
             .then((response) => {
-             console.log("sdfjdsfhsdklfhs",response)
-              this.setState(
-                {
-                  serviceType: response.data.data.map((val) => {
-                    return { id: val.id, serviceType: val.description };
-                  }),
-                },
-                () => this.state.serviceType.unshift({ id: 0, serviceType: "All" })
-              );
-              
-             
-              this.setState({});
-              // self.state.serviceType=response.data.data.map((val)=>{return{id:val.id,serviceType:val.description}})
+                console.log("sdfjdsfhsdklfhs", response)
+                this.setState(
+                    {
+                        serviceType: response.data.data.map((val) => {
+                            return { id: val.id, serviceType: val.description };
+                        }),
+                    },
+                    () => this.state.serviceType.unshift({ id: 0, serviceType: "All" })
+                );
+
+
+                this.setState({});
+                // self.state.serviceType=response.data.data.map((val)=>{return{id:val.id,serviceType:val.description}})
             })
             .catch((error) => {
-            //   alert(JSON.stringify(error));
+                //   alert(JSON.stringify(error));
             });
-      }
+    }
 
     checkValidation = () => {
         var bookingDetails = this.state.bookingDetails;
@@ -165,9 +165,9 @@ export default class BookingDetails extends React.Component {
         var filtererr = bookingKeys.filter((obj) =>
             bookingDetails[obj].error == true);
         console.log(filtererr.length)
-        if (filtererr.length > 0 || this.state.dateError ) {
-           
-            this.setState({ error: true})
+        if (filtererr.length > 0 || this.state.dateError) {
+
+            this.setState({ error: true })
         } else {
 
             this.setState({ error: false })
@@ -197,7 +197,7 @@ export default class BookingDetails extends React.Component {
     }
 
     changeDealOption = (data) => {
-        console.log(data,"dataradio")
+        console.log(data, "dataradio")
         this.setState({ dealOption: data });
     }
 
@@ -209,14 +209,14 @@ export default class BookingDetails extends React.Component {
     }
 
     getRangeData = (data) => {
-        console.log(data,"getRangeData")
-        if(data.enddate===null){
-            this.setState({deal_valid_from:data.startdate},() => this.compareDate())
-        }else{
-            if(data.startdate<data.enddate){
-            this.setState({deal_valid_from:data.startdate,deal_valid_to:data.enddate},() => this.compareDate())
-            }else{
-            this.setState({deal_valid_from:data.enddate,deal_valid_to:data.startdate},() => this.compareDate())
+        console.log(data, "getRangeData")
+        if (data.enddate === null) {
+            this.setState({ deal_valid_from: data.startdate }, () => this.compareDate())
+        } else {
+            if (data.startdate < data.enddate) {
+                this.setState({ deal_valid_from: data.startdate, deal_valid_to: data.enddate }, () => this.compareDate())
+            } else {
+                this.setState({ deal_valid_from: data.enddate, deal_valid_to: data.startdate }, () => this.compareDate())
             }
         }
     }
@@ -224,23 +224,23 @@ export default class BookingDetails extends React.Component {
 
     services = () => {
         let services = [];
-        for(let i=0;i<this.state.serviceType.length;i++) {
+        for (let i = 0; i < this.state.serviceType.length; i++) {
             services.push(<Option value={this.state.serviceType[i].id}>{this.state.serviceType[i].serviceType}</Option>)
-          
+
         }
-    
+
         return services;
-    
+
     }
 
     onSubmitData = () => {
-       
-    var data = [];
-    if(!this.state.serviceTypeAll) {
-        this.state.serviceType.map(val => val.id > 0 && data.push(val.id))    
-    }
 
-        console.log("sajkdfhjskdfhkdsjh",this.state.servicetype)
+        var data = [];
+        if (!this.state.serviceTypeAll) {
+            this.state.serviceType.map(val => val.id > 0 && data.push(val.id))
+        }
+
+        console.log("sajkdfhjskdfhkdsjh", this.state.servicetype)
         var bookingDetails = {
             userId: 1,
             dealvendorId: 5,
@@ -291,12 +291,12 @@ export default class BookingDetails extends React.Component {
             console.log(response)
             this.resetFormValue()
             this.getDealsList()
-            this.setState({afteredit: true})
+            this.setState({ afteredit: true })
             notification.info({
                 description:
-                  'Record Added Successfully',
-                  placement:"topRight",
-              });
+                    'Record Added Successfully',
+                placement: "topRight",
+            });
 
         }).catch((error) => {
             // alert(JSON.stringify(error))
@@ -315,14 +315,14 @@ export default class BookingDetails extends React.Component {
         }).then((response) => {
             this.resetFormValue()
             this.getDealsList()
-            this.setState({ afteredit: true, activeKey: "2",edit:false })
-           
-            
+            this.setState({ afteredit: true, activeKey: "2", edit: false })
+
+
             notification.info({
                 description:
-                  'Record Updated Successfully',
-                  placement:"topRight",
-              });
+                    'Record Updated Successfully',
+                placement: "topRight",
+            });
 
         }).catch((error) => {
             // alert(JSON.stringify(error))
@@ -332,49 +332,49 @@ export default class BookingDetails extends React.Component {
     // For Update purpose we are using this function here (if we try use this in dealList.jsx then we cant update automatically the list)
     getDealsList = () => {
         var data = {
-          vendor_id:5,
-          limit: 10,
-          pageno: 2,
+            vendor_id: 5,
+            limit: 10,
+            pageno: 2,
         };
         Axios({
-          method: "POST",
-          url: apiurl + "Common/getsingle_deals",
-          data: data,
+            method: "POST",
+            url: apiurl + "Common/getsingle_deals",
+            data: data,
         })
-          .then((response) => {
-            this.setState(
-              {
-                dealsList: response.data.data[0].details,
-              },
-              () => console.log("safskjdfhjsdkahfjksdfhljskd", this.state.dealsList)
-            );
-          })
-          .catch((error) => {
-            // alert(JSON.stringify(error));
-          });
-      };
+            .then((response) => {
+                this.setState(
+                    {
+                        dealsList: response.data.data[0].details,
+                    },
+                    () => console.log("safskjdfhjsdkahfjksdfhljskd", this.state.dealsList)
+                );
+            })
+            .catch((error) => {
+                // alert(JSON.stringify(error));
+            });
+    };
 
     changedateFun = (data, name) => {
-        this.setState({ [name]: data },() => this.compareDate())
+        this.setState({ [name]: data }, () => this.compareDate())
     }
 
 
     storeService = (data) => {
-        if(data == 0) {
-            this.setState({serviceTypeAll:false})
-        }else{
-        this.setState({servicetype:data,serviceTypeAll:true,serviceTypeValue:data})
+        if (data == 0) {
+            this.setState({ serviceTypeAll: false })
+        } else {
+            this.setState({ servicetype: data, serviceTypeAll: true, serviceTypeValue: data })
         }
     }
 
- 
+
 
     render() {
         const { TabPane } = Tabs;
 
         var editValue = this.state.edit
-        
-        console.log(this.state.serviceTypeValue,"deal_valid_from")
+
+        console.log(this.state.serviceTypeValue, "deal_valid_from")
         return (
             <div className="booking_createlist">
                 <Grid container>
@@ -388,16 +388,16 @@ export default class BookingDetails extends React.Component {
                             <TabPane tab="Create Deals" key={"1"}>
                                 <Grid container spacing={2} className="deal_container">
                                     <Grid item xs={6} md={6}>
-                                  
-                                                <div>
-                                                    <label className="label_txt">Service Type</label>
-                                                    <Select value={this.state.serviceTypeValue}  style={{width:"100%"}} onChange={this.storeService}>
-                          {this.services()}
-                </Select>
-                                                </div>
-                             </Grid>
+
+                                        <div>
+                                            <label className="label_txt">Service Type</label>
+                                            <Select value={this.state.serviceTypeValue} style={{ width: "100%" }} onChange={this.storeService}>
+                                                {this.services()}
+                                            </Select>
+                                        </div>
+                                    </Grid>
                                     <Grid item xs={6} md={6}>
-                                    <Labelbox
+                                        <Labelbox
                                             type="text"
                                             labelname="Deal Title"
                                             valuelabel={'deal_title'}
@@ -409,7 +409,7 @@ export default class BookingDetails extends React.Component {
                                     </Grid>
 
                                     <Grid item xs={6} md={6}>
-                                    <Labelbox
+                                        <Labelbox
                                             type="datepicker"
                                             labelname="Valid From"
                                             value={this.state.deal_valid_from}
@@ -419,63 +419,64 @@ export default class BookingDetails extends React.Component {
                                     </Grid>
 
                                     <Grid item xs={6} md={6}>
-                                    <Labelbox
-                                    type="datepicker"
-                                    labelname="Valid To"
-                                    value={this.state.deal_valid_to}
-                                    changeData={(data) => this.changedateFun(data, 'deal_valid_to')}
-                                    disablePast={true}
-                                    />
-                                   <div className="validation__error--minus errmsg_clr">{this.state.dateError && "enddate should be greater than startdate"}</div>
+                                        <Labelbox
+                                            type="datepicker"
+                                            labelname="Valid To"
+                                            value={this.state.deal_valid_to}
+                                            changeData={(data) => this.changedateFun(data, 'deal_valid_to')}
+                                            disablePast={true}
+                                        />
+                                        <div className="validation__error--minus errmsg_clr">{this.state.dateError && "enddate should be greater than startdate"}</div>
                                     </Grid>
 
                                     <Grid item xs={6} md={6}>
-                                    <div className="radio_buttons">
+                                        <div className="radio_buttons">
                                             <Labelbox
                                                 labelname="Deal Options"
                                                 type="radio"
                                                 checked={this.state.dealOption}
                                                 changeGender={(data) => this.changeDealOption(data)}
+                                                marginControl
                                             />
                                         </div>
                                     </Grid>
 
                                     <Grid item xs={6} md={6}>
                                         <div className="deal_radiopercent">
-                                    <Labelbox
-                                            type="number"
-                                            labelname={this.state.dealOption === "M" ? "Deal Amount" : "Deal Percentage"}
-                                            valuelabel={'deal_amt'}
-                                            changeData={(data) => this.changeDynamic(data, 'deal_amt')}
-                                            value={this.state.bookingDetails.deal_amt.value}
-                                            error={this.state.bookingDetails.deal_amt.error}
-                                            errmsg={this.state.bookingDetails.deal_amt.errmsg}
-                                        />
+                                            <Labelbox
+                                                type="number"
+                                                labelname={this.state.dealOption === "M" ? "Deal Amount" : "Deal Percentage"}
+                                                valuelabel={'deal_amt'}
+                                                changeData={(data) => this.changeDynamic(data, 'deal_amt')}
+                                                value={this.state.bookingDetails.deal_amt.value}
+                                                error={this.state.bookingDetails.deal_amt.error}
+                                                errmsg={this.state.bookingDetails.deal_amt.errmsg}
+                                            />
                                             <div className="deal_kwdalign">
-                                            {this.state.dealOption === "M" ? "KWD" : "%"}
+                                                {this.state.dealOption === "M" ? "KWD" : "%"}
                                             </div>
-                                            </div>
+                                        </div>
                                     </Grid>
-                                    
+
                                     <Grid item xs={12} md={12}>
-                                    <div className="Deal_activecheck">
-                                        <div>
-                                    <Checkbox className="Deal_active_check" checked={this.state.dealActive} onChange={(e) => this.dealActiveCheck(e)} /><span>Deal Active</span>
-                                    </div>
+                                        <div className="Deal_activecheck">
+                                            <div>
+                                                <Checkbox className="Deal_active_check" checked={this.state.dealActive} onChange={(e) => this.dealActiveCheck(e)} /><span>Deal Active</span>
+                                            </div>
 
 
-                                    <div className="createbutton-container">
-                                            <Button className="create_cancel" onClick={this.resetFormValue}>Cancel</Button>
-                                            <Button className="media_save" onClick={this.checkValidation}>
-                                                {
-                                                    this.state.edit === true ? "Update" : "Save"
-                                                }
-                                            </Button>
-                                    </div>
+                                            <div className="createbutton-container">
+                                                <Button className="create_cancel" onClick={this.resetFormValue}>Cancel</Button>
+                                                <Button className="media_save" onClick={this.checkValidation}>
+                                                    {
+                                                        this.state.edit === true ? "Update" : "Save"
+                                                    }
+                                                </Button>
+                                            </div>
 
-                                    </div>
-    
-       
+                                        </div>
+
+
 
                                     </Grid>
 
@@ -483,7 +484,7 @@ export default class BookingDetails extends React.Component {
                             </TabPane>
                             <TabPane tab="Deals List" key="2">
                                 <DealList
-                                    aftereditfalse={()=>this.setState({afteredit:false})}
+                                    aftereditfalse={() => this.setState({ afteredit: false })}
                                     dealsList={this.state.dealsList} // list data
                                     getDealsList={this.getDealsList} // get api function
                                     serviceType={this.state.serviceType} // dropdown val

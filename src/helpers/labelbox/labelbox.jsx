@@ -126,7 +126,7 @@ export default class Labelbox extends Component {
 			return (
 				<div className="formdiv">
 					<label className="labeltxt">{data.labelname}</label>
-					<div>
+					<div style={{marginTop: this.props.marginControl ? '-12px' : "0px"}}>
 						<FormControlLabel control={<Radio className="radiobtncolor" icon={<RadioButtonUncheckedIcon fontSize="small" />}
 							checkedIcon={<RadioButtonCheckedIcon fontSize="small" />} onClick={() => this.changeGender('M')} checked={this.props.checked == 'M'} fontSize="small" />} label="Amount" />
 						<FormControlLabel value="female" control={<Radio className="radiobtncolor" icon={<RadioButtonUncheckedIcon fontSize="small" />}
@@ -147,12 +147,12 @@ export default class Labelbox extends Component {
 
 						<MuiPickersUtilsProvider utils={DateFnsUtils}>
 							<KeyboardDatePicker
-								disableToolbar={true}
+								disableToolbar={this.props.disableToolbar ? false : true}
 								autoOk={true}
 								clearable={false}
-								disableUnderline={true}
+								disableUnderline={false}
 								disablePast={this.props.disablePast ? this.props.disablePast : false}
-								minDate={this.props.minDate ? this.props.minDate : null}
+								minDate={this.props.minDate && this.props.minDate}
 							
 								variant="variant"
 								format="dd/MM/yyyy"

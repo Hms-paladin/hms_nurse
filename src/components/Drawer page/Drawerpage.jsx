@@ -30,7 +30,7 @@ import advertisebooking from "../../Images/advertisebooking.svg";
 import managenurse from "../../Images/managenurse.svg";
 import revenue from "../../Images/revenue.svg";
 import profile from "../../Images/profile.svg";
-import report from "../../Images/report.svg";
+import CustomerHistory from "../../Images/CustomerHistory.svg";
 import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
 import Dashboard from "../Nurse_dashboard/Nurse_dash_master";
 import NursebookedHeader from "../NurseHired/NursebookedHeader";
@@ -41,13 +41,15 @@ import NurseserviceCancellation from "../CancelledAppointments/NurseServiceCance
 import AdvertisementMaster from "../AdvertisementBooking/AdvertisementMaster";
 import DealsMaster from "../Deals/DealsMaster";
 import Revenue from "../Revenue/RevenueMaster";
-import TotalnurseDashboard from "../ManageNurse/TotalnurseDashboard";
+import ManageNurse from "../ManageNurse/index";
 import CancelPayment from "../CancelPayment/CancelPayment";
 import PaymentReceived from "../PaymentReceived/PaymentReceived";
 import ProfileComp from "../Profilepage/Profilepage";
-import CustomerHistoryHeader from "../CustomerHistory/CustomerHistoryHeader";
+import CustomerHistoryMaster from "../CustomerHistory/index";
 import Axios from "axios";
 import {apiurl} from '../../App'
+import {notification} from 'antd';
+
 
 
 import {
@@ -137,27 +139,25 @@ class MiniDrawer extends React.Component {
     ProfileData:[],
     date: date,
     time: time,
+    current_location:""
   };
   componentDidMount(){
     this.ProfileGetApi()
-    this.EditProfileApi()
+    this.setState({
+      current_location: window.location.href
+    },() => console.log("sfdshfjsdhfjsdhfsdf", this.state.current_location))
   }
-  // ProfileGetApi=()=>{
-  //   var self=this
-  //   Axios({
-  //     method: 'POST',
-  //     url: "http://52.200.251.222:8158/api/v1/Nurse/getnursevendorprofile",
-  //     data:{
-  //       "nursevendorId":"5"
-  //     },
-  // }).then((response) => {
-  //   var ProfileData=[]
-  //   console.log(response,"getdetails")
-  //   ProfileData=response.data.data
-  //   this.setState({ProfileData}) 
-  // }).catch((error) => {
-  //     })
-  // }
+
+  generateAlert = (description) => {
+    notification.success({
+      // message: "Success",
+      description,
+      onClick: () => {
+        console.log("Notification Clicked!");
+      },
+    });
+  };
+  
 
   ProfileGetApi=()=>{
     var self=this
@@ -181,36 +181,7 @@ class MiniDrawer extends React.Component {
       })
   }
 
-  EditProfileApi=()=>{
-
-    var formData = new FormData()
-    if (this.props.imageChanged === true) {
-
-        for (let i in this.props.Image) {
-            formData.append('uploadFile', this.props.Image[i].originFileObj)
-            console.log("formdafdsfsdf", this.props.Image[i].originFileObj)
-        }
-
-    }else{
-        formData.append('uploadFile', '')
-    }
-    formData.set('modifiedby', 1)
-    formData.set('nursevendorId', this.props.EditId)
-    Axios({
-      method: 'POST',
-      url: apiurl + "Nurse/editNursevendorprofile",
-      data:formData
-       
-  }).then((response) => {
-    console.log("response",response)
-    // window.location.reload(false)
-   this.props.ProfileGetApi()
-   this.Notification("Updated successfully ")
-  }).catch((error) => {
-      
-  })
-  // this.props.closemodal()
-  }
+  
 
   handleClose = () => {
     this.props.onClose(this.props.selectedValue);
@@ -234,7 +205,9 @@ class MiniDrawer extends React.Component {
     window.location.assign('/?/nursemodule')
     this.props.onClose()
   }
-
+  active_box = () => {
+    this.setState({current_location:window.location.href},() => console.log("sfkjhdsfljkldhsfk",this.state.current_location))
+  }
   render() {
     const { classes, theme, children, onClose, selectedValue } = this.props;
 
@@ -349,7 +322,7 @@ class MiniDrawer extends React.Component {
 
                 <div className="date-wrapper1">
                   <div className="date-wrapper2">
-                  <large className="date">{this.state.date}{`   `}{this.state.time}</large>
+                  <large className="date">{this.state.date}{` `}{this.state.time}</large>
                   </div>
                 </div>
               </div>
@@ -392,8 +365,8 @@ class MiniDrawer extends React.Component {
               </IconButton>
             </div>
 
-            <MenuList className="appbar_sideicons">
-              <MenuItem component={Link} to="/Home/dashboard">
+            <MenuList className="appbar_sideicons" onClick={this.active_box}>
+              <MenuItem component={Link} to="/Home/dashboard" className={`${this.state.current_location.includes("/dashboard" || "/dashboard") && "active_text_heading"}`}>
                 <ListItemIcon>
                   <div className="icon-container">
                     <ReactSVG src={dashboard} />
@@ -402,7 +375,7 @@ class MiniDrawer extends React.Component {
                 <ListItemText primary="Home" />
               </MenuItem>
 
-              <MenuItem component={Link} to="/Home/nursehired">
+              <MenuItem component={Link} to="/Home/nursehired" className={`${this.state.current_location.includes("/nursehired") && "active_text_heading"}`}>
                 <ListItemIcon>
                   <div className="icon-container">
                     <ReactSVG src={nursehired} />
@@ -411,7 +384,7 @@ class MiniDrawer extends React.Component {
                 <ListItemText primary="Total Nurses Hired" />
               </MenuItem>
 
-              <MenuItem component={Link} to="/Home/idlenurse">
+              <MenuItem component={Link} to="/Home/idlenurse" className={`${this.state.current_location.includes("/idlenurse") && "active_text_heading"}`}>
                 <ListItemIcon>
                   <div className="icon-container">
                     <ReactSVG src={idlenurse} />
@@ -420,7 +393,7 @@ class MiniDrawer extends React.Component {
                 <ListItemText primary="Idle Nurses" />
               </MenuItem>
 
-              <MenuItem component={Link} to="/Home/availability">
+              <MenuItem component={Link} to="/Home/availability" className={`${this.state.current_location.includes("/availability") && "active_text_heading"}`}>
                 <ListItemIcon>
                   <div className="icon-container">
                     <ReactSVG src={availability} />
@@ -429,16 +402,16 @@ class MiniDrawer extends React.Component {
                 <ListItemText primary="Availability" />
               </MenuItem>
 
-              <MenuItem component={Link} to="/Home/nurseleave">
+              <MenuItem component={Link} to="/Home/nurseleave" className={`${this.state.current_location.includes("/nurseleave") && "active_text_heading"}`}>
                 <ListItemIcon>
                   <div className="icon-container">
                     <ReactSVG src={nurseonleave} />
                   </div>
                 </ListItemIcon>
-                <ListItemText primary="Nurses On Leave" />
+                <ListItemText primary="Nurses On Leave/Block" />
               </MenuItem>
 
-              <MenuItem component={Link} to="/Home/cancelledappointments">
+              <MenuItem component={Link} to="/Home/cancelledappointments" className={`${this.state.current_location.includes("/cancelledappointments") && "active_text_heading"}`}>
                 <ListItemIcon>
                   <div className="icon-container">
                     <ReactSVG src={cancelledappointments} />
@@ -447,7 +420,7 @@ class MiniDrawer extends React.Component {
                 <ListItemText primary="Cancelled Appointments" />
               </MenuItem>
 
-              <MenuItem component={Link} to="/Home/advertisement">
+              <MenuItem component={Link} to="/Home/advertisement" className={`${this.state.current_location.includes("/advertisement") && "active_text_heading"}`}>
                 <ListItemIcon>
                   <div className="icon-container">
                     <div>
@@ -458,7 +431,7 @@ class MiniDrawer extends React.Component {
                 <ListItemText primary="Advertisement Booking" />
               </MenuItem>
 
-              <MenuItem component={Link} to="/Home/deals">
+              <MenuItem component={Link} to="/Home/deals" className={`${this.state.current_location.includes("/deals") && "active_text_heading"}`}>
                 <ListItemIcon>
                   <div className="icon-container">
                     <div>
@@ -469,7 +442,7 @@ class MiniDrawer extends React.Component {
                 <ListItemText primary="Deals" />
               </MenuItem>
 
-              <MenuItem component={Link} to="/Home/revenue">
+              <MenuItem component={Link} to="/Home/revenue" className={`${this.state.current_location.includes("/revenue") && "active_text_heading"}`}>
                 <ListItemIcon>
                   <div className="icon-container">
                     <div>
@@ -480,7 +453,7 @@ class MiniDrawer extends React.Component {
                 <ListItemText primary="Revenue" />
               </MenuItem>
 
-              <MenuItem component={Link} to="/Home/managenurse">
+              <MenuItem component={Link} to="/Home/managenurse" className={`${this.state.current_location.includes("/managenurse") && "active_text_heading"}`}>
                 <ListItemIcon>
                   <div className="icon-container">
                     <div>
@@ -491,8 +464,7 @@ class MiniDrawer extends React.Component {
                 <ListItemText primary="Manage Nurses" />
               </MenuItem>
               <MenuItem
-                component={Link}
-                to="/Home/profilepage"
+                component={Link} to="/Home/profilepage" className={`${this.state.current_location.includes("/profilepage") && "active_text_heading"}`}
                 onClick={this.viewmodalOpen}
               >
                 <ListItemIcon>
@@ -504,11 +476,11 @@ class MiniDrawer extends React.Component {
                 </ListItemIcon>
                 <ListItemText primary="Profile" />
               </MenuItem>
-              <MenuItem component={Link} to="/Home/customerhistory">
+              <MenuItem component={Link} to="/Home/customerhistory" className={`${this.state.current_location.includes("/customerhistory") && "active_text_heading"}`}>
                 <ListItemIcon>
                   <div className="icon-container">
                     <div>
-                      <ReactSVG src={report} />
+                      <ReactSVG src={CustomerHistory} />
                     </div>
                   </div>
                 </ListItemIcon>
@@ -551,7 +523,8 @@ class MiniDrawer extends React.Component {
             />
             <Route
               path={`${this.props.match.path}/advertisement`}
-              component={AdvertisementMaster}
+              // component={AdvertisementMaster}
+              render={(props) => <AdvertisementMaster {...props} generateAlert={this.generateAlert} />}
               exact
             />
             <Route
@@ -566,7 +539,7 @@ class MiniDrawer extends React.Component {
             />
             <Route
               path={`${this.props.match.path}/managenurse`}
-              component={TotalnurseDashboard}
+              component={ManageNurse}
               exact
             />
             <Route
@@ -586,7 +559,7 @@ class MiniDrawer extends React.Component {
             />
             <Route
               path={`${this.props.match.path}/customerhistory`}
-              component={CustomerHistoryHeader}
+              component={CustomerHistoryMaster}
               exact
             />
 

@@ -4,22 +4,27 @@
   background-color: transparent;
   padding: 15px;
 }
+
 .VendorDetailsDiv tr {
   /*box-shadow: 0 0 0.5px #000;*/
   background: white;
 }
+
 .VendorDetailsDiv thead tr {
   background: transparent !important;
 }
+
 .VendorDetailsDiv tr,
 .VendorDetailsDiv th,
 .VendorDetailsDiv td {
   border-bottom: 0px solid rgba(224, 224, 224, 1);
 }
+
 .VendorDetailsDiv .addemployeebtn {
   text-align: left;
   padding-bottom: 20px;
 }
+
 .VendorDetailsDiv .addemployeetxt {
   background: white;
   width: 177px;
@@ -29,12 +34,14 @@
   display: inline-flex;
   align-items: center;
 }
+
 .VendorDetailsDiv .employeeTitle {
   padding-left: 15px;
 
   font-size: 25px;
   color: #333;
 }
+
 /* .VendorDetailsDiv .Mui-selected,
   .VendorDetailsDiv tbody tr:hover {
     background-color: white !important;
@@ -47,10 +54,12 @@
   font-size: 1.45rem;
   padding-top: 15px !important;
 }
+
 .Mui-selected th,
 .Mui-selected td {
   color: #000 !important;
 }
+
 .VendorDetailsDiv .addemployeetxticon {
   padding-left: 10px;
   color: green;
@@ -61,16 +70,19 @@
   /* padding-top: 12px; */
   display: inline-flex;
 }
+
 .VendorDetailsDiv th,
 .VendorDetailsDiv td {
   padding-left: 15px;
   text-align: left;
 }
+
 /*sear css */
 .VendorDetailsDiv .searchicon {
   margin-right: 4% !important;
   padding-top: 2%;
 }
+
 .VendorDetailsDiv .searchicontxt {
   color: #83af40;
   font-size: 24px;
@@ -85,17 +97,20 @@
 .VendorDetailsDiv table {
   min-width: 750;
 }
+
 .VendorDetailsDiv .tableWrapper {
   overflow-x: auto;
   margin-top: 5px;
   min-height: 375px;
 }
+
 .VendorDetailsDiv thead tr,
 .VendorDetailsDiv thead th {
   font-size: 16px;
   /* font-weight: 600; */
   /* color: #333; */
 }
+
 .VendorDetailsDiv .cancelbtn {
   background: darkgrey;
   margin-right: 2%;
@@ -103,23 +118,27 @@
   color: #000;
   width: 100px;
 }
+
 .VendorDetailsDiv .savebtn {
   background: #82af3f;
   text-transform: capitalize;
   color: #fff;
   width: 100px;
 }
+
 .VendorDetailsDiv tbody tr {
   box-shadow: 0 0 0.5px #9e9e9e;
   background: white;
 }
-.tablelocation_icon{
+
+.tablelocation_icon {
   color: #ee534f;
-  font-size: 20px!important;
+  font-size: 20px !important;
   margin-right: 7px;
   cursor: pointer;
 }
-.tablehistory_icon{
+
+.tablehistory_icon {
   color: #ffa827;
   font-size: 20px !important;
   margin-right: 7px;
@@ -137,9 +156,11 @@
   padding-left: 8px !important;
   padding-right: 24px !important;
 }
+
 .MuiTablePagination-caption {
   font-size: 1.5rem !important;
 }
+
 .VendorDetailsDiv .MuiInputBase-input {
   padding-bottom: 10px !important;
 }
@@ -147,6 +168,7 @@
 .table thead th {
   border-bottom: 0px !important;
 }
+
 .VendorDetailsDiv tbody tr {
   /* box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 2px 1px -1px rgba(0,0,0,0.12) !important; */
   box-shadow: 0px 0px 0px 0.5px #c3c3c399;
@@ -166,7 +188,7 @@
   font-weight: bold !important;
 }
 
-.table > tbody > tr > th:first-child {
+.table>tbody>tr>th:first-child {
   padding-left: 20px;
 }
 
@@ -181,31 +203,37 @@
   margin-right: 7px;
   cursor: pointer;
 }
+
 .tableedit_icon {
   color: #82ae3f;
   font-size: 20px !important;
   margin-right: 7px;
   cursor: pointer;
 }
+
 .tabledelete_icon {
   color: #ee534f;
   font-size: 20px !important;
   cursor: pointer;
 }
+
 .tableupload_icon {
   color: #82ae3f;
   font-size: 20px !important;
   margin-right: 7px;
   cursor: pointer;
 }
+
 .tableupload_icon svg {
   width: 18px;
   height: 18px;
   fill: #82ae3f;
 }
+
 .tableupload_icon {
   padding-top: 3px;
 }
+
 .group_grandtotal {
   display: flex;
   align-items: flex-end;
@@ -220,7 +248,7 @@
   margin-right: 15px;
 }
 
-.spinner_align{
+.spinner_align {
   left: -42px !important;
 }
 
@@ -228,21 +256,41 @@
   background-color: #82AE3F;
 }
 
-.noFoundIconCenter{
+.noFoundIconCenter {
   text-align: center !important;
 }
 
-.noFoundIconCenter img{
+.noFoundIconCenter img {
   width: 100px;
   margin-top: 40px;
   margin-right: 100px;
 }
 
-.noFoundIconCenter div{
+.noFoundIconCenter div {
   margin-right: 100px;
 }
 
 .VendorDetailsDiv .noFoundIconCenter {
-border: 1px solid #e2dddd !important;
-padding-bottom: 85px;
+  border: 1px solid #e2dddd !important;
+  padding-bottom: 85px;
+}
+
+.modeOfPayment {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  top: 15px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+}
+
+.modeOfPaymentText {
+  border-bottom: 1px solid black;
+  width: 270px;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  position: relative;
+  left: 336px;
 }

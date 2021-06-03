@@ -3,11 +3,8 @@ import Grid from "@material-ui/core/Grid";
 import Labelbox from "../../helpers/labelbox/labelbox";
 import Button from "@material-ui/core/Button";
 import "./Nurse_form.css";
-import { Upload, Icon, message } from "antd";
-import { DatePicker } from "antd";
-import Divider from "@material-ui/core/Divider";
+import { Upload, message } from "antd";
 import "antd/dist/antd.css";
-import Profilepage from "../LabProfile/Profilepage";
 import ValidationLibrary from '../../helpers/validationfunction';
 import Axios from 'axios';
 import { apiurl } from "../../App";
@@ -54,37 +51,37 @@ export default class Nurse_form extends Component {
     manageNurse: {
       'name': {
         'value': '',
-        validation: [{ 'name': 'required', 'name': 'alphabetsOnly' }],
+        validation: [{ 'name': 'required'}],
         error: null,
         errmsg: null
       },
       'dob': {
         'value': '',
-        validation: [{ 'name': '' }],
+        validation:'',
         error: null,
         errmsg: null
       },
       'experience': {
         'value': '',
-        validation: [{ 'name': '', }],
+        validation: [{ 'name': 'required'},{"name":'alphaNumaricOnly'},{"name":"custommaxLength","params":"2"}],
         error: null,
         errmsg: null
       },
       'gender': {
         'value': '',
-        validation: [{ 'name': '' }],
+        validation: [{ 'name': 'required' }],
         error: null,
         errmsg: null
       },
       'nationality': {
         'value': '',
-        validation: [{ 'name': '' }],
+        validation: [{ 'name': 'required' }],
         error: null,
         errmsg: null
       },
       'mobile_number': {
         'value': '',
-        validation: [{ 'name': '', }],
+        validation: [{ 'name': 'custommobile'}],
         error: null,
         errmsg: null
       },
@@ -96,13 +93,13 @@ export default class Nurse_form extends Component {
       },
       'cost_per_month_8hrs': {
         'value': '',
-        validation: [{ 'name': '' }],
+        validation: [{'name':"custommaxLength","params":"20" ,'name': 'required'}],
         error: null,
         errmsg: null
       },
       'cost_per_month_12hrs': {
         'value': '',
-        validation: [{ 'name': '' }],
+        validation: [{'name':"custommaxLength","params":"20", 'name': 'required'}],
         error: null,
         errmsg: null
       },
@@ -114,7 +111,7 @@ export default class Nurse_form extends Component {
       },
       'E_mail':{
         'value': '',
-        validation: [{ 'name': '' }],
+        validation: [{ 'name': 'email' }],
         error: null,
         errmsg: null
       },
@@ -142,7 +139,7 @@ export default class Nurse_form extends Component {
       this.state.manageNurse.name.value = editData.name
       this.state.manageNurse.dob.value = editData.dob
       this.state.manageNurse.experience.value = editData.experience
-      this.state.manageNurse.gender.value = parseInt(editData.gender)
+      this.state.manageNurse.gender.value =editData.gender
       this.state.manageNurse.nationality.value = editData.nationality_id
       this.state.manageNurse.mobile_number.value = editData.mobileno
       this.state.manageNurse.cost_per_month_8hrs.value = editData.cost_eight_hours
@@ -199,7 +196,7 @@ export default class Nurse_form extends Component {
       manageNurse[manageNurseKeys[i]].errmsg = errorcheck.msg;
     }
     var filtererr = manageNurseKeys.filter((obj) =>
-      manageNurse[obj].error == true);
+      manageNurse[obj].error === true);
     // console.log(filtererr.length)
     if (filtererr.length > 0) {
       this.setState({ error: true })
@@ -222,7 +219,8 @@ export default class Nurse_form extends Component {
       for (var i in this.state.imageData) {
         formData.append('imageArray', this.state.imageData[i].originFileObj)
       }
-    } else {
+    }
+     else {
       formData.append('imageArray', '')
     }
     console.log(formData, "formdata_chkk")
@@ -243,7 +241,7 @@ export default class Nurse_form extends Component {
     formData.set("is_active", this.state.nurseActive === true ? 1 : 0);
     formData.set("vendorId", 5);
     formData.set("createdby", 19);
-    if (this.props.editopenModal != true) {
+    if (this.props.editopenModal===false) {
       this.insertNurse(formData) // Add Api
     }
     if (this.props.editopenModal === true && this.state.imageChanged === true) {
@@ -276,7 +274,7 @@ export default class Nurse_form extends Component {
   updateNurseDetails = (nurseData) => {
     var self = this
     Axios({
-      method: 'PUT',
+      method: 'POST',
       url: apiurl + 'editNurseInfo',
       data:
         nurseData
@@ -288,7 +286,7 @@ export default class Nurse_form extends Component {
       }).catch((error) => {
         // alert(JSON.stringify(error))
       })
-    this.props.getTableData(); // Props from MediaUploadsMaster.jsx
+    this.props.getTableData(); // Props from TotalNurseTable.jsx
 
   }
 
@@ -324,10 +322,13 @@ export default class Nurse_form extends Component {
     }
     if (info.file.status === "done") {
       // Get this url from response in real world.
+      this.setState({
+        imageData: info
+      }, () => console.log("sdfdsfsdhfjhsdfhsdfd", this.state.imageData))
       getBase64(info.file.originFileObj, imageUrl =>
         this.setState({
           imageUrl,
-          imageData: info,
+          // imageData: info,
           loading: false,
           imageChanged: true
         })
@@ -380,7 +381,7 @@ export default class Nurse_form extends Component {
                   type="select"
                   labelname="Gender"
                   valuelabel={'value'}
-                  valuebind={"id"}
+                  valuebind={"value"}
                   dropdown={this.state.gender}
                   changeData={(data) => this.changeDynamic(data, 'gender')}
                   value={this.state.manageNurse.gender.value}
@@ -388,7 +389,7 @@ export default class Nurse_form extends Component {
                   errmsg={this.state.manageNurse.gender.errmsg}
                 />
               </div>
-              <div style={{ width: "47%" }}>
+            <div style={{ width: "47%" }}>
                 <Labelbox
                   type="select"
                   labelname="Nationality"
@@ -448,6 +449,8 @@ export default class Nurse_form extends Component {
                   changeData={(data) => this.changeDynamic(data, 'dob')}
                   error={this.state.manageNurse.dob.error}
                   errmsg={this.state.manageNurse.dob.errmsg}
+                  disableFuture={true}
+                  blockDate={new Date()}
                 />
               </div>
               <div style={{ width: "47%" }}>
@@ -487,11 +490,13 @@ export default class Nurse_form extends Component {
               <div style={{ width: "47%" }}>
                 <Labelbox
                   type="number"
+                  maxLength="2"
                   labelname="Experience"
                   changeData={(data) => this.changeDynamic(data, 'experience')}
                   value={this.state.manageNurse.experience.value}
                   error={this.state.manageNurse.experience.error}
                   errmsg={this.state.manageNurse.experience.errmsg}
+              
                 />
               </div>
               <div style={{ width: "47%" }}>
@@ -520,7 +525,7 @@ export default class Nurse_form extends Component {
             </div>
             </div>
           </Grid>
-          <Grid items xs={4} md={3} className="items_container">
+          <Grid items xs={4} md={3} className="items_container mt-5">
             <div className="User-upload-container">
               <Upload
                 name="avatar"
@@ -531,16 +536,17 @@ export default class Nurse_form extends Component {
                 beforeUpload={beforeUpload}
                 onChange={this.handleChange}
               >
-                {imageUrl ? (
+                 {/* {this.state.imageChanged ===true? */}
                   <img
                     src={imageUrl}
                     className="upload-img-circle"
                     alt="avatar"
-                    style={{ width: "100%" }}
+                    style={{ width: "100%",height:'123px' }}
                   />
-                ) : (
-                    uploadButton
-                  )}
+                  
+{/*                 
+                   : uploadButton
+                 } */}
               </Upload>
               <div className="chkbox_text_edit">
                 <div>

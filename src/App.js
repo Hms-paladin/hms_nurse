@@ -5,8 +5,7 @@ import Nurse_login from './components/Login/Login';
 import Nurse_pass from './components/Login/Forgot';
 import Nurse_passreset from "./components/Login/ResetPassword"
 import MiniDrawer from './components/Drawer page/Drawerpage';
-
-export const apiurl = 'http://52.200.251.222:8158/api/v1/';
+export const apiurl = 'http://3.138.129.137:8158/api/v1/';
 
 
 

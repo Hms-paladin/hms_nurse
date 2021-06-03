@@ -12,6 +12,7 @@ export default class PrintData extends React.Component {
               <td>{printdata.gender}</td>
               <td>{printdata.experience}</td>
               <td>{printdata.Nationality}</td>
+              <td>{printdata.status}</td>
               <td>{printdata.fromdate}</td>
               <td>{printdata.todate}</td>
               <td>{printdata.noofdays}</td>
@@ -21,7 +22,7 @@ export default class PrintData extends React.Component {
 
       return (
           <div className="printtabledata">
-              <div className="printDataTitle">Uploaded Details</div>
+              <div className="printDataTitle">Nurses On Leave/Block</div>
         <table>
           <thead>
             <th>S.No</th>
@@ -29,6 +30,7 @@ export default class PrintData extends React.Component {
             <th>Gender</th>
             <th>Experience</th>
             <th>Nationality</th>
+            <th>Status</th>
             <th>From Date</th>
             <th>To Date</th>
             <th>No of days</th>

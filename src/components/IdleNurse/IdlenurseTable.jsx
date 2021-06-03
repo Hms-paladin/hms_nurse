@@ -25,8 +25,7 @@ import DateRangeSelect from "../../helpers/DateRange/DateRange";
 import dateformat from 'dateformat';
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
-
-
+var moment = require('moment');
 var dateFormat = require('dateformat');
 var now = new Date();
 var current_day = dateFormat(now, "yyyy-mm-dd");
@@ -72,35 +71,31 @@ this.setState({})
   }
 
   getmethod=(rangeday)=>{
+
     this.setState({
       props_loading:true,
     })
     Axios({
       method: 'post',
-      url: apiurl + "patient/getnurseidle",
+      url: apiurl + "Nurse/getnurseidle",
       data: {
         nursevendorId:5,
-        // week: rangeday==="week"?true:false,
-        // month: rangeday==="month"?true:false,
-        // year: rangeday==="year"?true:false,
-        week:"false",
-        month:"false",
-        year:"true",
-        searchContent:"true",
-        date: dateformat(new Date(), "yyyy-mm-dd"),
-        date_to:dateformat(new Date(), "yyyy-mm-dd"),
-        name:"",
-        limit:10,
-        pageno:1,
+        fromDate: dateformat(new Date(), "yyyy-mm-dd"),
+        toDate:dateformat(new Date(), "yyyy-mm-dd"),
+        period:"Day",
       }
   })
   .then((response) => {
-      console.log(response,"response_check_nurseidle_table")
+      console.log(response.data.data,"response_check_nurseidle_table")
       var tabledatas=[];
-      response.data.data[0] && response.data.data[0].details.map((val,index) =>{
-        // console.log()
-        tabledatas.push({nursename:val.Nursename,gender:val.gender,age:val.age,experience:val.experience,Nationality:val.nationality_id,
-          idlesince:dateFormat(val.IdleSince, "dd-mmm-yyyy"),noofdays:val.Noofdays,id:val.id})
+      response.data.data && response.data.data.map((val,index) =>{
+      console.log(moment(val.nurseIdledetails[0].IdleSince).format("DD MMM YYYY"),"idlesince")
+      console.log(val.nurseIdledetails[0].Noofdays,"idlesince")
+
+        tabledatas.push({nursename:val.Nursename,gender:val.gender == 1 ?"Male" : "Female",
+        age:val.age,experience:val.experience,Nationality:val.nationalityName,
+        idlesince:moment(val.nurseIdledetails[0].IdleSince).format('DD MMM YYYY'),
+        noofdays:val.nurseIdledetails[0].Noofdays,id:val.id})
       })
       this.setState({
         tabledatas:tabledatas,
@@ -113,39 +108,32 @@ this.setState({})
   // Date range picker function
 
   dayReport=(data)=>{
-  //   function formatTimeShow(h_24) {
-  //     var h = Number(h_24.substring(0, 2)) % 12;
-  //     if (h === 0) h = 12;
-  //     return (h < 10 ? '0' : '') + h + ':'+h_24.substring(3, 5) + (Number(h_24.substring(0, 2)) < 12 ? ' AM' : ' PM');
-  // }
       console.log(data,"date_range")
       var startdate = dateformat(data[0].startDate, "yyyy-mm-dd")
       var enddate = dateformat(data[0].endDate, "yyyy-mm-dd")
     this.setState({ spinner:true })
     var self = this
+    console.log(startdate ,"start_date_chk")
     Axios({
             method: 'post',
-            url: apiurl + 'patient/getnurseidle',
+            url: apiurl + 'Nurse/getnurseidle',
             data: {
-              "nursevendorId":"5",
-              "week":false,
-              "month":false,
-              "year":true,
-              "searchContent":true,
-              "name":"",
-              "date":startdate,
-              "date_to":enddate,
-              "limit":10,
-              "pageno":1
+            "nursevendorId":"5",
+            "fromDate":startdate,
+            "toDate":enddate,
+            "period":"Day",
       }
     })
     .then((response) => {
+      // alert("getvalue")
+      console.log(response,"responseresponse")
+
       var tabledatas = [];
       var tableDatafull = [];
-      response.data.data[0] && response.data.data[0].details.map((val,index) =>{
+      response.data.data && response.data.data.map((val,index) =>{
         console.log(val,"text_valdata")
-        tabledatas.push({nursename:val.Nursename,gender:val.gender,age:val.age,experience:val.experience,Nationality:val.nationality_id,
-                 idlesince:dateFormat(val.IdleSince, "dd-mmm-yyyy"),noofdays:val.Noofdays,id:val.id
+        tabledatas.push({nursename:val.Nursename,gender:val.gender == 1 ?"Male" : "Female",age:val.age,experience:val.experience,Nationality:val.nationalityName,
+                 idlesince:moment(val.nurseIdledetails[0].IdleSince).format("DD MMM YYYY"),noofdays:val.nurseIdledetails[0].Noofdays,id:val.id
             })
              tableDatafull.push(val)
         })
@@ -175,7 +163,7 @@ this.setState({})
     })
     doc.autoTable({
       beforePageContent: function(data) {
-        doc.text("Uploaded Details", 15, 23); // 15,13 for css
+        doc.text("Idle Nurses", 15, 23); // 15,13 for css
         },
       margin: { top: 30 },
       showHead:"everyPage",
@@ -184,7 +172,7 @@ this.setState({})
       body:bodydata,
     })
      
-    doc.save('UploadDeatails.pdf')
+    doc.save('IdleNurses.pdf')
     
   }}
   // PRINT FUNCTION
@@ -206,7 +194,7 @@ this.setState({})
         || (data.gender!= null && data.gender.toLowerCase().includes(this.state.search.toLowerCase()))
         || (data.age!= null && data.age.toString().includes(this.state.search.toString()))
         || (data.experience!= null && data.experience.toString().includes(this.state.search.toString()))
-        || (data.Nationality!= null && data.Nationality.toString().includes(this.state.search.toString()))
+        || (data.Nationality!= null && data.Nationality.toLowerCase().includes(this.state.search.toString()))
         || (data.idlesince!= null && data.idlesince.toLowerCase().includes(this.state.search.toLowerCase()))
         || (data.noofdays!= null && data.noofdays.toString().includes(this.state.search.toString()))
         ) {
@@ -258,12 +246,6 @@ this.setState({})
           <p className="title_header">IDLE NURSES </p>
           <div style={{ fontSize: "16px" ,display:"flex",alignItems:"center"}}>
           <DateRangeSelect dynalign={"dynalign"} rangeDate={(item)=>this.dayReport(item)} />
-          {/* <ButtonGroup className="clinic_group_details" size="small" aria-label="small outlined button group">
-              <Button className="clinic_details" onClick={()=>this.getmethod("week")}>This Week</Button>
-              <Button className="clinic_details" onClick={()=>this.getmethod("month")}>This Month</Button>
-              <Button className="clinic_details" onClick={()=>this.getmethod("year")}>This Year</Button>
-            </ButtonGroup>
-            <Moment format="DD-MMM-YYYY" className="mr-2"></Moment> */}
             <Search
               placeholder="search"
               onSearch={value => console.log(value)}
@@ -275,8 +257,8 @@ this.setState({})
             onClick={this.generatepdf}
             style={{marginRight:"15px",marginLeft:"15px"}}/>
              {this.state.tabledatas.length===0 ? <ReactSVG src={excel} style={{ marginRight: "15px" }} /> :
-            <ExcelFile element={<ReactSVG src={excel} style={{ marginRight: "15px" }} />}>
-              <ExcelSheet dataSet={multiDataSet} name="Uploaded Details"/>
+            <ExcelFile filename={"IdleNurses"} element={<ReactSVG src={excel} style={{ marginRight: "15px" }} />}>
+              <ExcelSheet dataSet={multiDataSet} name="Idle Nurses"/>
             </ExcelFile>
             }
               <ReactToPrint
@@ -312,7 +294,6 @@ this.setState({})
           VisibilityIcon="close"
           HistoryIcon="close"
           LocationOnIcon="close"
-          
         />
         <Modalcomp
           visible={this.state.openview}
@@ -331,3 +312,4 @@ this.setState({})
   }
 }
 export default DashboardTable;
+

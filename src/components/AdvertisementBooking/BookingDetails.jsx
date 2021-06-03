@@ -60,9 +60,10 @@ const openNotification = () => {
     });
 }
 
-var startdate = dateformat(new Date(), "yyyy-mm-dd")
+var startDate = moment();
+var startdate = moment(startDate).add(2, 'days').format('YYYY-MM-DD');
 
-var enddate = dateformat(new Date(), "yyyy-mm-dd")
+var enddate = moment(startdate);
 export default class AdBooking extends React.Component {
     constructor(props) {
         super(props)
@@ -87,7 +88,7 @@ export default class AdBooking extends React.Component {
             startdate: startdate,
             endDate:  enddate,
             checked:false,
-
+            minDate:startdate,
 
 
             startdateError: "",
@@ -159,7 +160,7 @@ export default class AdBooking extends React.Component {
           return file;
         });
     
-        this.setState({ fileList,imagedata:fileList,imageChanged: true,hidefilelist:false });
+        this.setState({ fileList,imagedata:fileList,imageChanged: true,hidefilelist:false ,imageError:false});
         console.log(fileList, "fileList")
         // console.log("sfdfjhsdfjhsdjfhsdjfkhsdf", info)
         // if (info.file.status === 'uploading') {
@@ -246,14 +247,8 @@ export default class AdBooking extends React.Component {
         this.handleChangeSize()
         this.handlePlacement()
         this.getAdBooking()
-        this.getRate(1)
-
+        // this.getRate(1)
     }
-
-
-
-
-
     handleChangeSize = () => {
         Axios({
             method: 'GET',
@@ -296,9 +291,6 @@ export default class AdBooking extends React.Component {
                 console.log("placement_location", this.state.placementLocation)
             })
     }
-
-
-
     validation = () => {
         let startdateError = "";
         let enddateError = "";
@@ -332,18 +324,19 @@ export default class AdBooking extends React.Component {
             totalcostError = "Field Required"
         }
 
-        // if(this.state.imageUrl === ""){
-        //     imageError = "Field Required"
-        // }
+        if(this.state.imagedata.length === 0){
+            imageError = "Field Required"
+        }
 
 
-        if (startdateError || enddateError || sizeError || locationError || feeError || totalcostError) {
+        if (startdateError || enddateError || sizeError || imageError || locationError || feeError || totalcostError) {
             this.setState({
                 startdateError,
                 enddateError,
                 sizeError,
                 locationError,
                 feeError,
+                imageError,
                 totalcostError,
 
             })
@@ -359,23 +352,23 @@ export default class AdBooking extends React.Component {
         if (data === 1) {
             this.setState({
                 location: 1
-            }, () => this.getRate(data))
+            }, () => this.getRate(data,this.state.adsize))
         }
 
         if (data === 2) {
             this.setState({
                 location: 2
-            }, () => this.getRate(data))
+            }, () => this.getRate(data,this.state.adsize))
         }
     }
 
 
 
-    getRate = (data) => {
+    getRate = (data,size) => {
         var ratedata = {
-            "vendor_type_id": 1,
+            "vendor_type_id": 5,
             "placement_location_id": data,
-            "size_id": 1
+            "size_id": size
         }
 
         Axios({
@@ -389,13 +382,7 @@ export default class AdBooking extends React.Component {
 
         })
     }
-
-
-
-
     handleSubmit = () => {
-
-
         console.log("sfjsdfjdshfjdshfsfdhsdf", this.state.imagedata)
 
         let formdata = new FormData();
@@ -424,7 +411,7 @@ export default class AdBooking extends React.Component {
         formdata.set('adtotalcost', this.state.adtotalcost)
 
         !this.state.imageChanged && formdata.append('imageArray', [])
-        !this.state.edit && formdata.set('advendorId', 2)
+        !this.state.edit && formdata.set('advendorId', 5)
         !this.state.edit && formdata.set('createdby', 1)
 
         formdata.set('ipaddress', "126.183.0.1")
@@ -460,28 +447,30 @@ export default class AdBooking extends React.Component {
             data: details
         }).then((response) => {
 
-          
             this.getAdBooking();
             
             this.props.generateAlert("Advertisement added successfully")
 
-
-          
-
             this.state.adfeeperday = "";
-            this.state.location = "";
+            // this.state.location = "";
             this.state.adtotalcost = "";
             this.state.imageName = "";
             this.state.adsize = "";
-            this.state.imagedata=[];
 
-           
+            this.state.imagedata=[];
+            this.state.startdate = startdate;
+            this.state.endDate = enddate;
+            this.state.totalcostError = false;
+            this.state.feeError = false;
+            this.handlePlacement()
+     
 
             this.setState({hidefilelist:true,recallget:true})
 
         }).catch((error) => {
             // alert(JSON.stringify(error))
         })
+        console.log(this.generateAlert,"alert_chk")
     }
 
 
@@ -503,6 +492,11 @@ export default class AdBooking extends React.Component {
             this.state.adtotalcost = "";
             this.state.imageName = "";
             this.state.adsize = "";
+            this.state.imagedata=[];
+            this.state.totalcostError = false;
+            this.state.feeError = false;
+            this.handlePlacement()
+     
         }).catch((error) => {
             // alert(JSON.stringify(error))
         })
@@ -513,9 +507,9 @@ export default class AdBooking extends React.Component {
     getAdBooking = () => {
         Axios({
             method: 'POST',
-            url: apiurl + 'getAdBooking',
+            url: apiurl + 'Common/getAd_Booking',
             data: {
-                "doctorid": "5",
+                "vendor_id":"5",
                 "limit": "100",
                 "pageno": "1"
             }
@@ -633,14 +627,15 @@ export default class AdBooking extends React.Component {
 
 
         var totalcost = totalDays * this.state.adfeeperday;
+        this.setState({adtotalcost:totalcost})
 
-        if(this.state.adsize == "" || this.state.adsize == 2) {
-            this.setState({adtotalcost:totalcost})   
-        }
+        // if(this.state.adsize == "" || this.state.adsize == 2) {
+        //     this.setState({adtotalcost:totalcost})   
+        // }
 
-        if(this.state.adsize == 1) {
-            this.setState({adtotalcost:totalcost/2}) 
-        }
+        // if(this.state.adsize == 1) {
+        //     this.setState({adtotalcost:totalcost/2}) 
+        // }
 
          
 
@@ -690,7 +685,7 @@ export default class AdBooking extends React.Component {
     storeadSize = (data) => {
         
         console.log("sdfjdshfjksdhfkjsdhf",this.state.adsize)
-        this.setState({ adsize: data }, () =>  this.checkHours() )
+        this.setState({ adsize: data },  () =>  this.getRate(this.state.location,this.state.adsize),this.setState({sizeError:false}) )
        
     }
 
@@ -712,6 +707,7 @@ export default class AdBooking extends React.Component {
 
                         <Calendar
                             getDate={(data) => this.getRangeData(data)}
+                            aftertwodays={true}
                         />
 
                     </Grid>
@@ -722,7 +718,7 @@ export default class AdBooking extends React.Component {
                                     <Grid item xs={12} md={6} className="create_container">
                                         <div className="date_box_sizing">
                                             <Labelbox disablePast={true} type="datepicker" labelname="Start Date" value={this.state.startdate}
-                                            changeData={(date) => this.datepickerChange(date,'startdate')}
+                                            changeData={(date) => this.datepickerChange(date,'startdate')} minDate={this.state.minDate}
                                             /></div>
                                         <div className="validation__error">{this.state.startdateError && this.state.startdateError}</div>
 
@@ -752,13 +748,13 @@ export default class AdBooking extends React.Component {
                                             <input type="number" className="html__input" value={this.state.adfeeperday}></input>
                                         </div>
 
-                                        <div className="validation__error">{this.state.feeError && this.state.feeError}</div>
+                                        <div className="validation__error">{this.state.adfeeperday === "" && this.state.feeError && this.state.feeError}</div>
                                     </Grid>
 
                                     <Grid item xs={12} md={6} className="create_container">
                                         <div className="date_box_sizing">
                                             <Labelbox type="datepicker" labelname="End Date" disablePast={true}
-                                                value={this.state.endDate} 
+                                                value={this.state.endDate} minDate={this.state.minDate}
                                                 changeData={(data) => this.datepickerChange(data,'enddate')}/>
                                         </div>
                                         <div className="validation__error--minus errmsg_clr">{this.state.dateError && "enddate should be greater than startdate"}</div>
@@ -779,7 +775,7 @@ export default class AdBooking extends React.Component {
                                             <p className="fees_cost">Total Cost (KWD)</p>
                                             <input type="number" className="html__input" value={this.state.adtotalcost} ></input>
                                         </div>
-                                        <div className="validation__error">{this.state.totalcostError && this.state.totalcostError}</div>
+                                        <div className="validation__error">{this.state.adtotalcost === "" && this.state.totalcostError && this.state.totalcostError}</div>
                                     </Grid>
 
                                     <Grid item xs={12} md={12} className="create_container">
@@ -808,6 +804,7 @@ export default class AdBooking extends React.Component {
                                         </p>
                                     <Button className="button_browse">Browse</Button>
                                 </Upload>
+                                <div className="validation__error">{this.state.imageError && this.state.imageError}</div> 
                             </div>
 
 

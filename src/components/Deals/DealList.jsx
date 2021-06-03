@@ -71,6 +71,7 @@ export default class DealList extends React.Component {
       this.setState({total_count:response.data.data[0].totalCount})
 
       response.data.data[0].details.map((listdata)=>{
+        console.log("asdfjsdkfhjkdsfhjdsf",listdata)
         dyndealAlllist.push(listdata)
         dyndeallist.push(
           <>
@@ -78,8 +79,9 @@ export default class DealList extends React.Component {
               <Paper className="dyndeallistPaper">
                 <div className="aligndeallistdata">
                   <div>
-                    <span>Test Name</span>
-                    <div>{listdata.deal_service_type == "" ? "All" : listdata.deal_service_type}</div>
+                    <span>Service Type</span>
+                    <div>{listdata.deal_service_type_id == "" ? "All" : listdata.deal_service_type}</div>
+                    {/* <div>All</div> */}
                     
                     
                   </div>
@@ -160,7 +162,7 @@ export default class DealList extends React.Component {
         url: apiurl + "Common/getsingle_deals",
         data:{
           "vendor_id":"5", 
-          "limit":10, 
+          "limit":100, 
           "pageno":1
           
         } 
@@ -180,9 +182,9 @@ export default class DealList extends React.Component {
               <Paper className="dyndeallistPaper">
                 <div className="aligndeallistdata">
                   <div>
-                    <span>Test Name</span>
+                    <span>Service Type</span>
                     <div>{listdata.deal_service_type == "" ? "All" : listdata.deal_service_type}</div>
-                    
+                   
                     
                   </div>
                   <div>
@@ -359,13 +361,13 @@ export default class DealList extends React.Component {
           <DeleteMedia closemodal={this.handleClose} deleteitem={this.deleteDealLIst} closeDeleteModel={this.handleClose}/>
         </Modalcomp>
       </div>}
-      {this.state.total_count !== "" && this.state.total_count > 10 &&
+      {/* {this.state.total_count !== "" && this.state.total_count > 10 &&
       <div className="pagination__container">
             <div className="pagination__box">
                     <ReactPagination  limit={this.state.limit} total_count={this.state.total_count} getAdDetails={this.getPaginateList} />
             </div>
         </div>
-  }
+  } */}
       </Spin>
     );
   }

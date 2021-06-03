@@ -23,8 +23,8 @@ const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
 var dateFormat = require('dateformat');
 var now = new Date();
-var moment = require('moment');
 var current_day = dateFormat(now, "yyyy-mm-dd")
+var moment = require('moment');
 class NurseServiceCancellationTable extends React.Component {
   state = {
     openview: false,
@@ -64,7 +64,7 @@ class NurseServiceCancellationTable extends React.Component {
     })
     doc.autoTable({
       beforePageContent: function(data) {
-        doc.text("Uploaded Details", 15, 23); // 15,13 for css
+        doc.text("Cancelled Appointments", 15, 23); // 15,13 for css
         },
       margin: { top: 30 },
       showHead:"everyPage",
@@ -72,7 +72,7 @@ class NurseServiceCancellationTable extends React.Component {
       head: [['S.No', 'Customer', 'Nurse Name','No Of Months','Cancelled Date','Time']],
       body:bodydata,
     })
-    doc.save('UploadDeatails.pdf')
+    doc.save('CancelledAppointments.pdf')
   }}
   componentDidMount =() =>{
     this.getmethod()
@@ -86,32 +86,28 @@ class NurseServiceCancellationTable extends React.Component {
       return (h < 10 ? '0' : '') + h + ':'+h_24.substring(3, 5) + (Number(h_24.substring(0, 2)) < 12 ? ' AM' : ' PM');
   }
     this.setState({
-      props_loading:true,
+      props_loading:true
     })
     Axios({
       method: 'post',
-      url: apiurl + 'patient/getnursecancelappointment',
+      url: apiurl + 'Nurse/getnursecancelappointment',
       data: {
         nursevendorId:5,
-        // week: rangeday==="week"?true:false,
-        // month: rangeday==="month"?true:false,
-        // year: rangeday==="year"?true:false,
-        date: dateformat(new Date(), "yyyy-mm-dd"),
-        date_to:dateformat(new Date(), "yyyy-mm-dd"),
-        searchContent:"false",
-        name:"",
-        // date:current_day,
-        limit:10,
-        pageno:1,
+        fromDate: dateformat(new Date(), "yyyy-mm-dd"),
+        toDate:dateformat(new Date(), "yyyy-mm-dd"),
+        period:"Day",
       }
   })
   .then((response) => {
+    console.log(response,"checki_res")
       var tabledata = [];
-      response.data.data[0] && response.data.data[0].details.map((val) =>{
+      response.data.data && response.data.data.map((val) =>{
         console.log(val,"text_valdata")
         tabledata.push({customer:val.PatientName,nursename:val.Nursename,noofmonths:val.Noofmonth,
-                        cancellleddate:dateFormat(val.CancelDate, "dd-mmm-yyyy"),time:formatTimeShow(
-                          val.CancelTime),id:val.id})
+                        cancellleddate:moment(val.CancelDate).format("DD MMM YYYY"),
+                        time:formatTimeShow(val.CancelTime),
+                        // fromdate:moment(val.from_date).format("DD MMM YYYY"),
+                        id:val.id})
         })
         this.setState({
           tabledata:tabledata,
@@ -134,77 +130,21 @@ class NurseServiceCancellationTable extends React.Component {
   var self = this
   Axios({
           method: 'post',
-          url: apiurl + 'patient/getnursecancelappointment',
+          url: apiurl + 'Nurse/getnursecancelappointment',
           data: {
             "nursevendorId":"5",
-            "week":false,
-            "month":false,
-            "year":false,
-            "searchContent":"false",
-            "name":"",
-            "date":startdate,
-            "date_to":enddate,
-            "limit":10,
-            "pageno":1
+            "fromDate":startdate,
+            "toDate":enddate,
+            "period":"Day",
     }
   })
   .then((response) => {
     var tabledata = [];
     var tableDatafull = [];
-    response.data.data[0] && response.data.data[0].details.map((val,index) =>{
+    response.data.data && response.data.data.map((val,index) =>{
       console.log(val,"text_valdata")
       tabledata.push({customer:val.PatientName,nursename:val.Nursename,noofmonths:val.Noofmonth,
-        cancellleddate:dateFormat(val.CancelDate,"dd-mmm-yyyy"),time:formatTimeShow(
-          val.CancelTime),id:index
-          })
-           tableDatafull.push(val)
-      })
-      this.setState({
-        tabledata:tabledata,
-        wk_Mn_Yr_Full_Data: tableDatafull,
-        props_loading:false,
-        spinner:false
-    })
-    console.log(this.state.wk_Mn_Yr_Full_Data,"datattat")
-})
-}
-  // Date Range Function
-dayReport=(data)=>{
-  function formatTimeShow(h_24) {
-    
-    var h = Number(h_24.substring(0, 2)) % 12;
-    if (h === 0) h = 12;
-    return (h < 10 ? '0' : '') + h + ':'+h_24.substring(3, 5) + (Number(h_24.substring(0, 2)) < 12 ? ' AM' : ' PM');
-}
-  console.log(data,"itemdaterange")
-    var startdate = dateformat(data[0].startDate, "yyyy-mm-dd")
-    var enddate = dateformat(data[0].endDate,"yyyy-mm-dd")
-  this.setState({ spinner: true })
-  var self = this
-  Axios({
-          method: 'post',
-          url: apiurl + 'patient/getnursecancelappointment',
-          data: {
-            "nursevendorId":"5",
-            "week":false,
-            "month":false,
-            "year":false,
-            "searchContent":"false",
-            "name":"",
-            "date":startdate,
-            "date_to":enddate,
-            "limit":10,
-            "pageno":1
-    }
-  })
-  .then((response) => {
-    var tabledata = [];
-    var tableDatafull = [];
-    response.data.data[0] && response.data.data[0].details.map((val,index) =>{
-      console.log(val,"text_valdata")
-      tabledata.push({customer:val.PatientName,nursename:val.Nursename,noofmonths:val.Noofmonth,
-        cancellleddate:dateFormat(val.CancelDate,"dd-mmm-yyyy"),time:formatTimeShow(
-          val.CancelTime),id:index
+        cancellleddate:moment(val.CancelDate).format("DD MMM YYYY"),time:formatTimeShow(val.CancelTime),id:index
           })
            tableDatafull.push(val)
       })
@@ -289,8 +229,8 @@ generateprint=()=>{
             onClick={this.generatepdf}
             style={{marginRight:"15px",marginLeft:"15px"}}/>
             {this.state.tabledata.length===0 ? <ReactSVG src={excel} style={{ marginRight: "15px" }} /> :
-            <ExcelFile element={<ReactSVG src={excel} style={{ marginRight: "15px" }} />}>
-              <ExcelSheet dataSet={multiDataSet} name="Uploaded Details"/>
+            <ExcelFile filename={"CancelledAppointments"} element={<ReactSVG src={excel} style={{ marginRight: "15px" }} />}>
+              <ExcelSheet dataSet={multiDataSet} name="Cancelled Appointments"/>
             </ExcelFile>
              }
               <ReactToPrint
@@ -340,3 +280,8 @@ generateprint=()=>{
   }
 }
 export default NurseServiceCancellationTable;
+
+
+
+
+

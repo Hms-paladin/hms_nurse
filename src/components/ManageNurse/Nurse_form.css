@@ -11,7 +11,7 @@
 .user-avatar-upload {
   display: flex !important;
   justify-content: center !important;
-  margin-top: 20px !important;
+  margin-top: 2px !important;
 }
 .Usergrp-Create {
   color: #fff !important;
@@ -57,10 +57,7 @@
   border: none !important;
   font-family: "Roboto" !important;
 }
-/* .users-form .MuiSvgIcon-root{
-    fill:rgb(101, 96, 96) !important;
-    font-size: 3rem !important;
-} */
+
 .users-form .formdiv .brdrcls {
   font-size: 1.5rem !important;
   font-family: "Roboto" !important;
@@ -86,6 +83,9 @@ img.upload-img-circle {
   font-family: "Roboto" !important;
   border: 1px solid #ccc !important;
   /* color:#333; */
+}
+.users-form .formdiv{
+  margin-bottom: 10px;
 }
 .buttons_container {
   padding: 10px;
@@ -131,7 +131,7 @@ img.upload-img-circle {
   justify-content: space-between;
   /* margin-left: 20px; */
   width: 115%;
-  padding-top: 15px;
+  padding: 18px;
 }
 .duty_hoursdiv {
   display: flex;

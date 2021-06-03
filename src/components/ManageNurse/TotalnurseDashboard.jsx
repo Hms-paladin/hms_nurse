@@ -9,6 +9,7 @@ import { Input } from "antd";
 import Modalcomp from "../../helpers/ModalComp/Modalcomp";
 import { apiurl } from "../../App";
 import Axios from 'axios';
+import moment from 'moment';
 
 class TotalnurseDashboard extends Component {
   constructor(props) {
@@ -38,15 +39,14 @@ class TotalnurseDashboard extends Component {
     })
       .then((response) => {
         console.log(response, "res")
-        // alert("get")
         var tableData = [];
         response.data.data.map((val) => {
           tableData.push({
             nurseName: val.name,
-            gender: val.gender === "1" ? "Male" : "Female",
-            age: val.age,
+            gender: val.gender,
+            age: moment().diff(val.dob, 'years'),
             experience: val.experience,
-            nationality: val.nationality_id === 1 ? "Saudi" : "America",
+            nationality: val.nationality_id === 1 ? "Saudi" : "American",
             id: val.nurseId
           })
           console.log(val.id, "yyyyyyy")
@@ -75,6 +75,7 @@ class TotalnurseDashboard extends Component {
     })
     this.setState({})
   }
+
 
   render() {
     const { Option } = Select;
@@ -122,7 +123,7 @@ class TotalnurseDashboard extends Component {
               placeholder="search"
               onSearch={value => console.log(value)}
               style={{ width: 150 }}
-              onChange={(e) => this.searchChange(e)}
+              onChange={(e) => this.setState({ search: e.target.value })}
             />
             <img src={Plus} onClick={this.openmodal} />
           </div>
@@ -132,14 +133,16 @@ class TotalnurseDashboard extends Component {
           getTableData={() => this.getTableData()}
           props_loading={this.state.props_loading}
           totalData={this.state.totalData}
+          getNurseHistory={(id)=>this.props.getNurseHistory(id)}
         />
         <Modalcomp
           visible={this.state.open}
           closemodal={this.onclosemodal}
           title="Add Nurse"
           clrchange="textclr"
+          xswidth={"lg"}
         >
-          <Nurse_form visible={this.state.open} closemodal={this.onclosemodal} getTableData={() => this.getTableData()} />
+          <Nurse_form visible={this.state.open} closemodal={this.onclosemodal} editopenModal={false} getTableData={() => this.getTableData()} />
         </Modalcomp>
       </div>
     );

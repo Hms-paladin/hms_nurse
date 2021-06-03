@@ -57,11 +57,30 @@ export default class BookingDetails extends React.Component {
         console.log("consptops",this.props)
     }
     callback = (key) => {
+
+        if(key == 2 && this.state.edit) {
+            this.resetFormValue()
+        }
+
         this.setState({
             activeKey: key
         })
     }
     changeTabFun = (data) => {
+        console.log("asfshdfsdfksd",data)
+        if(new Date (data.deal_valid_from) < new Date() && new Date (data.deal_valid_to) < new Date() ){
+            notification.info({
+                description:
+                  'Deals expired',
+                  placement:"topRight",
+              });
+        }else if(new Date (data.deal_valid_from) < new Date() && new Date (data.deal_valid_to) > new Date() ){
+            notification.info({
+                description:
+                  "Deals already posted",
+                  placement:"topRight",
+              });
+        }else{
         console.log(data, "editdata")
         this.setState({
             edit: true,
@@ -81,6 +100,7 @@ export default class BookingDetails extends React.Component {
         this.state.deal_valid_to = dateformat(data.deal_valid_to, "yyyy-mm-dd")
         
         this.setState({})
+    }
 
     }
 
@@ -104,38 +124,33 @@ export default class BookingDetails extends React.Component {
     componentWillMount() {
         this.getServiceType()
     }
-
     getServiceType = () => {
         Axios({
-            method: "POST",
-            url: apiurl + "get_mas_lab_test",
+            method: "GET",
+            url: apiurl + "get_mas_nurse_types",
             data: {
-                "lab_vendor_id":"5"
+                "vendor_id":"5"
             },
           })
             .then((response) => {
-              console.log(
-                response.data.data.map((val) => {
-                  return { id: val.lab_test_id, serviceType: val.lab_test_name };
-                }),
-                "sadfasdf"
-              );
+             console.log("sdfjdsfhsdklfhs",response)
               this.setState(
                 {
                   serviceType: response.data.data.map((val) => {
-                    return { id: val.lab_test_id, serviceType: val.lab_test_name };
+                    return { id: val.id, serviceType: val.description };
                   }),
                 },
-                () => this.state.serviceType.unshift({ id: 1, serviceType: "All" })
+                () => this.state.serviceType.unshift({ id: 0, serviceType: "All" })
               );
-      
+              
+             
               this.setState({});
-              // self.state.serviceType=response.data.data.map((val)=>{return{id:val.id,serviceType:val.service_type}})
+              // self.state.serviceType=response.data.data.map((val)=>{return{id:val.id,serviceType:val.description}})
             })
             .catch((error) => {
             //   alert(JSON.stringify(error));
             });
-    }
+      }
 
     checkValidation = () => {
         var bookingDetails = this.state.bookingDetails;
@@ -213,17 +228,18 @@ export default class BookingDetails extends React.Component {
             services.push(<Option value={this.state.serviceType[i].id}>{this.state.serviceType[i].serviceType}</Option>)
           
         }
-
+    
         return services;
-
+    
     }
 
     onSubmitData = () => {
-        var serviceId = !this.state.edit && !this.state.serviceTypeAll 
-        var data = [];
-        if(!this.state.serviceTypeAll) {
-            this.state.serviceType.map(val => val.id > 1 && data.push(val.id))    
-        }
+       
+    var data = [];
+    if(!this.state.serviceTypeAll) {
+        this.state.serviceType.map(val => val.id > 0 && data.push(val.id))    
+    }
+
         console.log("sajkdfhjskdfhkdsjh",this.state.servicetype)
         var bookingDetails = {
             userId: 1,
@@ -259,6 +275,7 @@ export default class BookingDetails extends React.Component {
             this.state.dealOption = "M",
             this.state.bookingDetails.deal_amt.value = "",
             this.state.dealActive = false,
+            this.state.serviceTypeValue = "All",
             this.setState({})
         )
     }
@@ -343,10 +360,10 @@ export default class BookingDetails extends React.Component {
 
 
     storeService = (data) => {
-        if(data == 1) {
+        if(data == 0) {
             this.setState({serviceTypeAll:false})
         }else{
-        this.setState({servicetype:data,serviceTypeAll:true})
+        this.setState({servicetype:data,serviceTypeAll:true,serviceTypeValue:data})
         }
     }
 
@@ -374,9 +391,9 @@ export default class BookingDetails extends React.Component {
                                   
                                                 <div>
                                                     <label className="label_txt">Service Type</label>
-                                                <Select defaultValue={this.state.edit ? this.state.editData.deal_service_type : "All"}  style={{width:"100%"}} onChange={this.storeService}>
-                                                    {this.services()}
-                                                </Select>
+                                                    <Select value={this.state.serviceTypeValue}  style={{width:"100%"}} onChange={this.storeService}>
+                          {this.services()}
+                </Select>
                                                 </div>
                              </Grid>
                                     <Grid item xs={6} md={6}>

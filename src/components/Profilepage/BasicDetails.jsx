@@ -40,7 +40,7 @@ export default class BasicDetails extends React.Component {
       },
       'Mobile': {
         'value': '',
-        validation: [{ 'name': 'required' },{'name':'mobile'}],
+        validation: [{ 'name': 'required' },{'name':'mobileHms'}],
         error: null,
         errmsg: null
       },
@@ -78,10 +78,26 @@ export default class BasicDetails extends React.Component {
       ProfileEdit[key].errmsg = errorcheck.msg;
       this.setState({ ProfileEdit });
     }
+    checkValidation = () => {
+      var Profile = this.state.ProfileEditData;
+      var ProfileKeys = Object.keys(Profile);
+      for (var i in ProfileKeys) {
+        var errorcheck = ValidationLibrary.checkValidation(Profile[ProfileKeys[i]].value, Profile[ProfileKeys[i]].validation);
+        Profile[ProfileKeys[i]].error = !errorcheck.state;
+        Profile[ProfileKeys[i]].errmsg = errorcheck.msg;
+      }
+      var filtererr = ProfileKeys.filter((obj) =>
+      Profile[obj].error == true);
+      if (filtererr.length > 0) {
+        this.setState({ error: true })
+      } else {
+        this.setState({ error: false })
+        this.EditProfileApi()
+      }
+      this.setState({ Profile })
+    }
     Notification = (description) => {
- 
       notification.success({
-          message: 'Success',
           description,
           onClick: () => {
             console.log('Clicked!');
@@ -117,7 +133,7 @@ export default class BasicDetails extends React.Component {
       console.log("response",response)
       // window.location.reload(false)
      this.props.ProfileGetApi()
-     this.Notification("Updated successfully ")
+     this.Notification("Profile Updated successfully ")
     }).catch((error) => {
         
     })
@@ -180,7 +196,7 @@ export default class BasicDetails extends React.Component {
           <Button className="profile_Cancel"  onClick={() => this.props.closemodal(false)}>Cancel</Button>
             <Button
               className="profile_Submit"
-              onClick={this.EditProfileApi}
+              onClick={this.checkValidation}
               // onClick={this.changeDynamic}
             >
              Update

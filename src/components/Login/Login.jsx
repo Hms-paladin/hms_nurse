@@ -10,6 +10,8 @@ import Inbox from '../../Images/inbox.svg'
 import {Link,NavLink} from "react-router-dom";
 import Nurse_Login from "../../Images/nurse_login.png";
 
+// check my commit suriya code
+
 export default class Login extends Component {
   constructor(props)    
   {
@@ -19,7 +21,6 @@ export default class Login extends Component {
   toggleshow=()=>
   {
     this.setState({hidden:!this.state.hidden})
-    console.log("i am clicked",this.state.hidden)
   }
   onchange=(e)=>
   {

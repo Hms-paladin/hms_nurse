@@ -1,5 +1,6 @@
 .dialog_nurse_eyeview .MuiDialog-paper {
   padding: 20px;
+  overflow: scroll;
 }
 .nurse_view_image_childdiv {
   width: 82%;
@@ -7,7 +8,7 @@
 }
 .nurse_view_image {
   width: 100%;
-  box-shadow: 0px 0px 5px #333333a6;
+  /* box-shadow: 0px 0px 5px #333333a6; */
 }
 .nurse_view_contents_wrap {
   margin-left: 20px;
@@ -69,7 +70,8 @@
   border-radius: 20px;
   /* width: 30%; */
   height: 40px;
-  font-size: 15px;
+  /* font-size: 15px; */
+  font-size: 14px;
   display: flex;
   color: white;
   align-items: center;
@@ -81,6 +83,7 @@
   margin-left: 3px;
   text-decoration: underline;
   color: blue;
+  cursor: pointer;
 }
 .nurse_view_name {
   color: #333333;
@@ -123,8 +126,12 @@
   margin-right: 15px;
 }
 .nurse_view_values {
-  color: #33333;
-  font-family: "Roboto" !important;
+  color:#33333;
+  font-family:"Roboto"!important;
+}
+
+.address_edit{
+  font-size: 13px;
 }
 .nurse_view_cancel {
   margin-right: 20px !important;

@@ -1,10 +1,4 @@
-/*.MuiDialogTitle-root 
-{
-	padding:0px !important;
-}*/
-/* .MuiDialog-paperWidthSm {
-  width: 700px !important;
-} */
+
 .addtrainees_details {
   font-family: "Roboto";
   display: flex;
@@ -119,9 +113,6 @@
   max-width: 700px;
 } */
 
-/* .MuiDialog-paperWidthSm {
-  max-width: 680px !important;
-} */
 
 .trainee_text {
   padding-left: 3%;

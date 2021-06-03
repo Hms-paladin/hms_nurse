@@ -1,13 +1,8 @@
 import React from "react";
 import Tablecomponent from "../../helpers/TableComponent/TableComp";
-import Modalcomp from "../../helpers/ModalComp/Modalcomp";
 import "./CustomerHistoryTable.css";
-import HistoryForm from "./HistoryForm";
 import Axios from "axios";
 import { apiurl } from "../../App";
-import Button from '@material-ui/core/Button';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
-import Moment from "react-moment";
 import print from "../../Images/print.svg";
 import pdf from "../../Images/pdf.svg";
 import jsPDF from 'jspdf';
@@ -23,11 +18,6 @@ import DateRangeSelect from "../../helpers/DateRange/DateRange";
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
 
-
-var dateFormat = require('dateformat');
-var now = new Date();
-var current_day = dateFormat(now, "yyyy-mm-dd")
-
 class CustomerHistoryTable extends React.Component {
   state = {
     openview: false,
@@ -39,6 +29,11 @@ class CustomerHistoryTable extends React.Component {
     props_loading:true,
     spinner: false,
   };
+
+  componentWillReceiveProps() {
+    console.log(this.props, "sdfasdfa")
+   
+  }
 
   createData = parameter => {
     var keys = Object.keys(parameter);
@@ -59,18 +54,17 @@ class CustomerHistoryTable extends React.Component {
          return OpenViewData.PatientId===id
       })
       this.setState({ 
-        openview: true,
+        openview: true, 
         OpenViewData:OpenViewData
        });
-      console.log(OpenViewData,"openviewdata_checking")
+       console.log(OpenViewData,"openviewdata_checking")
+       this.props.DetailedCustomerHistory(id); //prop comming from index.js
     }
-    // else if (data === "edit") {
-    //   this.setState({ editopen: true });
-    // }
+
   };
   searchChange = (e) =>{
     this.setState({
-      search : e.target.value
+      search:e.target.value
     })
     this.setState({})
       }
@@ -87,35 +81,24 @@ class CustomerHistoryTable extends React.Component {
     var self = this
     Axios({
       method: 'post',
-      url: apiurl + 'Nurse/getvendornurseCustomerhistory',
+      url: apiurl + 'Nurse/getCustomerDetails',
       data: {
         nursevendorId:5,
-        // week: rangeday==="week"?true:false,
-        // month: rangeday==="month"?true:false,
-        // year: rangeday==="year"?true:false,
-        searchContent:"true",
-        date: dateformat(new Date(), "yyyy-mm-dd"),
-        date_to:dateformat(new Date(), "yyyy-mm-dd"),
-        name:"",
-        // date:current_day,
-        limit:10,
-        pageno:1,
       }
   })
     .then((response) => {
       console.log(response,"response_check_cancel_table")
       var tabledata = [];
-      console.log(response.data.data[0].details,"nursename_check")
-      response.data.data[0].details.map((val) =>{
+      console.log(response.data.data,"nursename_check")
+      response.data.data.map((val) =>{
         console.log(val,"text_valdata")
-        tabledata.push({customer:val.PatientName,nursename:val.Nursename,gender:val.gender,age:val.age,
-                      id:val.PatientId})
-                      //  console.log(val.nursevendorId,"nursevendor_id")
+        tabledata.push({customer:val.Customername,nursename:val.Nursename,gender:val.gender,age:val.patientage,
+                      id:val.CustomerId})
         })
         this.setState({
           tabledata:tabledata,
           props_loading:false,
-          totalValue:response.data.data[0].details,
+          totalValue:response.data.data,
       })
       console.log(this.state.tabledata,"table_data_nurse")
   }).catch((error) => {
@@ -124,55 +107,6 @@ class CustomerHistoryTable extends React.Component {
   // console.log("deletedetails", details)
   }
 
-  // DATE RANGE PICKER FUNCTIONALITY
-
-  dayReport=(data)=>{
-  //   function formatTimeShow(h_24) {
-      
-  //     var h = Number(h_24.substring(0, 2)) % 12;
-  //     if (h === 0) h = 12;
-  //     return (h < 10 ? '0' : '') + h + ':'+h_24.substring(3, 5) + (Number(h_24.substring(0, 2)) < 12 ? ' AM' : ' PM');
-  // }
-    console.log(data,"itemdaterange")
-      var startdate = dateformat(data[0].startDate, "yyyy-mm-dd")
-      var enddate = dateformat(data[0].endDate,"yyyy-mm-dd")
-    this.setState({ spinner: true })
-    var self = this
-    Axios({
-            method: 'post',
-            url: apiurl + 'Nurse/getvendornurseCustomerhistory',
-            data: {
-              "nursevendorId":"5",
-              "week":false,
-              "month":false,
-              "year":true,
-              "searchContent":"false",
-              "name":"",
-              "date":startdate,
-              "date_to":enddate,
-              "limit":10,
-              "pageno":1
-      }
-    })
-    .then((response) => {
-      var tabledata = [];
-      var tableDatafull = [];
-      response.data.data[0].details.map((val,index) =>{
-        console.log(val,"text_valdata")
-        tabledata.push({customer:val.PatientName,nursename:val.Nursename,gender:val.gender,age:val.age,
-                              id:val.PatientId
-            })
-             tableDatafull.push(val)
-        })
-        this.setState({
-          tabledata:tabledata,
-          wk_Mn_Yr_Full_Data: tableDatafull,
-          props_loading:false,
-          spinner:false
-      })
-      console.log(this.state.wk_Mn_Yr_Full_Data,"datattat")
-  })
-  }
   // PDF FUNCTION
   generatepdf=()=>{
     if(this.state.tabledata.length === 0){
@@ -196,7 +130,7 @@ class CustomerHistoryTable extends React.Component {
       body:bodydata,
     })
      
-    doc.save('UploadDeatails.pdf')
+    doc.save('UploadDetails.pdf')
     
   }
 }
@@ -208,6 +142,8 @@ class CustomerHistoryTable extends React.Component {
   }
 
   render() {
+    console.log(this.props,"myprops")
+
     const { Search } = Input;
     const Tabledatas = this.state.tabledata.filter((data)=>{
       console.log(data,"Search_data")
@@ -256,13 +192,6 @@ class CustomerHistoryTable extends React.Component {
       <div className="title_dashboard">
       <p className="title_header">CUSTOMER HISTORY </p>
       <div style={{ fontSize: "16px" ,display:"flex",alignItems:"center"}}>
-      <DateRangeSelect dynalign={"dynalign"} rangeDate={(item)=>this.dayReport(item)} />
-      {/* <ButtonGroup className="clinic_group_details" size="small" aria-label="small outlined button group">
-              <Button className="clinic_details" onClick={()=>this.getTableData("week")}>This Week</Button>
-              <Button className="clinic_details" onClick={()=>this.getTableData("month")}>This Month</Button>
-              <Button className="clinic_details" onClick={()=>this.getTableData("year")}>This Year</Button>
-        </ButtonGroup>
-        <Moment format="DD-MMM-YYYY" className="mr-2"></Moment> */}
         <Search
           placeholder="search"
           onSearch={value => console.log(value)}
@@ -283,7 +212,7 @@ class CustomerHistoryTable extends React.Component {
                 content={() => this.componentRef}
               />
               <div style={{ display: "none" }}>
-                <PrintData printTableData={this.state.tabledata}
+                <PrintData printTableData={this.state.tabledata} DetailedHistory={false}
                  ref={el => (this.componentRef = el)}/>
               </div>
       </div>
@@ -300,7 +229,6 @@ class CustomerHistoryTable extends React.Component {
             { id: "", label: "Action" }
           ]}
           
-          // tableicon_align={"cell_eye"}
           rowdata={Tabledatas.length ===  0 ? []: Tabledatas}
           props_loading={this.state.props_loading}
           DeleteIcon="close"
@@ -309,22 +237,6 @@ class CustomerHistoryTable extends React.Component {
           HistoryIcon="close"
           LocationOnIcon="close"
         />
-
-        <Modalcomp className="clr_class"
-          visible={this.state.openview}
-          title={"CUSTOMER HISTORY"}
-          closemodal={e => this.closemodal(e)}
-          clrchange="textclr"
-          // xswidth={"xs"}
->
-        <HistoryForm  OpenViewData={this.state.OpenViewData}/>
-        </Modalcomp>
-        {/* <Modalcomp
-          visible={this.state.editopen}
-          title={"Edit details"}
-          closemodal={e => this.closemodal(e)}
-          // xswidth={"xs"}
-        ></Modalcomp> */}
       </div>
       </>
     );

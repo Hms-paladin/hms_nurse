@@ -207,14 +207,14 @@ class ProfileComp extends Component {
                  <div className="User-upload-container">
                    <Upload
         name="avatar"
-        listType="picture-card"
+        // listType="picture-card"
         className="avatar-uploader"
         showUploadList={false}
         action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
         beforeUpload={beforeUpload}
         onChange={this.handleChange}
       >
-        {/* <div className="pic_align"><AddAPhotoIcon className="add_icon"/></div> */}
+         <div className="pic_align"><AddAPhotoIcon className="add_icon"/></div> 
           {imageUrl &&
          <img src={imageUrl} className="upload-img-circle" alt="avatar" />
           }

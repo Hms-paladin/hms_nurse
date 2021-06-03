@@ -1,22 +1,25 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React, { Component } from "react";
-import './AdvertiseList.css';
+
+import './AdvertiseList.css'
+
+
 import Workflow from '../../Images/workflow.svg'
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Half from '../../Images/Full.svg';
 import Full from '../../Images/Half.svg';
+
 import DeleteMedia from './DeleteMedia'
 import Modalcomp from '../../helpers/ModalComp/Modalcomp'
 import Axios from 'axios';
+// import apiservice from '../../helpers/apiservices'
 import { apiurl } from "../../App";
 import { Chart, Axis, Legend, Tooltip, Geom } from 'bizcharts';
 import Stepper from './Stepper'
 import ReactPagination from "../Pagination/Pagination";
 import NotfoundIcon from "../../Images/NotFound.svg";
-import { Spin } from "antd";
-
-
+import { Spin } from "antd"
 
 const data = [
     { month: 'Jan.', count: 69, city: 'tokyo' }
@@ -25,8 +28,6 @@ const scale = {
     month: { alias: 'Month', },
     count: { alias: 'Sales', },
 };
-
-
 
 export default class AdvertiseList extends React.Component{
     constructor(props) {
@@ -48,9 +49,9 @@ export default class AdvertiseList extends React.Component{
 getAdBooking = () => {
     Axios({
         method: 'POST',
-        url: apiurl + 'getAdBooking',
+        url: apiurl + 'Common/getAd_Booking',
         data:{
-            "doctorid":"5",
+            "vendor_id":"5",
             "limit":this.state.limit,
             "pageno":this.state.pageno
         }
@@ -85,9 +86,9 @@ getAdDetails = (data) => {
     
     Axios({
         method: 'POST',
-        url: apiurl + 'getAdBooking',
+        url: apiurl + 'Common/getAd_Booking',
         data:{
-            "doctorid":"5",
+            "vendor_id":"5",
             "limit":this.state.limit,
             "pageno":data+1
         }
@@ -117,7 +118,7 @@ getAdDetails = (data) => {
       handleDelete = (details) => {
         Axios({
             method: 'POST',
-            url: apiurl + 'deleteAdBooking',
+            url: apiurl + '/deleteAdBooking',
             data: {
                 doctorid: 5,
             }
@@ -235,7 +236,6 @@ getAdDetails = (data) => {
          
 
                 <div>
-                 
                         <Modalcomp xswidth={"xs"} clrchange="textclr" 
                         title="Delete Advertisement" visible={this.state.open} closemodal = {this.handleClose}>
 
@@ -243,20 +243,12 @@ getAdDetails = (data) => {
                             loader={(data)=>this.setState({dataOnload:data})}
                             apiendpoint={"deleteAdBooking"} generateAlert={this.props.generateAlert}
                                            
-                                            closemodal = {this.handleClose} />
+                            closemodal = {this.handleClose} />
                         </Modalcomp>
                 </div>
                 </>
     }
-
-
                 </Spin>
-
-
-       
-               
-                    
-            
         )
     }
 }

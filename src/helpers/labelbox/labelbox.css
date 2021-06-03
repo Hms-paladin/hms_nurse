@@ -67,8 +67,9 @@ padding-left: 0px;
     font-size: 12px;
     position: absolute;
     bottom: -22px;
-    left: 2px;
+    /* left: 2px; */
     color: red;
+    white-space: nowrap;
 }
 .ant-select-dropdown{
     z-index:1400;
@@ -130,4 +131,7 @@ padding-left: 0px;
 
 .formdiv .MuiInputBase-inputAdornedEnd{
     color: #797777;
+}
+.MuiFormHelperText-root.Mui-error{
+    display: none !important;
 }

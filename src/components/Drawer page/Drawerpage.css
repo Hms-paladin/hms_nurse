@@ -454,4 +454,9 @@ margin-top: 10px;
   border-top: 1px solid #e0e0e0;
 }
 
-
+.active_text_heading, .active_text_heading.MuiMenuItem-root path, .active_text_heading.MuiMenuItem-root rect {
+  color: #86B149 !important;
+  text-decoration: none !important;
+  background-color: rgba(0, 0, 0, 0.04) !important;
+  fill: #86b149;
+}

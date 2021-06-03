@@ -29,7 +29,6 @@
   margin-left: 2%;
   margin-top: 10px;
   font-family: "Roboto";
-  /* font-weight: 500; */
 }
 .today_date {
   color: rgba(0, 0, 0, 0.87) !important;
@@ -71,3 +70,18 @@
   
  }
 
+ 
+/* toaster */
+
+.ant-notification-notice-closable{
+  padding: 14px 5px 0px 16px;
+}
+.ant-notification-notice-description{
+    position: relative;
+    bottom: 17px;
+    margin-right: 40px;
+}
+
+.MuiDialog-paperScrollPaper{
+  overflow-y: scroll !important;
+}

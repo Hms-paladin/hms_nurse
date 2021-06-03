@@ -2,9 +2,9 @@
 {
 	padding:0px !important;
 }*/
-.MuiDialog-paperWidthSm {
+/* .MuiDialog-paperWidthSm {
   width: 700px !important;
-}
+} */
 .addmanage_nurses_details {
   font-family: "Roboto";
   display: flex;
@@ -39,11 +39,16 @@
 }
 .manage_nurse_image {
   width: 100%;
-  height: 100%;
+  /* height: 100%; */
+  height: 97%;
 }
 .manage_nurse_image_div {
   width: 100%;
   height: auto;
+}
+.manage_nurse_image_div img{
+  /* height: 100%; */
+  width: 100%;
 }
 .divider {
   padding: 20px !important;
@@ -89,12 +94,10 @@
   font-size: 15px;
   /* margin-left: 9px; */
 }
-
 .manage_nurse_popup_details .working_hour {
   font-size: 16px;
-  padding-bottom: 5%;
-
-  padding-top: 5%;
+  /* padding-bottom: 5%;
+  padding-top: 5%; */
 }
 .manage_nurse_popup_details .nurse_working_hour_detail {
   font-size: 15px;
@@ -102,7 +105,7 @@
 }
 .manage_nurse_popup_details .working_time_detail {
   width: 100%;
-  font-size: 1vw;
+  font-size: 13px;
   padding-left: 0px !important;
 }
 .manage_nurse_popup_details .working_time_detail_skills {
@@ -114,6 +117,7 @@
   display: inline-flex;
   width: 92%;
 }
+
 .icon_edit {
   display: flex;
   align-items: flex-end;
@@ -128,10 +132,6 @@
 .total {
   padding: 3%;
   width: 100%;
-}
-
-.MuiDialog-paperWidthSm {
-  max-width: 680px !important;
 }
 
 .manage_nurse_text {
@@ -158,7 +158,7 @@
   justify-content: space-around;
 }
 
-.btn-nurse {
+/* .btn-nurse {
   font-size: 1.5rem !important;
   padding-left: 20px !important;
   padding-right: 20px !important;
@@ -168,10 +168,8 @@
   white-space: nowrap;
   margin-bottom: 5px;
   border-radius: 20px;
-}
-.btn-text {
-  text-align: center;
-}
+} */
+
 .manage_nurse_close_icon {
   display: flex;
   justify-content: flex-end;
@@ -180,8 +178,34 @@
   cursor: pointer;
 
 }
-.nurse_modal_button .btn-success {
+/* .nurse_modal_button .btn-success {
   padding-right: 20% !important;
   padding-left: 20% !important;
+} */
+.eight_hrs_edit{
+  height: 31px;
+  width: 74px;
+  border-radius: 16px;
+  background-color: #28a745;
+  color: white;
+  font-size: 15px;
+  text-align: center;
+  /* margin-top: 5px; */
+  /* padding-bottom: 14px; */
+  margin-bottom: 7px;
+  margin-left: 15px;
 }
-
+.eight_text{
+  padding-top: 5px;
+}
+.cost_edit{
+  font-size: 13px !important;
+  margin: 0px;
+}
+/* .cost_edit {
+  margin-bottom:0.3rem !important;
+} */
+.btn_text {
+  text-align:center;
+  font-size: 13px;
+}

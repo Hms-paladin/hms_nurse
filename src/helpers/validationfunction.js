@@ -30,7 +30,16 @@ checkValidation(textValue,validatorsArray){
         if(re.test(textValue)==false){
       return {msg:"Please Enter 10 to 15 digit Mobile Number",state:false};
         }
-    }else if(validatorsArray[valid].name=='regex'){
+    }
+    else if(validatorsArray[valid].name=='custommobile'){
+      //var re = /^(0|[1-9][0-9]{9,15})$/;
+       var re = /^([0-9][0-9]{7,14})$/;
+       if(re.test(textValue)==false){
+     return {msg:"Please Enter 8 to 15 digit Mobile Number",state:false};
+       }
+   }
+   
+    else if(validatorsArray[valid].name=='regex'){
        // var re = /^(0|[1-9][0-9]*){10}$/;
         if(new RegExp(validatorsArray[valid].params).test(textValue)==false){
       return {msg:validatorsArray[valid].msg,state:false};
@@ -55,6 +64,7 @@ checkValidation(textValue,validatorsArray){
       return {msg:"zipcode should only be 5 digits",state:false};
         }
     }
+    
     else if(validatorsArray[valid].name=='pasword'){
        var re =/^[a-z0-9_-]{4,16}$/;
         if(re.test(textValue)==false){
@@ -74,7 +84,7 @@ checkValidation(textValue,validatorsArray){
         }
     }
      else if(validatorsArray[valid].name=='alphabetsOnly'){
-       var re =/^[A-Za-z]+$/;
+       var re =/^[A-Za-z.]+$/;
         if(re.test(textValue)==false){
       return {msg:"Please Enter Alphabets only",state:false};
         }

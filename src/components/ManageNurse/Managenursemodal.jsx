@@ -8,6 +8,8 @@ import "./Managenursemodal.css";
 import { MdLocationOn, MdLocalPhone } from "react-icons/md";
 import {MdEmail } from "react-icons/md";
 import CloseIcon from '@material-ui/icons/Close';
+import No_image_available from "../../Images/No_image_available.svg"
+
 const styles = {};
 
 export default class Profilepage extends React.Component {
@@ -24,7 +26,7 @@ export default class Profilepage extends React.Component {
   }
 
   render() {
-    console.log(this.props.viewData, "sdfasdfasfdas")
+    console.log(this.props.viewData, "data_chk")
 
     const styles = "";
     const { viewData, classes, onClose, cancel, selectedValue, ...other } = this.props;
@@ -35,6 +37,7 @@ export default class Profilepage extends React.Component {
         aria-labelledby="simple-dialog-title"
         {...other}
       >
+        
         <div className="manage_nurse_popup_details">
 
           <div className="manage_nurse_close_icon">
@@ -46,7 +49,13 @@ export default class Profilepage extends React.Component {
               <Grid item xs={12} md={5}>
                 <div className="manage_nurse_image_container">
                   <div className="manage_nurse_image_div">
-                    <img className="manage_nurse_image" src={viewData.profile_image} />
+                    {/* <img className="manage_nurse_image" src={viewData.profile_image} /> */}
+                    <img
+                  className="manage_nurse_image"
+                  src={viewData.profile_image?viewData.profile_image:No_image_available}
+                  alt="This IMG format is not supporting"
+                  style={{ height: "100" }}
+                />{" "}
                   </div>
                 </div>
               </Grid>
@@ -92,26 +101,26 @@ export default class Profilepage extends React.Component {
                       </h4>
                     </div>
                     <div className="nurse_working_detail">
-                      <h4 className="nurse_working_hour_detail">Gender</h4>
+                      <h4 className="nurse_working_hour_detail mr-2">Gender</h4>
 
-                      <p className="working_time_detail">{viewData.gender}</p>
+                      <p className="working_time_detail">{this.props.viewData.gender == 1 ? "Male" : "Female"}</p>
                     </div>
                     <div>
                       <div className="nurse_working_detail">
-                        <h4 className="nurse_working_hour_detail">Date Of Birth</h4>
+                        <h4 className="nurse_working_hour_detail mr-2">Date Of Birth</h4>
                         <p className="working_time_detail">{viewData.dob}</p>
                       </div>
                     </div>
                     <div>
                       <div className="nurse_working_detail">
-                        <h4 className="nurse_working_hour_detail">Nationality</h4>
+                        <h4 className="nurse_working_hour_detail mr-2">Nationality</h4>
 
-                        <p className="working_time_detail">{viewData.nationality_id}</p>
+                        <p className="working_time_detail">{this.props.viewData.nationality_id == 1 ? "SaudiArabian" : "American"}</p>
                       </div>
                     </div>
                     <div>
                       <div className="nurse_working_detail">
-                        <h4 className="nurse_working_hour_detail">Language</h4>
+                        <h4 className="nurse_working_hour_detail mr-2">Language</h4>
 
                         <p className="working_time_detail">{viewData.language}</p>
                       </div>
@@ -120,7 +129,7 @@ export default class Profilepage extends React.Component {
                       <div className="nurse_working_detail">
                         <h4 className="nurse_working_hour_detail">Skills</h4>
 
-                        <p className="working_time_detail_skills">
+                        <p className="working_time_detail">
                           {viewData.skills}
                         </p>
                       </div>
@@ -131,18 +140,22 @@ export default class Profilepage extends React.Component {
                 <div>
                   <div className="nurse_modal_button">
                     <div>
-                      <button type="button" class="btn-nurse btn-success">
-                        8 Hrs
-                  </button>
-                      <p>Cost/Month (KWD)</p>
-                      <p className="btn-text">{viewData.cost_eight_hours}</p>
+                      {/* <button type="button" class="btn-nurse btn-success"> */}
+                      <div className="eight_hrs_edit">
+                        <p className="eight_text">8 Hrs</p>
+                        </div>
+                  {/* </button> */}
+                      <p className="cost_edit">Cost/Month (KWD)</p>
+                      <p className="btn_text">{viewData.cost_eight_hours}</p>
                     </div>
                     <div>
-                      <button type="button" class="btn-nurse btn-success">
-                        12 Hrs
-                  </button>
-                      <p>Cost/Month (KWD)</p>
-                      <p className="btn-text">{viewData.cost_twelve_hours}</p>
+                      {/* <button type="button" class="btn-nurse btn-success"> */}
+                      <div className="eight_hrs_edit">
+                        <p className="eight_text">12 Hrs</p>
+                        </div>
+                  {/* </button> */}
+                      <p className="cost_edit">Cost/Month (KWD)</p>
+                      <p className="btn_text">{viewData.cost_twelve_hours}</p>
                     </div>
                   </div>
                 </div>
@@ -172,6 +185,7 @@ export default class Profilepage extends React.Component {
             </Grid>
           }
         </div>
+         
       </Dialog>
 
     );
@@ -200,3 +214,6 @@ const Trainer_viewWrapped = withStyles(styles)(Profilepage);
 //     </div>
 //   );
 // }
+
+
+

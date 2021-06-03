@@ -5,6 +5,8 @@ import { NavLink } from "react-router-dom";
 import Nursedetails from "./Nurse_dash_details";
 import { apiurl } from "../../App";
 import Axios from 'axios'
+var dateFormat = require('dateformat');
+
 
 class Nurse_dash_page extends Component {
   state={
@@ -30,8 +32,7 @@ class Nurse_dash_page extends Component {
       url:apiurl  + "Nurse/nurseDashboard",
       data:{
         "nursevendorId":"5",
-        "limit":"1",
-        "pageno":"1"
+        "today_date":dateFormat(new Date(), "yyyy-mm-dd")
       }
     }).then((response)=>{
       if(response.data.data &&response.data.data[0]){
@@ -45,14 +46,12 @@ class Nurse_dash_page extends Component {
     //   CostofMonth.push({CostofMonth:val.CostofMonth,id:val.nurseId})
     //  })
 
-      response.data.data[0].todaysappointment.map((val,index)=>{
+      response.data.data[0].today_appointments.map((val,index)=>{
           TableData.push({customername:val.PatientName,nursename:val.Nursename,dutyhours:val.working_hours,
                          months:val.Noofmonth,
                          costofmonth:val.CostofMonth && val.CostofMonth[0].CostofMonth,
-                        // costofmonth:"",val.CostofMonth[0].
-                         totalcost:val.amount,
-                        //  id:val.NurseId,             //divya i/p
-                         id:index       //suriya i/p
+                         totalcost:val.amount,      
+                         id:index       
                         })
       })
       self.setState({
@@ -63,9 +62,7 @@ class Nurse_dash_page extends Component {
         managenurse:ApiData.managenurse,
         revenue:ApiData.nursetotalrevenue,
         TableData,
-        // CostofMonth:response.data.data[0].CostofMonth[0].CostofMonth,
-        ViewData:response.data.data[0].todaysappointment,
-        // CostofMonth:response.data.data[0].CostofMonth,
+        ViewData:response.data.data[0].today_appointments,
         props_loading:false
       })
       console.log("response_data",this.state.ViewData)
@@ -80,7 +77,7 @@ class Nurse_dash_page extends Component {
           <div className="nurse_dashboard_buttons_wrap">
             <Card
               component={NavLink}
-              to="/Home/nursehired"
+              to="/Home/nursehired" 
               className="nurse_button1 nurse_button_common_styles"
             >
               <p className="nurse_button_text"> Total Hired</p>
@@ -109,7 +106,7 @@ class Nurse_dash_page extends Component {
               to="/Home/nurseleave"
               className="nurse_button5 nurse_button_common_styles"
             >
-              <p className="nurse_button_text">Total On Leave</p>
+              <p className="nurse_button_text">Total on Leave/Block</p>
               <div className="divider_container">
                 <div className="divider_1px"></div>
               </div>
@@ -141,7 +138,7 @@ class Nurse_dash_page extends Component {
                 <div className="divider_1px"></div>
               </div>
               <div className="nurse_dash_numeric_wrap">
-    <p className="nurse_dash_numeric_value">{this.state.managenurse}</p>
+    <p className="nurse_dash_numeric_value">{this.state.managenurse?this.state.managenurse:0}</p>
               </div>
             </Card>
             <Card
@@ -154,7 +151,7 @@ class Nurse_dash_page extends Component {
                 <div className="divider_1px"></div>
               </div>
               <div className="nurse_dash_numeric_wrap">
-    <p className="nurse_dash_numeric_value">{this.state.revenue}</p>
+    <p className="nurse_dash_numeric_value">{this.state.revenue?this.state.revenue:0}</p>
               </div>
             </Card>
           </div>

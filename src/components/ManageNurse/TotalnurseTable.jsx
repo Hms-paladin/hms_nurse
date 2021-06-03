@@ -4,7 +4,6 @@ import Modalcomp from "../../helpers/ModalComp/Modalcomp";
 import "./TotalnurseTable.css";
 import Managenursemodal from "./Managenursemodal";
 import Managenurseform from "./Managenurseform";
-import CloseIcon from "@material-ui/icons/Close";
 import axios from "axios";
 import { apiurl } from "../../App";
 import DeleteNurse from '../../helpers/ModalComp/deleteModal';
@@ -13,12 +12,13 @@ import Nurse_form from "./Nurse_form";
 
 class DashboardTable extends React.Component {
   state = {
+    editopen: false,
     openview: false,
     deleteopen: false,
     tableData: [],
     props_loading: true,
-    history_data:[],
-    history_data_store:[],
+    history_data: [],
+    history_data_store: [],
   };
 
   componentWillReceiveProps() {
@@ -55,60 +55,50 @@ class DashboardTable extends React.Component {
       this.setState({
         editData: this.state.totalData.find(val => val.nurseId === id),
         props_loading: false
-      },()=>console.log(this.state.editData, "dataaa_idd"))
-      
+      }, () => console.log(this.state.editData, "dataaa_idd"))
+
     }
     else if (data === "history") {
-      var history_data_store = this.state.history_data.filter((history_data_store)=>{
-        return history_data_store.nurseId===id
-     })
-     console.log(this.state.history_data,"historydata_chk")
+      this.props.getNurseHistory(id)
       this.setState({
-        historyopen:true,
-        history_data_store:history_data_store
+        historyopen: true,
       })
-      console.log(this.state.history_data_store, "history") 
-      // this.setState({
-      //   HistoryTableData:this.state.totalData.find(val =>val.nurseId === id),
-      // })
+      // this.HistoryTableData(id)
     }
-    console.log(this.state.viewData, "viewwwww")
   }
+
 
   closemodal = () => {
     this.setState({ openview: false, editopen: false, deleteopen: false, historyopen: false, workflow: false })
   }
 
-  componentDidMount(){
-    this.HistoryTableData()
-  }
 
-  HistoryTableData =() =>{
+  HistoryTableData = (id) => {
     axios({
       method: 'post',
-      url: apiurl + 'getNursePatientHistory/?results=2',
+      url: apiurl + 'getNursePatientHistory',
       data: {
-        nurseId:3,
+        nurseId: id,
       }
-  })
-    .then((response) => {
-      console.log(response,"response_history")
-      var history_data =[];
-      response.data.data.map((val)=>{
-        history_data.push(val)
-        console.log(val,"val_testttttt")
-      })
-      
-        this.setState({
-          history_data:history_data
+    })
+      .then((response) => {
+        console.log(response, "response_history")
+        var history_data = [];
+        response.data.data.map((val) => {
+          history_data.push(val)
+          console.log(val, "val_testttttt")
         })
-        console.log(history_data,"checkk")
-  })
-  .catch((error) => {
-      // alert(JSON.stringify(error))
-  })
+
+        this.setState({
+          history_data: history_data
+        })
+        console.log(history_data, "checkk")
+      })
+      .catch((error) => {
+        // alert(JSON.stringify(error))
+      })
   }
-  
+
   deleteopen = (type, id) => {
     console.log(id, "iddd")
     this.setState({
@@ -129,8 +119,12 @@ class DashboardTable extends React.Component {
       }
     })
       .then(function (response) {
+        if(response.status === 0 ){
+          message.error('Nurse Deleted Successfully');
+        }else{
+          message.error('This Nurse is already Booked. Cannot Delete');
+        }
         // alert("Deleted")
-        message.error('Nurse Deleted Successfully');
         self.props.getTableData();
       })
       .catch(function (error) {
@@ -159,33 +153,39 @@ class DashboardTable extends React.Component {
           modelopen={(e, id) => this.modelopen(e, id)}
           LocationOnIcon="close"
         />
-        <Managenursemodal open={this.state.workflow} onClose={this.closemodal} viewData={this.state.viewData} />
+        <Managenursemodal
+          open={this.state.workflow}
+          onClose={this.closemodal}
+          viewData={this.state.viewData}
+          xswidth={"lg"} />
         <Modalcomp
           visible={this.state.historyopen}
           title={"Nurse History"}
           closemodal={e => this.closemodal(e)}
           clrchange="textclr"
-        // xswidth={"xs"}
+          xswidth={this.state.history_data[0] && this.state.history_data[0].patientHistory.length > 2 ? "lg" : "md"}
         >
-          <Managenurseform  history_data_store={this.state.history_data_store} closemodal={this.closemodal}/>
+          <Managenurseform history_data_store={this.state.history_data} closemodal={this.closemodal} />
         </Modalcomp>
-
 
         <Modalcomp visible={this.state.editopen}
           editData={this.state.editData}
           title={"Edit Nurse Details"}
           clrchange="textclr"
-          closemodal={(e) => this.closemodal(e)} >
-          <Nurse_form getTableData={() => this.props.getTableData()}
+          closemodal={(e) => this.closemodal(e)}
+          xswidth={"lg"}
+        >
+          <Nurse_form
+            getTableData={() => this.props.getTableData()}
             closemodal={this.closemodal}
             editData={this.state.editData}
-            editopenModal={this.state.editopen && true} />
+            editopenModal={this.state.editopen} />
         </Modalcomp>
-
         <Modalcomp visible={this.state.deleteopen} title={"Delete"} closemodal={this.closemodal} xswidth={"xs"} clrchange="textclr">
           <DeleteNurse deleterow={this.deleterow} closemodal={this.closemodal} />
         </Modalcomp>
       </div>
+      
     );
   }
 }

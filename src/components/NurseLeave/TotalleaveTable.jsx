@@ -21,6 +21,7 @@ import ReactExport from 'react-data-export';
 import DateRangeSelect from "../../helpers/DateRange/DateRange";
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
+var moment = require('moment');
 
 var dateFormat = require('dateformat');
 var now = new Date();
@@ -35,6 +36,16 @@ class TotalleaveTable extends React.Component {
     props_loading:true,
     wk_Mn_Yr_Full_Data: [],
     spinner: false,
+    gender: [
+      {
+        id: 1,
+        value: 'Male'
+      },
+      {
+        id: 2,
+        value: 'Female'
+      }
+    ],
   };
 
 
@@ -64,20 +75,20 @@ class TotalleaveTable extends React.Component {
     const doc = new jsPDF("a3")
     var bodydata  = []
     this.state.leaveData.map((data,index)=>{
-      bodydata.push([index+1,data.nursename,data.gender,data.experience,data.Nationality,data.fromdate,data.todate,data.noofdays])
+      bodydata.push([index+1,data.nursename,data.gender,data.experience,data.Nationality,data.status,data.fromdate,data.todate,data.noofdays])
     })
     doc.autoTable({
       beforePageContent: function(data) {
-        doc.text("Uploaded Details", 15, 23); // 15,13 for css
+        doc.text("Nurses On Leave/Block", 15, 23); // 15,13 for css
         },
       margin: { top: 30 },
       showHead:"everyPage",
       theme:"grid",
-      head: [['S.No', 'Nurse Name', 'Gender','Experience','Nationality','From Date','To Date','No of days']],
+      head: [['S.No', 'Nurse Name', 'Gender','Experience','Nationality',"Status",'From Date','To Date','No of days']],
       body:bodydata,
     })
      
-    doc.save('UploadDeatails.pdf')
+    doc.save('NursesOnLeave/Block.pdf')
     
   }
 }
@@ -92,34 +103,23 @@ getmethod(rangeday){
   })
   axios({
     method:"POST",
-    url: apiurl + "patient/getnurseleaveinfo",
+    url: apiurl + "Nurse/getnurseleaveinfo",
     data:{
       nursevendorId:"5",
-      // week: rangeday==="week"?true:false,
-      // month: rangeday==="month"?true:false,
-      // year: rangeday==="year"?true:false,
-      week:"false",
-      month:"true",
-      year:"false",
-      searchContent:"false",
-      date: dateformat(new Date(), "yyyy-mm-dd"),
-      date_to:dateformat(new Date(), "yyyy-mm-dd"),
-      name:"",
-      // date:current_day,
-      // date:"2020-07-01",
-	    // date_to:"2020-07-16",
-      limit:10,
-      pageno:1,
+      fromDate: dateformat(new Date(), "yyyy-mm-dd"),
+      toDate:dateformat(new Date(), "yyyy-mm-dd"),
+      period:"Day"
     }
   })
   .then((response)=>{
-    console.log(response,"res")
+    console.log(response.data.data,"res_test")
     var leaveData = [];
-    response.data.data[0] && response.data.data[0].details.map((val)=>{
+    response.data.data && response.data.data.map((val)=>{
       console.log(val,"val_leave")
-      leaveData.push({nursename:val.Nursename,gender:val.gender,experience:val.experience,
-        Nationality:val.nationality_id,fromdate:dateFormat(val.from_date, "dd-mmm-yyyy"),
-        todate:dateFormat(val.to_date, "dd-mmm-yyyy"),noofdays:val.Noofdays,id:val.id
+      leaveData.push({nursename:val.Nursename,gender:val.gender==1?"Male":"Female",experience:val.experience,
+        Nationality:val.nationality,
+        status:val.status,
+        fromdate:moment(val.from_date).format("DD MMM YYYY"),todate:moment(val.to_date).format("DD MMM YYYY"),noofdays:val.Noofdays,id:val.id
       })
     
     })
@@ -145,28 +145,22 @@ dayReport=(data)=>{
   var self = this
   axios({
           method: 'post',
-          url: apiurl + 'patient/getnurseleaveinfo',
+          url: apiurl + 'Nurse/getnurseleaveinfo',
           data: {
             "nursevendorId":"5",
-            "week":false,
-            "month":true,
-            "year":false,
-            "searchContent":"false",
-            "name":"",
-            "date":startdate,
-            "date_to":enddate,
-            "limit":10,
-            "pageno":1
+            "fromDate":startdate,
+            "toDate":enddate,
+             "period":"Day"
     }
   })
   .then((response) => {
     var leaveData = [];
     var tableDatafull = [];
-    response.data.data[0] && response.data.data[0].details.map((val,index) =>{
+    response.data.data && response.data.data.map((val,index) =>{
       console.log(val,"text_valdata")
-      leaveData.push({nursename:val.Nursename,gender:val.gender,experience:val.experience,
-        Nationality:val.nationality_id,fromdate:dateFormat(val.from_date, "dd-mmm-yyyy"),
-        todate:dateFormat(val.to_date, "dd-mmm-yyyy"),noofdays:val.Noofdays,id:val.id
+      leaveData.push({nursename:val.Nursename,gender:val.gender==="1" || val.gender==="Male"?"Male":"Female",experience:val.experience,
+        Nationality:val.nationality,status:val.status,fromdate:moment(val.from_date).format("DD MMM YYYY"),
+        todate:moment(val.to_date).format("DD MMM YYYY"),noofdays:val.Noofdays,id:val.id
           })
            tableDatafull.push(val)
       })
@@ -195,14 +189,15 @@ dayReport=(data)=>{
         return data
         else if (data.nursename!== null && data.nursename.toLowerCase().includes(this.state.search.toLowerCase())
         || (data.gender!= null && data.gender.toLowerCase().includes(this.state.search.toLowerCase()))
-        || (data.experience!= null && data.experience.toString().includes(this.state.search.toString()))
-        || (data.Nationality!= null && data.Nationality.toString().includes(this.state.search.toString()))
+        || (data.experience!= null && data.experience.toString().toLowerCase().includes(this.state.search.toString().toLowerCase()))
+        || (data.Nationality!= null && data.Nationality.toString().toLowerCase().includes(this.state.search.toString().toLowerCase()))
+        || (data.status!= null && data.status.toString().toLowerCase().includes(this.state.search.toString().toLowerCase()))
         || (data.fromdate!= null && data.fromdate.toLowerCase().includes(this.state.search.toLowerCase()))
         || (data.todate!= null && data.todate.toLowerCase().includes(this.state.search.toLowerCase()))
-        || (data.noofdays!= null && data.noofdays.toString().includes(this.state.search.toString()))
+        || (data.noofdays!= null && data.noofdays.toString().toLowerCase().includes(this.state.search.toString().toLowerCase()))
         ) {
           return data
-      }   
+      }
     }) 
     // EXCEL FUNCTION
   var multiDataSetbody = []
@@ -213,6 +208,7 @@ dayReport=(data)=>{
       {value:xldata.gender},
       {value:xldata.experience},
       {value:xldata.Nationality},
+      {value:xldata.status},
       {value:xldata.fromdate},
       {value:xldata.todate},
       {value:xldata.noofdays}])
@@ -223,6 +219,7 @@ dayReport=(data)=>{
       {value:xldata.gender,style: {fill: {patternType: "solid", fgColor: {rgb: "e2e0e0"}}}},
       {value:xldata.experience,style: {fill: {patternType: "solid", fgColor: {rgb: "e2e0e0"}}}},
       {value:xldata.Nationality,style: {fill: {patternType: "solid", fgColor: {rgb: "e2e0e0"}}}},
+      {value:xldata.status,style: {fill: {patternType: "solid", fgColor: {rgb: "e2e0e0"}}}},
       {value:xldata.fromdate,style: {fill: {patternType: "solid", fgColor: {rgb: "e2e0e0"}}}},
       {value:xldata.todate,style: {fill: {patternType: "solid", fgColor: {rgb: "e2e0e0"}}}},
       {value:xldata.noofdays,style: {fill: {patternType: "solid", fgColor: {rgb: "e2e0e0"}}}}])
@@ -236,6 +233,7 @@ dayReport=(data)=>{
       {title: "Gender", width: {wch: 20},style: {fill: {patternType: "solid", fgColor: {rgb: "86b149"}}}},  
       {title: "Experience", width: {wpx: 90},style: {fill: {patternType: "solid", fgColor: {rgb: "86b149"}}}},
       {title: "Nationality",width:{wpx: 100},style:{fill:{patternType: "solid", fgColor: {rgb: "86b149"}}}},
+      {title: "Status",width:{wpx: 100},style:{fill:{patternType: "solid", fgColor: {rgb: "86b149"}}}},
       {title: "From Date", width: {wpx: 90},style: {fill: {patternType: "solid", fgColor: {rgb: "86b149"}}}},
       {title: "To Date", width: {wpx: 90},style: {fill: {patternType: "solid", fgColor: {rgb: "86b149"}}}},
       {title: "No of days", width: {wpx: 90},style: {fill: {patternType: "solid", fgColor: {rgb: "86b149"}}}},
@@ -246,15 +244,9 @@ dayReport=(data)=>{
     return (
       <>
       <div className="title_dashboard">
-      <p className="title_header">NURSES ON LEAVE </p>
+      <p className="title_header">NURSES ON LEAVE / BLOCK </p>
       <div style={{ fontSize: "16px" ,display:"flex",alignItems:"center"}}>
       <DateRangeSelect dynalign={"dynalign"} rangeDate={(item)=>this.dayReport(item)} />
-      {/* <ButtonGroup className="clinic_group_details" size="small" aria-label="small outlined button group">
-              <Button className="clinic_details" onClick={()=>this.getmethod("week")}>This Week</Button>
-              <Button className="clinic_details" onClick={()=>this.getmethod("month")}>This Month</Button>
-              <Button className="clinic_details" onClick={()=>this.getmethod("year")}>This Year</Button>
-        </ButtonGroup>
-        <Moment format="DD-MMM-YYYY" className="mr-2"></Moment> */}
         <Search
           placeholder="search"
           onSearch={value => console.log(value)}
@@ -267,8 +259,8 @@ dayReport=(data)=>{
         style={{marginRight:"15px",
         marginLeft:"15px"}}/>
          {this.state.leaveData.length===0 ? <ReactSVG src={excel} style={{ marginRight: "15px" }} /> :
-        <ExcelFile element={<ReactSVG src={excel} style={{ marginRight: "15px" }} />}>
-          <ExcelSheet dataSet={multiDataSet} name="Uploaded Details"/>
+        <ExcelFile filename={"NursesOnLeave_Block"} element={<ReactSVG src={excel} style={{ marginRight: "15px" }} />}>
+          <ExcelSheet dataSet={multiDataSet} name="Nurses On Leave_Block"/>
         </ExcelFile>
         }
               <ReactToPrint
@@ -290,6 +282,7 @@ dayReport=(data)=>{
             { id: "gender", label: "Gender" },
             { id: "experience", label: "Experience" },
             { id: "Nationality", label: "Nationality" },
+            { id: "status", label: "Status"},
             { id: "fromdate", label: "From Date" },
             { id: "todate", label: "To Date" },
             { id: "noofdays", label: "No of days" }
